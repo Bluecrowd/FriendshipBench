@@ -24,7 +24,7 @@ pipeline {
         }
 		stage('Delivery') {
 			steps {
-				sh 'pwd'
+				echo 'Transferring file...'
 				sh 'delivery.sh'
 			}
 		}
