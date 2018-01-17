@@ -22,5 +22,11 @@ pipeline {
                 sh 'mvn test -f api/pom.xml'
             }
         }
+		stage('Delivery') {
+			steps {
+				sh 'pwd'
+				sh 'delivery.sh'
+			}
+		}
     }
 }
