@@ -26,6 +26,7 @@ pipeline {
 			steps {
 				echo 'Transferring file...'
 				sh 'whoami'
+				sh '$PATH'
 				sh '/var/lib/jenkins/workspace/HPA-web-api/delivery.sh'
 			}
 		}
