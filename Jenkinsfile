@@ -13,7 +13,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building...'
-                sh 'mvn -B -DskipTests clean package'
+                sh 'mvn -B -DskipTests clean package -f api/pom.xml'
             }
         }
         stage('Test') {
