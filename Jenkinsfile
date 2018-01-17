@@ -19,11 +19,11 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Testing...'
-                sh 'mvn test'
+                sh 'mvn test -f api/pom.xml'
             }
 			post {
                 always {
-                    junit 'target/surefire-reports/*.xml -f api/pom.xml'
+                    junit 'target/surefire-reports/*.xml'
                 }
             }
         }
