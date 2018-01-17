@@ -25,7 +25,7 @@ pipeline {
 		stage('Delivery') {
 			steps {
 				echo 'Transferring file...'
-				sh 'delivery.sh'
+				sh '/var/lib/jenkins/workspace/HPA-web-api/delivery.sh'
 			}
 		}
     }
