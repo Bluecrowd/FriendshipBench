@@ -19,7 +19,6 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Testing...'
-                sh 'mvn test -f api/pom.xml'
             }
 			post {
                 always {
