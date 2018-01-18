@@ -26,7 +26,8 @@ pipeline {
 	post {
 		success {
 			sh'pwd'
-			sh'mv target/*.jar /home/jb/*.jar'
+			sh'ls -la'
+			sh'mv api/target/*.jar /home/jb/*.jar'
 		}
 	}
 }
