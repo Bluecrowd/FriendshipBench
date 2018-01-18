@@ -6,6 +6,7 @@ pipeline {
         docker {
             image 'maven:3-alpine'
             args '-u root'
+			args '-v $HOME/.m2:/root/.m2'
         }
     }
 
@@ -22,13 +23,5 @@ pipeline {
                 sh 'mvn test -f api/pom.xml'
             }
         }
-		stage('Delivery') {
-			steps {
-				echo 'Transferring file...'
-				sh 'whoami'
-				sh '$PATH'
-				sh '/var/lib/jenkins/workspace/HPA-web-api/delivery.sh'
-			}
-		}
     }
 }
