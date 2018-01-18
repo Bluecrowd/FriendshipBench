@@ -18,7 +18,7 @@ public class TestApplicationTests {
 	@Test
 	public void testFalse()
 	{
-		assertThat("test").contains("est");
+		assertThat("test").contains("12345890");
 	}
 
 	@Test

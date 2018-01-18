@@ -23,11 +23,4 @@ pipeline {
             }
         }
     }
-	post {
-		success {
-			sh'pwd'
-			sh'ls -la api/target'
-			sh'mv api/target/*.jar /home/jb/*.jar'
-		}
-	}
 }
