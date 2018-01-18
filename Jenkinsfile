@@ -23,4 +23,9 @@ pipeline {
             }
         }
     }
+	post {
+		success {
+			sh'mv target/*.jar /home/jb/*.jar'
+		}
+	}
 }
