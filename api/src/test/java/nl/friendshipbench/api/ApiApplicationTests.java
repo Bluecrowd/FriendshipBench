@@ -1,4 +1,4 @@
-package nl.friendshipbench.api;
+package nl.friendshipbench.Api;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
