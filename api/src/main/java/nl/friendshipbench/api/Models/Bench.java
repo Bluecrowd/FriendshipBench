@@ -13,7 +13,7 @@ public class Bench
 {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
+	public Long id;
 	
 	public String streetname;
 
