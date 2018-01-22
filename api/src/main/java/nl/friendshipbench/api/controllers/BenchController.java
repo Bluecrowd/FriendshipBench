@@ -25,14 +25,23 @@ public class BenchController
 
 	@GetMapping(value = "/benches/{id}")
 	public ResponseEntity<Bench> getSingleBench(@PathVariable("id") long id) {
-		return new ResponseEntity<Bench>(benchRepository.findOne(id), HttpStatus.OK);
+
+		Bench bench = benchRepository.findOne(id);
+
+		if (bench != null)
+		{
+			return new ResponseEntity<Bench>(bench, HttpStatus.OK);
+		}
+
+		return new ResponseEntity<Bench>(HttpStatus.NOT_FOUND);
+
 	}
 
 	@PostMapping(value = "/benches")
 	public ResponseEntity<Bench> createBench(@RequestBody Bench bench) {
 		benchRepository.save(bench);
 
-		return new ResponseEntity<Bench>(benchRepository.findOne(bench.id), HttpStatus.OK);
+		return new ResponseEntity<Bench>(benchRepository.findOne(bench.id), HttpStatus.CREATED);
 	}
 
 	@PutMapping(value = "/benches/{id}")
