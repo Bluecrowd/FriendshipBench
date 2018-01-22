@@ -7,6 +7,8 @@ import {Client} from '../models/client';
 import {catchError, tap} from 'rxjs/operators';
 import { Constants } from '../Constants';
 
+import { HandleErrorService} from './handle-error.service';
+
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -18,38 +20,18 @@ export class ClientsService {
 
   constructor(
     private http: HttpClient,
-    private messageService: MessageService) { }
+    private messageService: MessageService,
+    private handleErrorService: HandleErrorService,
+    ) { }
 
   /** GET clients from the server */
   getClients (): Observable<Client[]> {
     return this.http.get<Client[]>(this.clientsUrl)
       .pipe(
-        tap(clients => this.log(`fetched clients`)),
-        catchError(this.handleError('getClients', []))
+        tap(clients => this.handleErrorService.log(`ClientService: fetched clients`)),
+        catchError(this.handleErrorService.handleError('getClients', []))
       );
   }
 
-  private log(message: string) {
-    this.messageService.add('ClientsService: ' + message);
-  }
 
-  /**
-   * Handle Http operation that failed.
-   * Let the app continue.
-   * @param operation - name of the operation that failed
-   * @param result - optional value to return as the observable result
-   */
-  private handleError<T>(operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
-
-      // TODO: send the error to remote logging infrastructure
-      console.error(error); // log to console instead
-
-      // TODO: better job of transforming error for user consumption
-      this.log(`${operation} failed: ${error.message}`);
-
-      // Let the app keep running by returning an empty result.
-      return of(result as T);
-    };
-  }
 }
