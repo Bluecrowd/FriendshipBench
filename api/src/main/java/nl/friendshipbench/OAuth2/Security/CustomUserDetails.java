@@ -1,4 +1,4 @@
-package nl.friendshipbench;
+package nl.friendshipbench.OAuth2.Security;
 
 import nl.friendshipbench.Api.Models.Role;
 import nl.friendshipbench.Api.Models.User;
@@ -10,22 +10,36 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * Creates a set of GrantedAuthority instances that represents roles that the user has in the system
+ * Granted Authority reflects the permissions granted to the user
+ *
+ * @author Nick Oosterhuis
+ */
 public class CustomUserDetails implements UserDetails {
 
     private String username;
     private String password;
     private Collection<? extends GrantedAuthority> authorities;
 
-    public  CustomUserDetails(User byUsername) {
-        this.username = byUsername.getUsername();
-        this.password = byUsername.getPassword();
+    public  CustomUserDetails(User user) {
+        this.username = user.getUsername();
+        this.password = user.getPassword();
+        this.authorities = translate(user.getRoles());
+    }
 
+    private Collection<? extends GrantedAuthority> translate(List<Role> roles) {
 
-        List<GrantedAuthority> auths = new ArrayList<>();
-        for(Role role : byUsername.getRoles())
-            auths.add(new SimpleGrantedAuthority(role.getRoleName()));
+        List<GrantedAuthority> authorities = new ArrayList<>();
 
-        this.authorities = auths;
+        for (Role role : roles) {
+            String name = role.getRoleName().toUpperCase();
+//            if (!name.startsWith("ROLE_")) {
+//                name = "ROLE_" + name;
+//            }
+            authorities.add(new SimpleGrantedAuthority(name));
+        }
+        return authorities;
     }
 
     @Override

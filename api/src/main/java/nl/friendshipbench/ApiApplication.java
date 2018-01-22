@@ -3,6 +3,7 @@ package nl.friendshipbench;
 import nl.friendshipbench.Api.Models.Role;
 import nl.friendshipbench.Api.Models.User;
 import nl.friendshipbench.Api.Repositories.UserRepository;
+import nl.friendshipbench.OAuth2.Security.CustomUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -15,15 +16,5 @@ public class ApiApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ApiApplication.class, args);
-	}
-
-	@Autowired
-	public void authenticationManager(AuthenticationManagerBuilder builder, UserRepository repository) throws Exception {
-
-	    //test user
-	    if(repository.count() == 0)
-	        repository.save(new User("user", "user", Arrays.asList(new Role("USER"), new Role("ACTUATOR"))));
-
-		builder.userDetailsService(username -> new CustomUserDetails(repository.findByUsername(username)));
 	}
 }

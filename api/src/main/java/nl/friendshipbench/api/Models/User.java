@@ -3,6 +3,11 @@ package nl.friendshipbench.Api.Models;
 import javax.persistence.*;
 import java.util.List;
 
+/**
+ * The user model
+ *
+ * @author Nick Oosterhuis
+ */
 @Entity
 public class User {
     @Id
