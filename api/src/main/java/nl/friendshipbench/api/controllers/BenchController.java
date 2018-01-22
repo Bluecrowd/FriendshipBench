@@ -12,6 +12,7 @@ import java.util.List;
 /**
  * Created by Jan-Bert on 22-1-2018.
  */
+@CrossOrigin
 @RestController
 public class BenchController
 {
