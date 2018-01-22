@@ -5,6 +5,7 @@ import {Observable} from 'rxjs/Observable';
 import {of} from 'rxjs/observable/of';
 import {Client} from '../models/client';
 import {catchError, tap} from 'rxjs/operators';
+import { Constants } from '../Constants';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -13,7 +14,7 @@ const httpOptions = {
 @Injectable()
 export class ClientsService {
 
-  private clientsUrl = 'https://localhost:44314/clients';  // URL to web api
+  private clientsUrl = Constants.API_URL + 'clients';  // URL to web api
 
   constructor(
     private http: HttpClient,
