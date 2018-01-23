@@ -18,25 +18,26 @@ import java.util.List;
  */
 public class CustomUserDetails implements UserDetails {
 
-    private String username;
-    private String password;
+    private static final long serialVersionUID = 1L;
     private Collection<? extends GrantedAuthority> authorities;
+    private String password;
+    private String username;
 
-    public  CustomUserDetails(User user) {
+
+    public CustomUserDetails(User user) {
         this.username = user.getUsername();
         this.password = user.getPassword();
         this.authorities = translate(user.getRoles());
     }
 
+
     private Collection<? extends GrantedAuthority> translate(List<Role> roles) {
-
         List<GrantedAuthority> authorities = new ArrayList<>();
-
         for (Role role : roles) {
             String name = role.getRoleName().toUpperCase();
-//            if (!name.startsWith("ROLE_")) {
-//                name = "ROLE_" + name;
-//            }
+            if (!name.startsWith("ROLE_")) {
+                name = "ROLE_" + name;
+            }
             authorities.add(new SimpleGrantedAuthority(name));
         }
         return authorities;

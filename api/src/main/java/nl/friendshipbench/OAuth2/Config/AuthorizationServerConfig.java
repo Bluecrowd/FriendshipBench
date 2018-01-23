@@ -1,7 +1,9 @@
 package nl.friendshipbench.OAuth2.Config;
 
 import nl.friendshipbench.OAuth2.Security.CustomUserDetailsService;
+import org.apache.tomcat.jdbc.pool.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
@@ -12,7 +14,6 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.provider.approval.UserApprovalHandler;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 
-import javax.sql.DataSource;
 
 /**
  * Authorization server configuration
@@ -28,7 +29,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     private static final int TEN_DAYS = 60 * 60 * 24 * 10;
 
     @Autowired
-    private AuthenticationManager authenticationManager;
+    private DataSource dataSource;
 
     @Autowired
     private TokenStore tokenStore;
@@ -37,18 +38,26 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     private UserApprovalHandler userApprovalHandler;
 
     @Autowired
+    @Qualifier("authenticationManagerBean")
+    private AuthenticationManager authenticationManager;
+
+    @Autowired
     private CustomUserDetailsService customUserDetailsService;
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-        clients.inMemory().withClient("my-trusted-client")
-                .secret("supersecret")
-                .authorizedGrantTypes("password", "refresh_token")
-                .authorities("ROLE_CLIENT", "ROLE_TRUSTED_CLIENT")
-                .scopes("read", "write", "trust")
-                .resourceIds("oauth2-resource")
-                .accessTokenValiditySeconds(ONE_DAY)
-                .refreshTokenValiditySeconds(TEN_DAYS);
+
+        clients.jdbc(dataSource);
+
+//		clients.inMemory()
+//	        .withClient("my-trusted-client")
+//            .secret("secret")
+//            .authorizedGrantTypes("password", "refresh_token")
+//            .authorities("ROLE_CLIENT", "ROLE_TRUSTED_CLIENT")
+//            .scopes("read", "write", "trust")
+//            .accessTokenValiditySeconds(ONE_DAY)
+//            .refreshTokenValiditySeconds(TEN_DAYS);
+
     }
 
     @Override
@@ -59,7 +68,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     }
 
     @Override
-    public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
-        security.realm(REALM);
+    public void configure(AuthorizationServerSecurityConfigurer oauthServer) throws Exception {
+        oauthServer.realm(REALM);
     }
 }
