@@ -25,8 +25,6 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
     private static String REALM = "FRIENDSHIPBENCH_REALM";
-    private static final int ONE_DAY = 60 * 60 * 24;
-    private static final int TEN_DAYS = 60 * 60 * 24 * 10;
 
     @Autowired
     private DataSource dataSource;
@@ -46,18 +44,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-
         clients.jdbc(dataSource);
-
-//		clients.inMemory()
-//	        .withClient("my-trusted-client")
-//            .secret("secret")
-//            .authorizedGrantTypes("password", "refresh_token")
-//            .authorities("ROLE_CLIENT", "ROLE_TRUSTED_CLIENT")
-//            .scopes("read", "write", "trust")
-//            .accessTokenValiditySeconds(ONE_DAY)
-//            .refreshTokenValiditySeconds(TEN_DAYS);
-
     }
 
     @Override
