@@ -83,7 +83,8 @@ public class QuestionController
 
 	@PutMapping(value = "/questions/{id}")
 	public ResponseEntity<Question> updateQuestion(@PathVariable("id") long id, @RequestBody Question question) {
-		//TODO: Fix dingen met id
+		question.id = id;
+
 		questionRepository.save(question);
 
 		return new ResponseEntity<Question>(questionRepository.findOne(id), HttpStatus.OK);
