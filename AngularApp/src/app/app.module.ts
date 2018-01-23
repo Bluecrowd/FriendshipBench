@@ -42,4 +42,6 @@ import { UserSearchComponent } from './user-search/user-search.component';
   providers: [ UserService, MessageService ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  userType = 'Admin';
+}
