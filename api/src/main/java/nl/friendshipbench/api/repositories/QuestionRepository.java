@@ -1,6 +1,6 @@
 package nl.friendshipbench.api.repositories;
 
-import nl.friendshipbench.api.Models.Question;
+import nl.friendshipbench.api.models.Question;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;

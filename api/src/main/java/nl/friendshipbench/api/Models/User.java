@@ -1,4 +1,4 @@
-package nl.friendshipbench.Api.Models;
+package nl.friendshipbench.api.models;
 
 import javax.persistence.*;
 import java.util.List;

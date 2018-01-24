@@ -1,8 +1,8 @@
-package nl.friendshipbench.Api.Controllers;
+package nl.friendshipbench.api.Controllers;
 
-import nl.friendshipbench.Api.Models.Role;
-import nl.friendshipbench.Api.Models.User;
-import nl.friendshipbench.Api.Services.SignUpService;
+import nl.friendshipbench.api.models.Role;
+import nl.friendshipbench.api.models.User;
+import nl.friendshipbench.api.services.SignUpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,7 +1,7 @@
-package nl.friendshipbench.OAuth2.Security;
+package nl.friendshipbench.oauth2.security;
 
-import nl.friendshipbench.Api.Models.Role;
-import nl.friendshipbench.Api.Models.User;
+import nl.friendshipbench.api.models.Role;
+import nl.friendshipbench.api.models.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

@@ -1,4 +1,4 @@
-package nl.friendshipbench.OAuth2.Config;
+package nl.friendshipbench.oauth2.config;
 
 import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
 

@@ -1,8 +1,8 @@
-package nl.friendshipbench.Api.Services;
+package nl.friendshipbench.api.services;
 
-import nl.friendshipbench.Api.Models.Role;
-import nl.friendshipbench.Api.Models.User;
-import nl.friendshipbench.Api.Repositories.UserRepository;
+import nl.friendshipbench.api.models.Role;
+import nl.friendshipbench.api.models.User;
+import nl.friendshipbench.api.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

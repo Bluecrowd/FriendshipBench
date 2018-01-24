@@ -1,6 +1,6 @@
 package nl.friendshipbench.api.controllers;
 
-import nl.friendshipbench.api.Models.Bench;
+import nl.friendshipbench.api.models.Bench;
 import nl.friendshipbench.api.repositories.BenchRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

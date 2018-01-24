@@ -1,4 +1,4 @@
-package nl.friendshipbench.OAuth2.Config;
+package nl.friendshipbench.oauth2.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.expression.method.MethodSecurityExpressionHandler;

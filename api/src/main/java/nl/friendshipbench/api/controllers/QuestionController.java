@@ -1,6 +1,6 @@
 package nl.friendshipbench.api.controllers;
 
-import nl.friendshipbench.api.Models.Question;
+import nl.friendshipbench.api.models.Question;
 import nl.friendshipbench.api.repositories.QuestionRepository;
 import org.apache.commons.collections4.IterableUtils;
 import org.springframework.beans.factory.annotation.Autowired;

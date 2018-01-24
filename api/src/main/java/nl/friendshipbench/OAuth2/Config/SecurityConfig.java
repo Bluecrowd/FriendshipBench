@@ -1,6 +1,6 @@
-package nl.friendshipbench.OAuth2.Config;
+package nl.friendshipbench.oauth2.config;
 
-import nl.friendshipbench.OAuth2.Security.CustomUserDetailsService;
+import nl.friendshipbench.oauth2.security.CustomUserDetailsService;
 import org.apache.tomcat.jdbc.pool.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -21,7 +21,6 @@ import org.springframework.security.oauth2.provider.approval.TokenApprovalStore;
 import org.springframework.security.oauth2.provider.approval.TokenStoreUserApprovalHandler;
 import org.springframework.security.oauth2.provider.request.DefaultOAuth2RequestFactory;
 import org.springframework.security.oauth2.provider.token.TokenStore;
-import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
 import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 
 /**

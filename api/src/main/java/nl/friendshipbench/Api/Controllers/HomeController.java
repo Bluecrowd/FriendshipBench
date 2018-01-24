@@ -1,6 +1,6 @@
-package nl.friendshipbench.Api.Controllers;
+package nl.friendshipbench.api.Controllers;
 
-import nl.friendshipbench.OAuth2.Security.CustomUserDetails;
+import nl.friendshipbench.oauth2.security.CustomUserDetails;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
