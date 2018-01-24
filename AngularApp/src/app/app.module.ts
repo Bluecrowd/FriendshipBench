@@ -22,6 +22,7 @@ import { BenchesComponent } from './components/benches/benches.component';
 import { BenchComponent } from './components/bench/bench.component';
 import {BenchesService} from './services/benches.service';
 import {HandleErrorService} from './services/handle-error.service';
+import { GoogleMapsComponent } from './components/google-maps/google-maps.component';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import {HandleErrorService} from './services/handle-error.service';
     ClientsComponent,
     ClientComponent,
     BenchesComponent,
-    BenchComponent
+    BenchComponent,
+    GoogleMapsComponent
   ],
   imports: [
     BrowserModule,

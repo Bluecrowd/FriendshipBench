@@ -57,4 +57,7 @@
     "styleExt": "css",
     "component": {}
   }
+  "scripts": [
+    "../path"
+  ];
 }
