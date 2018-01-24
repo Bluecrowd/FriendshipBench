@@ -23,6 +23,7 @@ import { BenchComponent } from './components/bench/bench.component';
 import {BenchesService} from './services/benches.service';
 import {HandleErrorService} from './services/handle-error.service';
 import { GoogleMapsComponent } from './components/google-maps/google-maps.component';
+import {GoogleMapsService} from "./services/google-maps.service";
 
 
 @NgModule({
@@ -46,7 +47,7 @@ import { GoogleMapsComponent } from './components/google-maps/google-maps.compon
     HttpClientModule,
 
   ],
-  providers: [ UserService, MessageService, ClientsService, HandleErrorService, BenchesService  ],
+  providers: [ UserService, MessageService, ClientsService, HandleErrorService, BenchesService, GoogleMapsService  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
