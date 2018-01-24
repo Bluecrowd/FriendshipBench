@@ -8,13 +8,20 @@ import { InMemoryDataService } from './in-memory-data.service';
 
 
 import { AppComponent } from './app.component';
-import { UserComponent } from './user/user.component';
-import { AppRoutingModule } from './/app-routing.module';
-import { UsersComponent } from './users/users.component';
-import {UserService} from './user.service';
-import { MessagesComponent } from './messages/messages.component';
-import { MessageService } from './message.service';
-import { UserSearchComponent } from './user-search/user-search.component';
+import { UserComponent } from './components/user/user.component';
+import { AppRoutingModule } from './modules/app-routing.module';
+import { UsersComponent } from './components/users/users.component';
+import {UserService} from './services/user.service';
+import { MessagesComponent } from './components/messages/messages.component';
+import { MessageService } from './services/message.service';
+import { UserSearchComponent } from './components/user-search/user-search.component';
+import { ClientsComponent } from './components/clients/clients.component';
+import { ClientsService } from './services/clients.service';
+import { ClientComponent } from './components/client/client.component';
+import { BenchesComponent } from './components/benches/benches.component';
+import { BenchComponent } from './components/bench/bench.component';
+import {BenchesService} from './services/benches.service';
+import {HandleErrorService} from './services/handle-error.service';
 
 
 @NgModule({
@@ -23,7 +30,11 @@ import { UserSearchComponent } from './user-search/user-search.component';
     UserComponent,
     UsersComponent,
     MessagesComponent,
-    UserSearchComponent
+    UserSearchComponent,
+    ClientsComponent,
+    ClientComponent,
+    BenchesComponent,
+    BenchComponent
   ],
   imports: [
     BrowserModule,
@@ -32,14 +43,8 @@ import { UserSearchComponent } from './user-search/user-search.component';
     HttpClientModule,
     HttpClientModule,
 
-    // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
-    // and returns simulated server responses.
-    // Remove it when a real server is ready to receive requests.
-    HttpClientInMemoryWebApiModule.forRoot(
-      InMemoryDataService, { dataEncapsulation: false }
-    )
   ],
-  providers: [ UserService, MessageService ],
+  providers: [ UserService, MessageService, ClientsService, HandleErrorService, BenchesService  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
