@@ -1,0 +1,26 @@
+<h2>All benches</h2>
+<button (click)="toggleAddBench()">Add Bench</button>
+
+<table style="width:100%">
+  <thead>
+    <tr>
+      <th>id</th>
+      <th>STREETNAME</th>
+      <th>HOUSENUMBER</th>
+      <th>PROVINCE</th>
+      <th>DISTRICT</th>
+    </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let bench of benches">
+    <td>{{bench.id}}</td>
+    <td>{{bench.streetname}}</td>
+    <td>{{bench.housenumber}}</td>
+    <td>{{bench.province}}</td>
+    <td>{{bench.district}}</td>
+    <td><button (click)="toggleBench(bench)">Edit</button></td>
+  </tr>
+  </tbody>
+</table>
+
+<app-bench [bench]="selectedBench" ></app-bench>
