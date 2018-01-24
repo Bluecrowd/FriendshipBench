@@ -1,6 +1,6 @@
 package nl.friendshipbench.api.controllers;
 
-import nl.friendshipbench.api.Models.Question;
+import nl.friendshipbench.api.models.Question;
 import nl.friendshipbench.api.repositories.QuestionRepository;
 import org.apache.commons.collections4.IterableUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 /**

@@ -1,13 +1,11 @@
 package nl.friendshipbench.api.controllers;
 
-import nl.friendshipbench.api.Models.Bench;
+import nl.friendshipbench.api.models.Bench;
 import nl.friendshipbench.api.repositories.BenchRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * Created by Jan-Bert on 22-1-2018.

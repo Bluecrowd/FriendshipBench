@@ -1,6 +1,4 @@
-package nl.friendshipbench.api.Models;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
+package nl.friendshipbench.api.models;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

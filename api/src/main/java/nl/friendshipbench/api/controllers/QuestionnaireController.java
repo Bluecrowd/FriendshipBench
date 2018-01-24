@@ -1,6 +1,6 @@
 package nl.friendshipbench.api.controllers;
 
-import nl.friendshipbench.api.Models.Questionnaire;
+import nl.friendshipbench.api.models.Questionnaire;
 import nl.friendshipbench.api.repositories.QuestionnaireRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

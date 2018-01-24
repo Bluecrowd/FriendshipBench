@@ -1,4 +1,4 @@
-package nl.friendshipbench.api.Models;
+package nl.friendshipbench.api.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

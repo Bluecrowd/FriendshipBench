@@ -1,6 +1,6 @@
 package nl.friendshipbench.api.repositories;
 
-import nl.friendshipbench.api.Models.Answer;
+import nl.friendshipbench.api.models.Answer;
 import org.springframework.data.repository.CrudRepository;
 
 /**
