@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import {MessageService} from './message.service';
 import {Observable} from 'rxjs/Observable';
-import {of} from 'rxjs/observable/of';
 import {Client} from '../models/client';
 import {catchError, tap} from 'rxjs/operators';
 import { Constants } from '../Constants';
@@ -20,8 +18,7 @@ export class ClientsService {
 
   constructor(
     private http: HttpClient,
-    private messageService: MessageService,
-    private handleErrorService: HandleErrorService,
+    public handleErrorService: HandleErrorService,
     ) { }
 
   /** GET clients from the server */
