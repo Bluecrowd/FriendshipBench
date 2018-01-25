@@ -31,11 +31,30 @@ export class BenchesService {
       );
   }
 
-  /** PUT: update the user on the server */
+  /** PUT: update the bench on the server */
   updateBench (bench: Bench): Observable<any> {
     return this.http.put(this.benchesUrl + '/' + bench.id, bench, httpOptions).pipe(
       tap(_ => this.handleErrorService.log(`updated bench id=${bench.id}`)),
       catchError(this.handleErrorService.handleError<any>('updateBench'))
+    );
+  }
+
+  /** POST: add a new bench to the server */
+  addBench (bench: Bench): Observable<Bench> {
+    return this.http.post<Bench>(this.benchesUrl + '/', bench, httpOptions).pipe(
+      tap((bench1: Bench) => this.handleErrorService.log(`added bench`)),
+      catchError(this.handleErrorService.handleError<Bench>('addBench'))
+    );
+  }
+
+  /** DELETE: delete the bench from the server */
+  deleteBench ( bench: Bench | number): Observable<Bench> {
+    const id = typeof bench === 'number' ? bench : bench.id;
+    const url = `${this.benchesUrl}/${id}`;
+
+    return this.http.delete<Bench>(url, httpOptions).pipe(
+      tap(_ => this.handleErrorService.log(`deleted bench id=${id}`)),
+      catchError(this.handleErrorService.handleError<Bench>('deletedBench'))
     );
   }
 }

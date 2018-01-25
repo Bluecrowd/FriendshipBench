@@ -1,6 +1,9 @@
 <h2>All benches</h2>
 <button (click)="toggleAddBench()">Add Bench</button>
 
+
+<app-bench-form [addBenchToggle] ="addBenchToggle" ></app-bench-form>
+
 <table style="width:100%">
   <thead>
     <tr>
@@ -19,6 +22,8 @@
     <td>{{bench.province}}</td>
     <td>{{bench.district}}</td>
     <td><button (click)="toggleBench(bench)">Edit</button></td>
+    <td><button class="delete" title="delete hero"
+                (click)="delete(bench)">delete</button></td>
   </tr>
   </tbody>
 </table>

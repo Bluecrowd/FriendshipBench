@@ -30,7 +30,6 @@ export class BenchComponent implements OnInit {
   }
 
   close(): void {
-    console.log(this.bench.streetname);
     this.bench = null;
     this.benchesComponent.selectedBench = null;
   }
