@@ -8,6 +8,7 @@ import { InMemoryDataService } from './in-memory-data.service';
 
 
 import { AppComponent } from './app.component';
+import { CookieService } from 'ngx-cookie-service';
 import { UserComponent } from './components/user/user.component';
 import { AppRoutingModule } from './modules/app-routing.module';
 import { UsersComponent } from './components/users/users.component';
