@@ -20,9 +20,8 @@ public class CustomUserDetails implements UserDetails {
 
     private static final long serialVersionUID = 1L;
     private Collection<? extends GrantedAuthority> authorities;
-    private String password;
     private String username;
-
+    private String password;
 
     public CustomUserDetails(User user) {
         this.username = user.getUsername();

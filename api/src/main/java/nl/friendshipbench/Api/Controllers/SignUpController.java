@@ -1,4 +1,4 @@
-package nl.friendshipbench.api.Controllers;
+package nl.friendshipbench.api.controllers;
 
 import nl.friendshipbench.api.models.Role;
 import nl.friendshipbench.api.models.User;
