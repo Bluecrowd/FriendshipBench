@@ -7,6 +7,7 @@ import {BenchesComponent} from '../components/benches/benches.component';
 import {AppointmentsComponent} from '../components/appointments/appointments.component';
 import {QuestionnairesComponent} from '../components/questionnaires/questionnaires.component';
 import {HealthworkersComponent} from '../components/healthworkers/healthworkers.component';
+import {QuestionsComponent} from '../components/questions/questions.component';
 
 const routes: Routes = [
   { path: 'user', component: UserComponent },
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: 'appointments', component: AppointmentsComponent },
   { path: 'questionnaires', component: QuestionnairesComponent },
   { path: 'healthworkers', component: HealthworkersComponent },
+  { path: 'questions', component: QuestionsComponent },
 ];
 
 

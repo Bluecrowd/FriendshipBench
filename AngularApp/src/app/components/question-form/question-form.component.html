@@ -1,0 +1,32 @@
+<form *ngIf="addQuestionToggle" questionForm="ngForm">
+  <table>
+    <br>
+    <tbody>
+    {{diagnostic}}
+    <tr>
+      <td>
+        <input type="text"
+               required
+               [(ngModel)]="model.question_text" name="question_text" placeholder="question text" #spy>
+        <br>TODO: remove this: {{spy.className}}
+      </td>
+      <td>
+        <select required [(ngModel)]="model.active" name="active">
+          <option *ngFor="let state of states" [value]="state">{{state}}</option>
+        </select>
+      <td>
+        <input type="text"
+               required
+               [(ngModel)]="model.question_order" name="question_order" placeholder="question order">
+      </td>
+      <td>
+        <button (click)="add()">Create</button>
+      </td>
+      <td>
+        <button (click)="closeAddQuestion()">Close</button>
+      </td>
+    </tr>
+    </tbody>
+    <br>
+  </table>
+</form>

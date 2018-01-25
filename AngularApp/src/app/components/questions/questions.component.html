@@ -1,0 +1,26 @@
+<h2>All questions</h2>
+<button (click)="toggleAddQuestion()">Add Question</button>
+
+<app-question-form [addQuestionToggle] = "addQuestionToggle"></app-question-form>
+
+<table style="width:100%">
+  <thead>
+  <tr>
+    <th>id</th>
+    <th>Question</th>
+    <th>Status</th>
+    <th>Order number</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let question of questions">
+    <td>{{question.id}}</td>
+    <td>{{question.question_text}}</td>
+    <td>{{question.active}}</td>
+    <td>{{question.question_order}}</td>
+    <td><button (click)="editQuestion(question)">Edit</button></td>
+    <td><button class="delete" title="delete hero"
+                (click)="setInactive(question)">Set Inactive</button></td>
+  </tr>
+  </tbody>
+</table>
