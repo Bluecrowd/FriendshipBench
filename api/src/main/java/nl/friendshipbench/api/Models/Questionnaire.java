@@ -2,6 +2,7 @@ package nl.friendshipbench.api.models;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 /**
@@ -14,7 +15,7 @@ public class Questionnaire
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	public Long id;
 
-	public LocalDateTime timestamp;
+	public OffsetDateTime timestamp;
 
 	public Boolean redflag;
 

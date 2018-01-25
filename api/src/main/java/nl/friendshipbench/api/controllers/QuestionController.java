@@ -31,7 +31,6 @@ public class QuestionController
 		Iterable<Question> results = null;
 		if(showOnlyActive)
 		{
-			System.out.println("FOUND ONLY ACTIVE REQUEST");
 			results = questionRepository.findByActiveTrue();
 		}
 		else
