@@ -19,6 +19,10 @@ public class Questionnaire
 
 	public Boolean redflag;
 
+	@ManyToOne(cascade=CascadeType.DETACH)
+	@JoinColumn(referencedColumnName = "id")
+	public Client client;
+
 	@OneToMany(cascade=CascadeType.ALL)
 	public List<Answer> answers;
 
