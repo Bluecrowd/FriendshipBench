@@ -47,7 +47,7 @@ import {GoogleMapsService} from "./services/google-maps.service";
     HttpClientModule,
 
   ],
-  providers: [ UserService, MessageService, ClientsService, HandleErrorService, BenchesService, GoogleMapsService  ],
+  providers: [ UserService, MessageService, ClientsService, HandleErrorService, BenchesService, GoogleMapsService   ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
