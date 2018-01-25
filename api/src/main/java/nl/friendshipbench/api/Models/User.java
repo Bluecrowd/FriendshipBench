@@ -1,6 +1,7 @@
 package nl.friendshipbench.api.models;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -9,9 +10,10 @@ import java.util.List;
  * @author Nick Oosterhuis
  */
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.TABLE)
     private Long id;
     private String username;
     private String password;
