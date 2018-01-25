@@ -89,10 +89,4 @@ public class QuestionController
 		return new ResponseEntity<Question>(questionRepository.findOne(id), HttpStatus.OK);
 	}
 
-	@DeleteMapping(value = "/questions/{id}")
-	public ResponseEntity<Question> deleteQuestion(@PathVariable("id") long id) {
-		questionRepository.delete(id);
-
-		return new ResponseEntity<Question>(HttpStatus.NO_CONTENT);
-	}
 }
