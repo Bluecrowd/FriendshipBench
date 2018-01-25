@@ -8,6 +8,7 @@ import { InMemoryDataService } from './in-memory-data.service';
 
 
 import { AppComponent } from './app.component';
+import { CookieService } from 'ngx-cookie-service';
 import { UserComponent } from './components/user/user.component';
 import { AppRoutingModule } from './modules/app-routing.module';
 import { UsersComponent } from './components/users/users.component';
@@ -22,6 +23,13 @@ import { BenchesComponent } from './components/benches/benches.component';
 import { BenchComponent } from './components/bench/bench.component';
 import {BenchesService} from './services/benches.service';
 import {HandleErrorService} from './services/handle-error.service';
+import { BenchFormComponent } from './components/bench-form/bench-form.component';
+import { AppointmentsComponent } from './components/appointments/appointments.component';
+import {AppointmentsService} from './services/appointments.service';
+import { QuestionnairesComponent } from './components/questionnaires/questionnaires.component';
+import {QuestionnairesService} from './services/questionnaires.service';
+import { HealthworkersComponent } from './components/healthworkers/healthworkers.component';
+import {HealthworkersService} from './services/healthworkers.service';
 
 
 @NgModule({
@@ -34,7 +42,11 @@ import {HandleErrorService} from './services/handle-error.service';
     ClientsComponent,
     ClientComponent,
     BenchesComponent,
-    BenchComponent
+    BenchComponent,
+    BenchFormComponent,
+    AppointmentsComponent,
+    QuestionnairesComponent,
+    HealthworkersComponent
   ],
   imports: [
     BrowserModule,
@@ -44,7 +56,17 @@ import {HandleErrorService} from './services/handle-error.service';
     HttpClientModule,
 
   ],
-  providers: [ UserService, MessageService, ClientsService, HandleErrorService, BenchesService  ],
+  providers: [
+    UserService,
+    MessageService,
+    ClientsService,
+    HandleErrorService,
+    BenchesService,
+    AppointmentsService,
+    QuestionnairesService,
+    HealthworkersService,
+    CookieService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
