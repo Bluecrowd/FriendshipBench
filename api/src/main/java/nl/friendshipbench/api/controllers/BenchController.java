@@ -10,18 +10,20 @@ import org.springframework.web.bind.annotation.*;
 /**
  * Created by Jan-Bert on 22-1-2018.
  */
-@CrossOrigin
+
 @RestController
 public class BenchController
 {
 	@Autowired
 	private BenchRepository benchRepository;
 
+	@CrossOrigin
 	@GetMapping(value = "/benches")
 	public ResponseEntity<Iterable<Bench>> getAllBenches() {
 		return new ResponseEntity<Iterable<Bench>>(benchRepository.findAll(), HttpStatus.OK);
 	}
 
+	@CrossOrigin
 	@GetMapping(value = "/benches/{id}")
 	public ResponseEntity<Bench> getSingleBench(@PathVariable("id") long id) {
 
@@ -36,6 +38,7 @@ public class BenchController
 
 	}
 
+	@CrossOrigin
 	@PostMapping(value = "/benches")
 	public ResponseEntity<Bench> createBench(@RequestBody Bench bench) {
 		benchRepository.save(bench);
@@ -43,6 +46,7 @@ public class BenchController
 		return new ResponseEntity<Bench>(benchRepository.findOne(bench.id), HttpStatus.CREATED);
 	}
 
+	@CrossOrigin
 	@PutMapping(value = "/benches/{id}")
 	public ResponseEntity<Bench> updateBench(@PathVariable("id") long id, @RequestBody Bench bench) {
 		//TODO: Fix dingen met id
@@ -51,6 +55,7 @@ public class BenchController
 		return new ResponseEntity<Bench>(benchRepository.findOne(id), HttpStatus.OK);
 	}
 
+	@CrossOrigin
 	@DeleteMapping(value = "/benches/{id}")
 	public ResponseEntity<Bench> updateBench(@PathVariable("id") long id) {
 		benchRepository.delete(id);

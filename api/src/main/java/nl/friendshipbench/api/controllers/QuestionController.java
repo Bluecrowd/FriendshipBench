@@ -14,7 +14,6 @@ import java.util.List;
 /**
  * Created by Jan-Bert on 22-1-2018.
  */
-@CrossOrigin
 @RestController
 public class QuestionController
 {
@@ -22,6 +21,7 @@ public class QuestionController
 	@Autowired
 	private QuestionRepository questionRepository;
 
+	@CrossOrigin
 	@GetMapping(value = "/questions")
 	public ResponseEntity<Iterable<Question>> getQuestions(@RequestParam(value="only-active", defaultValue = "false") String onlyActive, @RequestParam(value="ordered", defaultValue = "false") String ordered)
 	{
@@ -60,6 +60,7 @@ public class QuestionController
 		}
 	}
 
+	@CrossOrigin
 	@GetMapping(value = "/questions/{id}")
 	public ResponseEntity<Question> getSingleQuestion(@PathVariable("id") long id)
 	{
@@ -73,6 +74,7 @@ public class QuestionController
 		return new ResponseEntity<Question>(HttpStatus.NOT_FOUND);
 	}
 
+	@CrossOrigin
 	@PostMapping(value = "/questions")
 	public ResponseEntity<Question> createQuestion(@RequestBody Question question) {
 		questionRepository.save(question);
@@ -80,6 +82,7 @@ public class QuestionController
 		return new ResponseEntity<Question>(questionRepository.findOne(question.id), HttpStatus.CREATED);
 	}
 
+	@CrossOrigin
 	@PutMapping(value = "/questions/{id}")
 	public ResponseEntity<Question> updateQuestion(@PathVariable("id") long id, @RequestBody Question question) {
 		question.id = id;

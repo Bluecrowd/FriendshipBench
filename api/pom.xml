@@ -22,7 +22,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
-		<spring.boot.mainclass>nl.friendshipbench.api.ApiApplication</spring.boot.mainclass>
+		<spring.boot.mainclass>nl.friendshipbench.ApiApplication</spring.boot.mainclass>
 	</properties>
 
 	<dependencies>
@@ -54,7 +54,10 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-
+		<dependency>
+		<groupId>org.springframework.security.oauth</groupId>
+		<artifactId>spring-security-oauth2</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
