@@ -1,0 +1,38 @@
+<form *ngIf="addBenchToggle" benchForm="ngForm">
+  <table>
+    <br>
+    <tbody>
+      {{diagnostic}}
+      <tr>
+        <td>
+          <input type="text"
+                 required
+                 [(ngModel)]="model.streetname" name="streetname" placeholder="streetname" #spy>
+          <br>TODO: remove this: {{spy.className}}
+        </td>
+        <td>
+          <input type="text"
+                 required
+                 [(ngModel)]="model.housenumber" name="housenumber" placeholder="housenumber">
+        </td>
+        <td>
+          <input type="text"
+                 required
+                 [(ngModel)]="model.province" name="province" placeholder="province">
+        </td>
+        <td>
+          <input type="text"
+                 required
+                 [(ngModel)]="model.district" name="district" placeholder="district">
+        </td>
+        <td>
+          <button (click)="add()">Create</button>
+        </td>
+        <td>
+          <button (click)="closeAddBench()">Close</button>
+        </td>
+      </tr>
+    </tbody>
+    <br>
+  </table>
+</form>

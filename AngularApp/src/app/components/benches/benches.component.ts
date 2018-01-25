@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Bench} from '../../models/bench';
 import {BenchesService} from '../../services/benches.service';
+
 @Component({
   selector: 'app-benches',
   templateUrl: './benches.component.html',
@@ -12,10 +13,16 @@ export class BenchesComponent implements OnInit {
   public selectedBench: Bench;
   public addBenchToggle = false;
 
-  constructor(private benchesService: BenchesService) { }
+  constructor(
+    private benchesService: BenchesService,
+    ) { }
 
   ngOnInit() {
     this.getBenches();
+  }
+
+  toggleAddBench(): void {
+    this.addBenchToggle = !this.addBenchToggle;
   }
 
   getBenches(): void {
@@ -23,8 +30,9 @@ export class BenchesComponent implements OnInit {
       .subscribe(benches => this.benches = benches);
   }
 
-  toggleAddBench(): void {
-    this.addBenchToggle = !this.addBenchToggle;
+  delete(bench: Bench): void {
+    this.benches = this.benches.filter(h => h !== bench);
+    this.benchesService.deleteBench(bench).subscribe();
   }
 
   toggleBench(bench: Bench): void {
