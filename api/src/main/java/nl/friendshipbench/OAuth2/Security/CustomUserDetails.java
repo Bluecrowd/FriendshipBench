@@ -29,7 +29,6 @@ public class CustomUserDetails implements UserDetails {
         this.authorities = translate(user.getRoles());
     }
 
-
     private Collection<? extends GrantedAuthority> translate(List<Role> roles) {
         List<GrantedAuthority> authorities = new ArrayList<>();
         for (Role role : roles) {

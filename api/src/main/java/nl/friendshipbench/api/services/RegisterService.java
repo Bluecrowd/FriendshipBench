@@ -24,7 +24,7 @@ import java.util.Arrays;
  */
 @Service
 @Transactional
-public class SignUpService {
+public class RegisterService {
 
     @Autowired
     private UserRepository userRepository;
@@ -41,6 +41,16 @@ public class SignUpService {
     public User addUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
+    }
+
+    public HealthWorker addHeathWorker(HealthWorker healthWorker) {
+        healthWorker.setPassword(passwordEncoder.encode(healthWorker.getPassword()));
+        return healthworkerRepository.save(healthWorker);
+    }
+
+    public Client addClient(Client client) {
+        client.setPassword(passwordEncoder.encode(client.getPassword()));
+        return clientRepository.save(client);
     }
 
     @PostConstruct
