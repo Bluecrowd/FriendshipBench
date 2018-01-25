@@ -23,10 +23,9 @@ public class QuestionController
 
 	@CrossOrigin
 	@GetMapping(value = "/questions")
-	public ResponseEntity<Iterable<Question>> getQuestions(@RequestParam(value="only-active", defaultValue = "false") String onlyActive, @RequestParam(value="ordered", defaultValue = "false") String ordered)
+	public ResponseEntity<Iterable<Question>> getQuestions(@RequestParam(value="only-active", defaultValue = "false") String onlyActive)
 	{
 		boolean showOnlyActive = Boolean.parseBoolean(onlyActive);
-		boolean showQuestionsOrdered = Boolean.parseBoolean(ordered);
 
 		Iterable<Question> results = null;
 		if(showOnlyActive)
@@ -36,18 +35,6 @@ public class QuestionController
 		else
 		{
 			results = questionRepository.findAll();
-		}
-
-		if(showQuestionsOrdered)
-		{
-			List<Question> resultsList = IterableUtils.toList(results);
-
-			Collections.sort(resultsList, (lhs, rhs) ->
-			{
-				return Long.compare(lhs.question_order, rhs.question_order);
-			});
-
-			results = resultsList;
 		}
 
 		if (results != null)
