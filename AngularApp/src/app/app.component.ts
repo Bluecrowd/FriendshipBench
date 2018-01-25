@@ -17,7 +17,7 @@ export class AppComponent implements OnInit{
   ngOnInit() {
     this.currentDate = new Date();
     this.userLogged = false;
-    this.cookieService.set('UserType', 'HealthWorker', this.currentDate.setHours(Date.now() + 1) );
+    this.cookieService.set('UserType', 'Admin', this.currentDate.setHours(Date.now() + 1) );
     // this.cookieService.deleteAll();
     this.userLogged = this.cookieService.check('UserType')
     console.log(this.userLogged)

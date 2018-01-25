@@ -65,6 +65,7 @@ import {HealthworkersService} from './services/healthworkers.service';
     AppointmentsService,
     QuestionnairesService,
     HealthworkersService,
+    CookieService
   ],
   bootstrap: [AppComponent]
 })
