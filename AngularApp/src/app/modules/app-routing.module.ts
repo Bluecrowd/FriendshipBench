@@ -5,6 +5,9 @@ import {UsersComponent} from '../components/users/users.component';
 import {ClientsComponent} from '../components/clients/clients.component';
 import {BenchesComponent} from '../components/benches/benches.component';
 import {GoogleMapsComponent} from "../components/google-maps/google-maps.component";
+import {AppointmentsComponent} from '../components/appointments/appointments.component';
+import {QuestionnairesComponent} from '../components/questionnaires/questionnaires.component';
+import {HealthworkersComponent} from '../components/healthworkers/healthworkers.component';
 
 const routes: Routes = [
   { path: 'user', component: UserComponent },
@@ -12,6 +15,9 @@ const routes: Routes = [
   { path: 'clients', component: ClientsComponent },
   { path: 'benches', component: BenchesComponent },
   { path: 'googleMaps', component: GoogleMapsComponent },
+  { path: 'appointments', component: AppointmentsComponent },
+  { path: 'questionnaires', component: QuestionnairesComponent },
+  { path: 'healthworkers', component: HealthworkersComponent },
 ];
 
 

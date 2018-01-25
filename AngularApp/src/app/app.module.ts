@@ -8,6 +8,7 @@ import { InMemoryDataService } from './in-memory-data.service';
 
 
 import { AppComponent } from './app.component';
+import { CookieService } from 'ngx-cookie-service';
 import { UserComponent } from './components/user/user.component';
 import { AppRoutingModule } from './modules/app-routing.module';
 import { UsersComponent } from './components/users/users.component';
@@ -24,6 +25,13 @@ import {BenchesService} from './services/benches.service';
 import {HandleErrorService} from './services/handle-error.service';
 import { GoogleMapsComponent } from './components/google-maps/google-maps.component';
 import {GoogleMapsService} from "./services/google-maps.service";
+import { BenchFormComponent } from './components/bench-form/bench-form.component';
+import { AppointmentsComponent } from './components/appointments/appointments.component';
+import {AppointmentsService} from './services/appointments.service';
+import { QuestionnairesComponent } from './components/questionnaires/questionnaires.component';
+import {QuestionnairesService} from './services/questionnaires.service';
+import { HealthworkersComponent } from './components/healthworkers/healthworkers.component';
+import {HealthworkersService} from './services/healthworkers.service';
 
 
 @NgModule({
@@ -37,7 +45,11 @@ import {GoogleMapsService} from "./services/google-maps.service";
     ClientComponent,
     BenchesComponent,
     BenchComponent,
-    GoogleMapsComponent
+    GoogleMapsComponent,
+    BenchFormComponent,
+    AppointmentsComponent,
+    QuestionnairesComponent,
+    HealthworkersComponent
   ],
   imports: [
     BrowserModule,
@@ -47,7 +59,17 @@ import {GoogleMapsService} from "./services/google-maps.service";
     HttpClientModule,
 
   ],
-  providers: [ UserService, MessageService, ClientsService, HandleErrorService, BenchesService, GoogleMapsService   ],
+  providers: [
+    UserService,
+    MessageService,
+    ClientsService,
+    HandleErrorService,
+    BenchesService,
+    AppointmentsService,
+    QuestionnairesService,
+    HealthworkersService,
+    GoogleMapsService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
