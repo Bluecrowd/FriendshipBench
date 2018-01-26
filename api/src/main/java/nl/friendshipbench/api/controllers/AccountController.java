@@ -18,10 +18,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -42,6 +39,7 @@ public class AccountController {
     @Autowired
     private UserRepository userRepository;
 
+    @CrossOrigin
     @RequestMapping(value = "/admin/register", method = RequestMethod.POST)
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<?> registerAdmin(@RequestBody User user) {
@@ -50,6 +48,7 @@ public class AccountController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
+    @CrossOrigin
     @RequestMapping(value = "/healthworker/register", method = RequestMethod.POST)
     public ResponseEntity<?> registerHealthWorker(@RequestBody HealthWorker healthWorker) {
         healthWorker.setRoles(Arrays.asList(new Role("HEALTHWORKER")));
@@ -57,6 +56,7 @@ public class AccountController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
+    @CrossOrigin
     @RequestMapping(value = "/client/register", method = RequestMethod.POST)
     public ResponseEntity<?> registerClient(@RequestBody Client client) {
         client.setRoles(Arrays.asList(new Role("CLIENT")));
@@ -64,6 +64,7 @@ public class AccountController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
+    @CrossOrigin
     @RequestMapping(value = "/account/me", method = RequestMethod.GET)
     @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_USER') or hasAuthority('ROLE_HEALTHWORKER') or hasAuthority('ROLE_CLIENT')")
     public ResponseEntity<?> getUserInfo() {
