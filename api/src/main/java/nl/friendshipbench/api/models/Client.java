@@ -9,20 +9,25 @@ import javax.persistence.*;
  */
 @Entity
 public class Client extends User {
-    @Column(name = "first_name")
+    @Column(name = "first_name", nullable = false)
     private String firstName;
-    @Column(name = "last_name")
+    @Column(name = "last_name", nullable = false)
     private String lastName;
+    @Column(nullable = false)
     private String gender;
+    @Column(nullable = false)
     private int age;
-    @Column(name = "street_name")
+    @Column(name = "street_name", nullable = false)
     private String streetName;
-    @Column(name = "house_number")
+    @Column(name = "house_number", nullable = false)
     private int houseNumber;
+    @Column(nullable = false)
     private String province;
+    @Column(nullable = false)
     private String district;
+    @Column(nullable = false, unique = true)
     private String email;
-    @Column(name = "phone_number")
+    @Column(name = "phone_number", nullable = false)
     private String phoneNumber;
 
     @ManyToOne(cascade = CascadeType.DETACH)
