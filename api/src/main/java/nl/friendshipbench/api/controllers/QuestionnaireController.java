@@ -3,11 +3,9 @@ package nl.friendshipbench.api.controllers;
 import nl.friendshipbench.api.models.Client;
 import nl.friendshipbench.api.models.HealthWorker;
 import nl.friendshipbench.api.models.Questionnaire;
-import nl.friendshipbench.api.models.User;
 import nl.friendshipbench.api.repositories.ClientRepository;
 import nl.friendshipbench.api.repositories.HealthworkerRepository;
 import nl.friendshipbench.api.repositories.QuestionnaireRepository;
-import nl.friendshipbench.api.repositories.UserBaseRepo;
 import nl.friendshipbench.oauth2.security.CustomUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -72,6 +70,16 @@ public class QuestionnaireController
 		}
 
 
+	}
+
+	@CrossOrigin
+	@PutMapping(value = "/questionnaires/{id}")
+	public ResponseEntity<Questionnaire> updateQuestionnaire(@PathVariable("id") long id, @RequestBody Questionnaire questionnaire) {
+		questionnaire.id = id;
+
+		questionnaireRepository.save(questionnaire);
+
+		return new ResponseEntity<Questionnaire>(questionnaireRepository.findOne(id), HttpStatus.OK);
 	}
 
 	@CrossOrigin
