@@ -1,9 +1,6 @@
 package nl.friendshipbench.api.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * The Role model
@@ -15,7 +12,9 @@ public class Role {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(nullable = false)
     private Long id;
+    @Column(nullable = false, unique = true)
     private String roleName;
 
     //default constructor for hibernate

@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -24,32 +23,18 @@ public class QuestionController
 
 	@CrossOrigin
 	@GetMapping(value = "/questions")
-	public ResponseEntity<Iterable<Question>> getQuestions(@RequestParam(value="only-active", defaultValue = "false") String onlyActive, @RequestParam(value="ordered", defaultValue = "false") String ordered)
+	public ResponseEntity<Iterable<Question>> getQuestions(@RequestParam(value="only-active", defaultValue = "false") String onlyActive)
 	{
 		boolean showOnlyActive = Boolean.parseBoolean(onlyActive);
-		boolean showQuestionsOrdered = Boolean.parseBoolean(ordered);
 
 		Iterable<Question> results = null;
 		if(showOnlyActive)
 		{
-			System.out.println("FOUND ONLY ACTIVE REQUEST");
 			results = questionRepository.findByActiveTrue();
 		}
 		else
 		{
 			results = questionRepository.findAll();
-		}
-
-		if(showQuestionsOrdered)
-		{
-			List<Question> resultsList = IterableUtils.toList(results);
-
-			Collections.sort(resultsList, (lhs, rhs) ->
-			{
-				return Long.compare(lhs.question_order, rhs.question_order);
-			});
-
-			results = resultsList;
 		}
 
 		if (results != null)
@@ -94,11 +79,4 @@ public class QuestionController
 		return new ResponseEntity<Question>(questionRepository.findOne(id), HttpStatus.OK);
 	}
 
-	@CrossOrigin
-	@DeleteMapping(value = "/questions/{id}")
-	public ResponseEntity<Question> deleteQuestion(@PathVariable("id") long id) {
-		questionRepository.delete(id);
-
-		return new ResponseEntity<Question>(HttpStatus.NO_CONTENT);
-	}
 }

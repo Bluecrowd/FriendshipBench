@@ -1,4 +1,4 @@
-package nl.friendshipbench.api.Controllers;
+package nl.friendshipbench.api.controllers;
 
 import nl.friendshipbench.oauth2.security.CustomUserDetails;
 import org.springframework.http.HttpStatus;
@@ -25,7 +25,7 @@ public class HomeController {
     }
 
     @RequestMapping(value = "/user", method = RequestMethod.GET)
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_USER') or hasAuthority('ROLE_HEALTHWORKER')")
     public ResponseEntity<?> getUserInfo() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         CustomUserDetails principal = (CustomUserDetails) authentication.getPrincipal();

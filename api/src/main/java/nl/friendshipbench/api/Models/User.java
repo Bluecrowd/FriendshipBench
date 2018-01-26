@@ -1,6 +1,10 @@
 package nl.friendshipbench.api.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -9,12 +13,21 @@ import java.util.List;
  * @author Nick Oosterhuis
  */
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.TABLE)
+    @Column(nullable = false)
     private Long id;
     private String username;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @Column(nullable = false)
     private String password;
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @Column(nullable = false)
+    private List<Role> roles;
 
     //default constructor for hibernate
     public User() {}
@@ -24,9 +37,6 @@ public class User {
         this.password = password;
         this.roles = roles;
     }
-
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<Role> roles;
 
     public Long getId() {
         return id;

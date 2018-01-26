@@ -14,11 +14,15 @@ export class QuestionComponent implements OnInit {
 
   constructor(
     private questionsService: QuestionsService,
-    private location: Location,
     private questionsComponent: QuestionsComponent
   ) { }
 
   ngOnInit() {
+  }
+
+  save(): void {
+    this.questionsService.updateQuestion(this.question).subscribe();
+    this.questionsComponent = null;
   }
 
   close(): void {

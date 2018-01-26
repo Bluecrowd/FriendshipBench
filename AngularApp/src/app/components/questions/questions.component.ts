@@ -3,7 +3,7 @@ import {Question} from '../../models/question';
 import {QuestionsService} from '../../services/questions.service';
 
 @Component({
-  selector: 'app-question',
+  selector: 'app-questions',
   templateUrl: './questions.component.html',
   styleUrls: ['./questions.component.css']
 })
@@ -33,5 +33,4 @@ export class QuestionsComponent implements OnInit {
     this.questionsService.getQuestions()
       .subscribe( questions => this.questions = questions);
   }
-
 }
