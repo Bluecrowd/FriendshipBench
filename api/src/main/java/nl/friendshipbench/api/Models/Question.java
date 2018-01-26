@@ -16,6 +16,4 @@ public class Question
 
 	public Boolean active;
 
-	@Column(unique = true)
-	public Long question_order;
 }
