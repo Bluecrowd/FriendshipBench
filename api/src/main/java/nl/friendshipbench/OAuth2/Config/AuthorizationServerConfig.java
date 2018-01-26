@@ -43,15 +43,15 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         endpoints.authenticationManager(authenticationManager);
-//        endpoints.addInterceptor(new HandlerInterceptorAdapter() {
-//            @Override
-//            public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-//                response.setHeader("Access-Control-Allow-Origin", "*");
-//                response.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
-//                response.setHeader("Access-Control-Allow-Headers", "Content-Type,X-Requested-With,accept,Origin,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization");
-//                return true;
-//            }
-//        });
+        endpoints.addInterceptor(new HandlerInterceptorAdapter() {
+            @Override
+            public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+                response.setHeader("Access-Control-Allow-Origin", "*");
+                response.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
+                response.setHeader("Access-Control-Allow-Headers", "Content-Type,X-Requested-With,accept,Origin,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization");
+                return true;
+            }
+        });
     }
 
     @Override
