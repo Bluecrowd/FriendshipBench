@@ -1,10 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms'; // <-- NgModel lives here
-import { HttpClientModule} from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 
-import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { InMemoryDataService } from './in-memory-data.service';
+import {I1, I2} from './models/httpinterceptors';
 
 
 import { AppComponent } from './app.component';
@@ -30,6 +29,7 @@ import { QuestionnairesComponent } from './components/questionnaires/questionnai
 import {QuestionnairesService} from './services/questionnaires.service';
 import { HealthworkersComponent } from './components/healthworkers/healthworkers.component';
 import {HealthworkersService} from './services/healthworkers.service';
+import {AuthenticationService} from './services/authentication.service';
 
 
 @NgModule({
@@ -53,7 +53,6 @@ import {HealthworkersService} from './services/healthworkers.service';
     FormsModule,
     AppRoutingModule,
     HttpClientModule,
-    HttpClientModule,
 
   ],
   providers: [
@@ -65,8 +64,20 @@ import {HealthworkersService} from './services/healthworkers.service';
     AppointmentsService,
     QuestionnairesService,
     HealthworkersService,
-    CookieService
-  ],
+    CookieService,
+    AuthenticationService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: I1,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: I2,
+      multi: true
+    }
+
+],
   bootstrap: [AppComponent]
 })
 export class AppModule {
