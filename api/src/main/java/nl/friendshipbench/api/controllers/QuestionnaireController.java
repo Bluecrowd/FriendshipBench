@@ -1,9 +1,11 @@
 package nl.friendshipbench.api.controllers;
 
 import nl.friendshipbench.api.models.Client;
+import nl.friendshipbench.api.models.HealthWorker;
 import nl.friendshipbench.api.models.Questionnaire;
 import nl.friendshipbench.api.models.User;
 import nl.friendshipbench.api.repositories.ClientRepository;
+import nl.friendshipbench.api.repositories.HealthworkerRepository;
 import nl.friendshipbench.api.repositories.QuestionnaireRepository;
 import nl.friendshipbench.api.repositories.UserBaseRepo;
 import nl.friendshipbench.oauth2.security.CustomUserDetails;
@@ -25,6 +27,10 @@ public class QuestionnaireController
 	private ClientRepository clientRepository;
 
 	@Autowired
+	private HealthworkerRepository healthworkerRepository;
+
+
+	@Autowired
 	private QuestionnaireRepository questionnaireRepository;
 
 	@CrossOrigin
@@ -42,6 +48,30 @@ public class QuestionnaireController
 		Client client = clientRepository.findByUsername(principal.getUsername());
 
 		return new ResponseEntity<>(questionnaireRepository.findByClient(client), HttpStatus.OK);
+	}
+
+	@CrossOrigin
+	@GetMapping(value = "/questionnaires/client/{id}")
+	public ResponseEntity<Iterable<Questionnaire>> getAllQuestionnairesMyClientMade(@PathVariable("id") long clientId) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		CustomUserDetails principal = (CustomUserDetails) authentication.getPrincipal();
+
+		HealthWorker healthworker = healthworkerRepository.findByUsername(principal.getUsername());
+
+		Client client = clientRepository.findOne(clientId);
+
+
+
+		if (client.getHealthWorker().getId().equals(healthworker.getId()))
+		{
+			return new ResponseEntity<>(questionnaireRepository.findByClient(client), HttpStatus.OK);
+		}
+		else
+		{
+			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+		}
+
+
 	}
 
 	@CrossOrigin
