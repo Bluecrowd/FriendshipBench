@@ -21,23 +21,13 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 @EnableAuthorizationServer
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
-    //private static String REALM = "FRIENDSHIPBENCH_REALM";
-
     @Autowired
     private DataSource dataSource;
-
-//    @Autowired
-//    private TokenStore tokenStore;
-
-//    @Autowired
-//    private UserApprovalHandler userApprovalHandler;
 
     @Autowired
     @Qualifier("authenticationManagerBean")
     private AuthenticationManager authenticationManager;
 
-//    @Autowired
-//    private CustomUserDetailsService customUserDetailsService;
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
