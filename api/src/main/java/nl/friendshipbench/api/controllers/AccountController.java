@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Iterator;
 
 @RestController
 public class AccountController {
@@ -71,21 +72,22 @@ public class AccountController {
         CustomUserDetails principal = userHelper.principalHelper();
         String username = principal.getUsername();
 
+        Collection<? extends GrantedAuthority> authorities = principal.getAuthorities();
 
-        if(principal.getAuthorities().contains("ROLE_CLIENT")) {
-            Client request = clientRepository.findByUsername(username);
-            return new ResponseEntity<Object>(request, HttpStatus.OK);
+        for (GrantedAuthority authority : authorities) {
+            if(authority.getAuthority().equals("ROLE_CLIENT")) {
+                Client request = clientRepository.findByUsername(username);
+                return new ResponseEntity<Object>(request, HttpStatus.OK);
+            }
+            else if(authority.getAuthority().equals("ROLE_HEALTHWORKER")) {
+                HealthWorker request = healthworkerRepository.findByUsername(username);
+                return new ResponseEntity<Object>(request, HttpStatus.OK);
+            }
+            else if(authority.getAuthority().equals("ROLE_ADMIN")) {
+                User request = userRepository.findByUsername(username);
+                return new ResponseEntity<Object>(request, HttpStatus.OK);
+            }
         }
-        else if(principal.getAuthorities().contains("ROLE_HEALTHWORKER")) {
-            HealthWorker request = healthworkerRepository.findByUsername(username);
-            return new ResponseEntity<Object>(request, HttpStatus.OK);
-        }
-        else if(principal.getAuthorities().contains("ROLE_ADMIN")) {
-            User request = userRepository.findByUsername(username);
-            return new ResponseEntity<Object>(request, HttpStatus.OK);
-        }
-        else
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }
