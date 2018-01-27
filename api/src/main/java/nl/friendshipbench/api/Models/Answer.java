@@ -1,6 +1,7 @@
 package nl.friendshipbench.api.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 
@@ -16,8 +17,17 @@ public class Answer
 
 	public Boolean answer;
 
-	@JsonIgnoreProperties({"question_text", "active", "question_order"})
 	@ManyToOne(cascade=CascadeType.DETACH)
 	@JoinColumn(referencedColumnName = "id")
-	public Question question;
+	private Question question;
+
+	public Question getQuestion()
+	{
+		return question;
+	}
+
+	public void setQuestion(Question question)
+	{
+		this.question = question;
+	}
 }
