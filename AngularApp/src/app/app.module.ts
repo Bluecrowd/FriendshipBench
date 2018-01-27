@@ -65,17 +65,7 @@ import {AuthenticationService} from './services/authentication.service';
     QuestionnairesService,
     HealthworkersService,
     CookieService,
-    AuthenticationService,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: I1,
-      multi: true
-    },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: I2,
-      multi: true
-    }
+    AuthenticationService
 
 ],
   bootstrap: [AppComponent]

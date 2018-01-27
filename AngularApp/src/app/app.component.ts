@@ -14,9 +14,6 @@ export class AppComponent implements OnInit{
 
   credentials: Object = {};
 
-  userLogged: boolean;
-  userType: string;
-  currentDate: Date;
   get diagnostic() { return JSON.stringify(this.credentials); }
 
   constructor(
@@ -25,21 +22,17 @@ export class AppComponent implements OnInit{
     ) {}
 
   ngOnInit() {
-    this.currentDate = new Date();
-    this.userLogged = false;
-    this.cookieService.set('UserType', 'Admin', this.currentDate.setHours(Date.now() + 1) );
-    this.cookieService.deleteAll();
-    this.userLogged = this.cookieService.check('UserType')
-    console.log(this.userLogged)
-    if (this.userLogged) {
-      this.userType = this.cookieService.get('UserType');
-    }
+    // this.cookieService.deleteAll();
   }
 
   login(): void {
     if (this.credentials != null) {
-      this.authenticationService.login(this.credentials as Credentials)
-        .subscribe();
+      this.authenticationService.login(this.credentials as Credentials);
+      this.credentials = {};
     }
+  }
+
+  logout(): void {
+    this.cookieService.deleteAll();
   }
 }
