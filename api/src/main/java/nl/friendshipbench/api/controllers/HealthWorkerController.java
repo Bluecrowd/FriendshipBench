@@ -2,7 +2,7 @@ package nl.friendshipbench.api.controllers;
 
 import nl.friendshipbench.api.models.HealthWorker;
 import nl.friendshipbench.api.models.Role;
-import nl.friendshipbench.api.repositories.HealthWorkerRepository;
+import nl.friendshipbench.api.repositories.HealthworkerRepository;
 import nl.friendshipbench.api.repositories.RoleRepository;
 import nl.friendshipbench.api.services.RegisterService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ import java.util.Arrays;
 public class HealthWorkerController {
 
     @Autowired
-    private HealthWorkerRepository healthWorkerRepository;
+    private HealthworkerRepository healthworkerRepository;
 
     @Autowired
     private RegisterService registerService;
@@ -38,7 +38,7 @@ public class HealthWorkerController {
     @CrossOrigin
     @GetMapping(value = "/healthworkers")
     public ResponseEntity<Iterable<HealthWorker>> getAllHealthWorkers() {
-        return new ResponseEntity<>(healthWorkerRepository.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>(healthworkerRepository.findAll(), HttpStatus.OK);
     }
 
     /**
@@ -51,7 +51,7 @@ public class HealthWorkerController {
     @CrossOrigin
     @GetMapping(value = "/healthworkers/{id}")
     public ResponseEntity<HealthWorker> getHealthWorkerById(@PathVariable("id") long id) {
-        HealthWorker healthWorker = healthWorkerRepository.findOne(id);
+        HealthWorker healthWorker = healthworkerRepository.findOne(id);
 
         if (healthWorker != null)
         {

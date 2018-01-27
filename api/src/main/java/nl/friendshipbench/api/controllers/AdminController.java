@@ -3,7 +3,7 @@ package nl.friendshipbench.api.controllers;
 import nl.friendshipbench.api.models.HealthWorker;
 import nl.friendshipbench.api.models.Role;
 import nl.friendshipbench.api.models.User;
-import nl.friendshipbench.api.repositories.HealthWorkerRepository;
+import nl.friendshipbench.api.repositories.HealthworkerRepository;
 import nl.friendshipbench.api.repositories.RoleRepository;
 import nl.friendshipbench.api.repositories.UserRepository;
 import nl.friendshipbench.api.services.RegisterService;
@@ -23,7 +23,7 @@ public class AdminController {
     private UserRepository userRepository;
 
     @Autowired
-    private HealthWorkerRepository healthWorkerRepository;
+    private HealthworkerRepository healthworkerRepository;
 
     @Autowired
     private RegisterService registerService;
@@ -86,7 +86,7 @@ public class AdminController {
     @CrossOrigin
     @PutMapping(value = "/admins/approvehealthworker/{id}")
     public  ResponseEntity<?> approveHealthWorkerRole(@PathVariable("id") long id, @RequestBody HashMap<String, Object> mapper) {
-        HealthWorker healthWorker = healthWorkerRepository.findOne(id);
+        HealthWorker healthWorker = healthworkerRepository.findOne(id);
         Role role = roleRepository.getByRoleName("HEALTHWORKER");
         boolean approve = (boolean) mapper.get("approve");
 

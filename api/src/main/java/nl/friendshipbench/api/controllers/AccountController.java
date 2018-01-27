@@ -5,7 +5,7 @@ import nl.friendshipbench.api.models.Client;
 import nl.friendshipbench.api.models.HealthWorker;
 import nl.friendshipbench.api.models.User;
 import nl.friendshipbench.api.repositories.ClientRepository;
-import nl.friendshipbench.api.repositories.HealthWorkerRepository;
+import nl.friendshipbench.api.repositories.HealthworkerRepository;
 import nl.friendshipbench.api.repositories.UserRepository;
 import nl.friendshipbench.api.services.RegisterService;
 import nl.friendshipbench.oauth2.security.CustomUserDetails;
@@ -35,7 +35,7 @@ public class AccountController {
     private ClientRepository clientRepository;
     
     @Autowired
-    private HealthWorkerRepository healthWorkerRepository;
+    private HealthworkerRepository healthworkerRepository;
 
     @Autowired
     private UserRepository userRepository;
@@ -67,7 +67,7 @@ public class AccountController {
                 return new ResponseEntity<Object>(request, HttpStatus.OK);
             }
             else if(authority.getAuthority().equals("ROLE_HEALTHWORKER")) {
-                HealthWorker request = healthWorkerRepository.findByUsername(username);
+                HealthWorker request = healthworkerRepository.findByUsername(username);
                 return new ResponseEntity<Object>(request, HttpStatus.OK);
             }
             else if(authority.getAuthority().equals("ROLE_ADMIN")) {
@@ -137,7 +137,7 @@ public class AccountController {
             }
             //users with role HEALTHWORKER
             else if(authority.getAuthority().equals("ROLE_HEALTHWORKER")) {
-                HealthWorker currentUser = healthWorkerRepository.findByUsername(currentUsername);
+                HealthWorker currentUser = healthworkerRepository.findByUsername(currentUsername);
                 String dbPassword = currentUser.getPassword();
 
                 if(passwordEncoder.matches(dbPassword, oldPassword))
@@ -151,7 +151,7 @@ public class AccountController {
                 currentUser.setEmail(email);
                 currentUser.setPhonenumber(phoneNumber);
 
-                healthWorkerRepository.save(currentUser);
+                healthworkerRepository.save(currentUser);
                 return ResponseEntity.ok("User updated successfully");
             }
             //users with role ADMIN

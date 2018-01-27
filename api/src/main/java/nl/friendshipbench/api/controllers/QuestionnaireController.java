@@ -4,7 +4,7 @@ import nl.friendshipbench.api.models.Client;
 import nl.friendshipbench.api.models.HealthWorker;
 import nl.friendshipbench.api.models.Questionnaire;
 import nl.friendshipbench.api.repositories.ClientRepository;
-import nl.friendshipbench.api.repositories.HealthWorkerRepository;
+import nl.friendshipbench.api.repositories.HealthworkerRepository;
 import nl.friendshipbench.api.repositories.QuestionnaireRepository;
 import nl.friendshipbench.oauth2.security.CustomUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ public class QuestionnaireController
 	private ClientRepository clientRepository;
 
 	@Autowired
-	private HealthWorkerRepository healthWorkerRepository;
+	private HealthworkerRepository healthworkerRepository;
 
 
 	@Autowired
@@ -54,7 +54,7 @@ public class QuestionnaireController
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		CustomUserDetails principal = (CustomUserDetails) authentication.getPrincipal();
 
-		HealthWorker healthworker = healthWorkerRepository.findByUsername(principal.getUsername());
+		HealthWorker healthworker = healthworkerRepository.findByUsername(principal.getUsername());
 
 		Client client = clientRepository.findOne(clientId);
 
