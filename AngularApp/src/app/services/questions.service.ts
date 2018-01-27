@@ -41,13 +41,12 @@ export class QuestionsService {
   }
 
   /** PUT: update the Question on the server */
-  updateQuestion (question: Question): Observable<any> {
+  updateQuestion (question: Question): Observable<Question> {
+    console.log('test');
     return this.http.put(this.questionsUrl + '/' + question.id, question, httpOptions).pipe(
       tap(_ => this.handleErrorService.log(`updated question id=${question.id}`)),
       catchError(this.handleErrorService.handleError<any>('updateQuestion'))
     );
   }
-
-
 
 }

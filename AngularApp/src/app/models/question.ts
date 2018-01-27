@@ -3,6 +3,5 @@ export class Question {
     public id: number,
     public question_text: string,
     public active: boolean,
-    public question_order: number
   ) {}
 }

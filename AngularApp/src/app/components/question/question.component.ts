@@ -22,7 +22,7 @@ export class QuestionComponent implements OnInit {
 
   save(): void {
     this.questionsService.updateQuestion(this.question).subscribe();
-    this.questionsComponent = null;
+    this.questionsComponent.selectedQuestion = null;
   }
 
   close(): void {

@@ -15,11 +15,6 @@
           <option *ngFor="let state of states" [value]="state">{{state}}</option>
         </select>
       <td>
-        <input type="text"
-               required
-               [(ngModel)]="model.question_order" name="question_order" placeholder="question order">
-      </td>
-      <td>
         <button (click)="add()">Create</button>
       </td>
       <td>

@@ -29,6 +29,11 @@ export class QuestionsComponent implements OnInit {
     this.selectedQuestion = question;
   }
 
+  toggleActive(question: Question): void {
+    question.active = !question.active;
+    this.questionsService.updateQuestion(question).subscribe();
+  }
+
   getQuestions(): void {
     this.questionsService.getQuestions()
       .subscribe( questions => this.questions = questions);
