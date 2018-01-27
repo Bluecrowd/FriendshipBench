@@ -8,11 +8,13 @@ import {AppointmentsComponent} from '../components/appointments/appointments.com
 import {QuestionnairesComponent} from '../components/questionnaires/questionnaires.component';
 import {HealthworkersComponent} from '../components/healthworkers/healthworkers.component';
 import {QuestionsComponent} from '../components/questions/questions.component';
+import {ClientComponent} from '../components/client/client.component';
 
 const routes: Routes = [
   { path: 'user', component: UserComponent },
   { path: 'users', component: UsersComponent },
   { path: 'clients', component: ClientsComponent },
+  { path: 'clients/:id', component: ClientComponent },
   { path: 'benches', component: BenchesComponent },
   { path: 'appointments', component: AppointmentsComponent },
   { path: 'questionnaires', component: QuestionnairesComponent },

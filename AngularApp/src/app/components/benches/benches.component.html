@@ -21,16 +21,6 @@
             <th>Edit</th>
           </tr>
         </thead>
-        <tfoot>
-          <tr>
-            <th>ID</th>
-            <th>Street name</th>
-            <th>House number</th>
-            <th>Province</th>
-            <th>District</th>
-            <th>Edit</th>
-          </tr>
-        </tfoot>
         <tbody>
         <tr *ngFor="let bench of benches">
           <td>{{bench.id}}</td>
@@ -41,6 +31,16 @@
           <td><a class="btn btn-primary btn-block" title="Edit bench" (click)="toggleBench(bench)" style="!important;color: #fff">Edit</a><a class="btn btn-secondary btn-block" title="Delete bench" (click)="delete(bench)" style="!important;color: #fff">Delete</a></td>
         </tr>
         </tbody>
+        <tfoot>
+          <tr>
+            <th>ID</th>
+            <th>Street name</th>
+            <th>House number</th>
+            <th>Province</th>
+            <th>District</th>
+            <th>Edit</th>
+          </tr>
+        </tfoot>
       </table>
     </div>
   </div>
