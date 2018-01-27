@@ -20,7 +20,7 @@ public class Client extends User {
     @Column(name = "street_name", nullable = false)
     private String streetName;
     @Column(name = "house_number", nullable = false)
-    private int houseNumber;
+    private String houseNumber;
     @Column(nullable = false)
     private String province;
     @Column(nullable = false)
@@ -38,10 +38,10 @@ public class Client extends User {
 
     }
 
-    public Client(String firstName, String lastname, String gender, int age, String streetName,
-                  int houseNumber, String province, String district, String email, String phoneNumber, HealthWorker healthWorker) {
+    public Client(String firstName, String lastName, String gender, int age, String streetName,
+                  String houseNumber, String province, String district, String email, String phoneNumber, HealthWorker healthWorker) {
         this.firstName = firstName;
-        this.lastName = lastname;
+        this.lastName = lastName;
         this.gender = gender;
         this.age = age;
         this.streetName = streetName;
@@ -93,11 +93,11 @@ public class Client extends User {
         this.streetName = streetName;
     }
 
-    public int getHousenumber() {
+    public String getHousenumber() {
         return houseNumber;
     }
 
-    public void setHousenumber(int houseNumber) {
+    public void setHousenumber(String houseNumber) {
         this.houseNumber = houseNumber;
     }
 

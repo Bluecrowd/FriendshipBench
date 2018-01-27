@@ -4,6 +4,9 @@ import nl.friendshipbench.oauth2.security.CustomUserDetails;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+/**
+ * @author Nick Oosterhuis
+ */
 public class UserHelper {
 
     /**

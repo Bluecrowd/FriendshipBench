@@ -19,7 +19,7 @@ export class BenchFormComponent implements OnInit {
   onSubmit() { this.submitted = true; }
 
   // TODO: Remove this when it works
-  get diagnostic() { return JSON.stringify(this.model); }
+
 
   constructor(
     private benchesComponent: BenchesComponent,

@@ -1,6 +1,7 @@
 package nl.friendshipbench.oauth2.security;
 
 import nl.friendshipbench.api.models.User;
+import nl.friendshipbench.api.repositories.RoleRepository;
 import nl.friendshipbench.api.repositories.UserBaseRepo;
 import nl.friendshipbench.api.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
