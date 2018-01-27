@@ -95,7 +95,7 @@ public class RegisterService {
             client.setHousenumber(10);
             client.setProvince("Grunn");
             client.setDistrict("Nederland");
-            client.setPhonenumber("0612345678");
+            client.setPhonenumber("0123456789");
             client.setRoles(Arrays.asList(new Role("CLIENT")));
 
             userRepository.save(client);
