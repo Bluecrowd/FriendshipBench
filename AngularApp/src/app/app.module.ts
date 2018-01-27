@@ -29,16 +29,11 @@ import { QuestionnairesComponent } from './components/questionnaires/questionnai
 import {QuestionnairesService} from './services/questionnaires.service';
 import { HealthworkersComponent } from './components/healthworkers/healthworkers.component';
 import {HealthworkersService} from './services/healthworkers.service';
-<<<<<<< HEAD
 import { QuestionsComponent } from './components/questions/questions.component';
 import {QuestionsService} from './services/questions.service';
 import { QuestionFormComponent } from './components/question-form/question-form.component';
 import { QuestionComponent } from './components/question/question.component';
 import {AuthenticationService} from './services/authentication.service';
-
-=======
-import {AuthenticationService} from './services/authentication.service';
->>>>>>> 2541ca7f691c28b8f6c1809f2337c7aafc067cb6;
 
 
 @NgModule({
