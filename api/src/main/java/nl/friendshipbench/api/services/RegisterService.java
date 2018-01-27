@@ -1,14 +1,11 @@
 package nl.friendshipbench.api.services;
 
-//import nl.friendshipbench.api.models.HealthWorker;
 import nl.friendshipbench.api.models.Client;
 import nl.friendshipbench.api.models.HealthWorker;
 import nl.friendshipbench.api.models.Role;
 import nl.friendshipbench.api.models.User;
-//import nl.friendshipbench.api.repositories.ClientRepository;
-//import nl.friendshipbench.api.repositories.HealthworkerRepository;
 import nl.friendshipbench.api.repositories.ClientRepository;
-import nl.friendshipbench.api.repositories.HealthworkerRepository;
+import nl.friendshipbench.api.repositories.HealthWorkerRepository;
 import nl.friendshipbench.api.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -30,7 +27,7 @@ public class RegisterService {
     private UserRepository userRepository;
 
     @Autowired
-    private HealthworkerRepository healthworkerRepository;
+    private HealthWorkerRepository healthWorkerRepository;
 
     @Autowired
     private ClientRepository clientRepository;
@@ -45,7 +42,7 @@ public class RegisterService {
 
     public HealthWorker addHeathWorker(HealthWorker healthWorker) {
         healthWorker.setPassword(passwordEncoder.encode(healthWorker.getPassword()));
-        return healthworkerRepository.save(healthWorker);
+        return healthWorkerRepository.save(healthWorker);
     }
 
     public Client addClient(Client client) {
@@ -60,10 +57,10 @@ public class RegisterService {
 
             userRepository.save(new User("admin",
                     passwordEncoder.encode("admin"),
-                    Arrays.asList(new Role("USER"), new Role("ADMIN"))));
+                    Arrays.asList(new Role("ADMIN"))));
         }
 
-        if (healthworkerRepository.count() == 0) {
+        if (healthWorkerRepository.count() == 0) {
 
             HealthWorker healthWorker = new HealthWorker();
 
@@ -75,9 +72,9 @@ public class RegisterService {
             healthWorker.setLastName("lastname");
             healthWorker.setGender("male");
             healthWorker.setPhonenumber("06123456789");
-            healthWorker.setRoles(Arrays.asList(new Role("HEALTHWORKER")));
+            healthWorker.setRoles(Arrays.asList(new Role("HEALTHWORKER"), new Role("PENDING")));
 
-            healthworkerRepository.save(healthWorker);
+            healthWorkerRepository.save(healthWorker);
         }
 
         if (clientRepository.count() == 0) {
@@ -92,7 +89,7 @@ public class RegisterService {
             client.setEmail("test@example.com");
             client.setGender("Female");
             client.setStreetName("streetname");
-            client.setHousenumber(10);
+            client.setHousenumber("10");
             client.setProvince("Grunn");
             client.setDistrict("Nederland");
             client.setPhonenumber("0123456789");

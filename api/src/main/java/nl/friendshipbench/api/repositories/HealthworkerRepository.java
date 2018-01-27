@@ -11,5 +11,5 @@ import javax.transaction.Transactional;
  */
 
 @Transactional
-public interface HealthworkerRepository extends UserBaseRepo<HealthWorker> {
+public interface HealthWorkerRepository extends UserBaseRepo<HealthWorker> {
 }
