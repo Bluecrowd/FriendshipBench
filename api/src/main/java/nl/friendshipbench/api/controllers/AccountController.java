@@ -187,7 +187,6 @@ public class AccountController {
             } else
                 return new ResponseEntity<Object>(myClients, HttpStatus.OK);
         }
-
         return new ResponseEntity<Object>("Something went wrong", HttpStatus.I_AM_A_TEAPOT);
     }
 
