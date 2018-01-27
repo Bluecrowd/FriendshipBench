@@ -136,12 +136,12 @@ public class AccountController {
                 return ResponseEntity.ok("User updated successfully");
             }
             //users with role HEALTHWORKER
-            else if(authority.getAuthority().equals("ROLE_HEALTHWORKER")) {
+            else if(authority.getAuthority().equals("ROLE_HEALTHWORKER") || authority.getAuthority().equals("ROLE_PENDING")) {
                 HealthWorker currentUser = healthworkerRepository.findByUsername(currentUsername);
                 String dbPassword = currentUser.getPassword();
 
-                if(passwordEncoder.matches(dbPassword, oldPassword))
-                    if(newPassword != null && !newPassword.isEmpty() && !newPassword.equals(""))
+                if (passwordEncoder.matches(dbPassword, oldPassword))
+                    if (newPassword != null && !newPassword.isEmpty() && !newPassword.equals(""))
                         currentUser.setPassword(passwordEncoder.encode(newPassword));
 
                 currentUser.setFirstName(firstName);
