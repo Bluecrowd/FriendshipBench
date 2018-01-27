@@ -34,12 +34,6 @@ public class AppointmentController
 
 	@CrossOrigin
 	@GetMapping(value = "/appointments")
-	public ResponseEntity<Iterable<Appointment>> getAllAppointments() {
-		return new ResponseEntity<Iterable<Appointment>>(appointmentRepository.findAll(), HttpStatus.OK);
-	}
-
-	@CrossOrigin
-	@GetMapping(value = "/appointments/me")
 	public ResponseEntity<Iterable<Appointment>> getAllAppointmentsIHave() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		CustomUserDetails principal = (CustomUserDetails) authentication.getPrincipal();
