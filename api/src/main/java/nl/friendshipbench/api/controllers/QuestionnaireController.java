@@ -67,7 +67,7 @@ public class QuestionnaireController
 			{
 				Client client = clientRepository.findByUsername(principal.getUsername());
 
-				allQuestionnaires = questionnaireRepository.findByClient(client)
+				allQuestionnaires = questionnaireRepository.findByClient(client);
 				break;
 			}
 		}
