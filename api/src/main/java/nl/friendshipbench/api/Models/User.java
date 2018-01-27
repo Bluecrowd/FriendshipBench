@@ -1,10 +1,8 @@
 package nl.friendshipbench.api.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -25,7 +23,7 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @Column(nullable = false)
     private List<Role> roles;
 

@@ -1,12 +1,9 @@
 package nl.friendshipbench.api.services;
 
-//import nl.friendshipbench.api.models.HealthWorker;
 import nl.friendshipbench.api.models.Client;
 import nl.friendshipbench.api.models.HealthWorker;
 import nl.friendshipbench.api.models.Role;
 import nl.friendshipbench.api.models.User;
-//import nl.friendshipbench.api.repositories.ClientRepository;
-//import nl.friendshipbench.api.repositories.HealthworkerRepository;
 import nl.friendshipbench.api.repositories.ClientRepository;
 import nl.friendshipbench.api.repositories.HealthworkerRepository;
 import nl.friendshipbench.api.repositories.UserRepository;
@@ -60,7 +57,7 @@ public class RegisterService {
 
             userRepository.save(new User("admin",
                     passwordEncoder.encode("admin"),
-                    Arrays.asList(new Role("USER"), new Role("ADMIN"))));
+                    Arrays.asList(new Role("ADMIN"))));
         }
 
         if (healthworkerRepository.count() == 0) {
@@ -75,7 +72,7 @@ public class RegisterService {
             healthWorker.setLastName("lastname");
             healthWorker.setGender("male");
             healthWorker.setPhonenumber("06123456789");
-            healthWorker.setRoles(Arrays.asList(new Role("HEALTHWORKER")));
+            healthWorker.setRoles(Arrays.asList(new Role("HEALTHWORKER"), new Role("PENDING")));
 
             healthworkerRepository.save(healthWorker);
         }
@@ -92,7 +89,7 @@ public class RegisterService {
             client.setEmail("test@example.com");
             client.setGender("Female");
             client.setStreetName("streetname");
-            client.setHousenumber(10);
+            client.setHousenumber("10");
             client.setProvince("Grunn");
             client.setDistrict("Nederland");
             client.setPhonenumber("0123456789");
