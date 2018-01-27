@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,31 +43,36 @@ public class QuestionnaireController
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		CustomUserDetails principal = (CustomUserDetails) authentication.getPrincipal();
 
-		HealthWorker healthworker = healthworkerRepository.findByUsername(principal.getUsername());
-
-		Iterable<Client> clients = clientRepository.findByHealthWorker(healthworker);
-
 		List<Questionnaire> allQuestionnaires = new ArrayList<>();
 
-		for(Client client : clients)
+		for( GrantedAuthority authority : principal.getAuthorities())
 		{
-			List<Questionnaire> questionnaires = questionnaireRepository.findByClient(client);
-			allQuestionnaires = Stream.concat(allQuestionnaires.stream(), questionnaires.stream())
-				.collect(Collectors.toList());
+			if (authority.toString().equals("ROLE_HEALTHWORKER"))
+			{
+				HealthWorker healthworker = healthworkerRepository.findByUsername(principal.getUsername());
+
+				Iterable<Client> clients = clientRepository.findByHealthWorker(healthworker);
+
+
+
+				for(Client client : clients)
+				{
+					List<Questionnaire> questionnaires = questionnaireRepository.findByClient(client);
+					allQuestionnaires = Stream.concat(allQuestionnaires.stream(), questionnaires.stream())
+						.collect(Collectors.toList());
+				}
+				break;
+			}
+			if (authority.toString().equals("ROLE_CLIENT"))
+			{
+				Client client = clientRepository.findByUsername(principal.getUsername());
+
+				allQuestionnaires = questionnaireRepository.findByClient(client);
+				break;
+			}
 		}
 
 		return new ResponseEntity<>(allQuestionnaires, HttpStatus.OK);
-	}
-
-	@CrossOrigin
-	@GetMapping(value = "/questionnaires/me")
-	public ResponseEntity<Iterable<Questionnaire>> getAllQuestionnairesITook() {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		CustomUserDetails principal = (CustomUserDetails) authentication.getPrincipal();
-
-		Client client = clientRepository.findByUsername(principal.getUsername());
-
-		return new ResponseEntity<>(questionnaireRepository.findByClient(client), HttpStatus.OK);
 	}
 
 	@CrossOrigin

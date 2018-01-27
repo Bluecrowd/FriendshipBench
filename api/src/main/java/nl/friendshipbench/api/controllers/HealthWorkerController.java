@@ -71,7 +71,7 @@ public class HealthWorkerController {
     @CrossOrigin
     @RequestMapping(value = "/healthworkers/register", method = RequestMethod.POST)
     public ResponseEntity<?> registerHealthWorker(@RequestBody HealthWorker healthWorker) {
-        Role role = roleRepository.getByRoleName("HEALTHWORKER");
+        Role role = roleRepository.getByRoleName("PENDING");
         healthWorker.setRoles(Arrays.asList(role));
         HealthWorker newUser = registerService.addHeathWorker(healthWorker);
 

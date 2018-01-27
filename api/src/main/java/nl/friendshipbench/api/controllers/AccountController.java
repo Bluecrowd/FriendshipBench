@@ -136,12 +136,12 @@ public class AccountController {
                 return ResponseEntity.ok("User updated successfully");
             }
             //users with role HEALTHWORKER
-            else if(authority.getAuthority().equals("ROLE_HEALTHWORKER")) {
+            else if(authority.getAuthority().equals("ROLE_HEALTHWORKER") || authority.getAuthority().equals("ROLE_PENDING")) {
                 HealthWorker currentUser = healthworkerRepository.findByUsername(currentUsername);
                 String dbPassword = currentUser.getPassword();
 
-                if(passwordEncoder.matches(dbPassword, oldPassword))
-                    if(newPassword != null && !newPassword.isEmpty() && !newPassword.equals(""))
+                if (passwordEncoder.matches(dbPassword, oldPassword))
+                    if (newPassword != null && !newPassword.isEmpty() && !newPassword.equals(""))
                         currentUser.setPassword(passwordEncoder.encode(newPassword));
 
                 currentUser.setFirstName(firstName);
@@ -168,5 +168,43 @@ public class AccountController {
             }
         }
         return new ResponseEntity<>("Something went wrong ", HttpStatus.BAD_REQUEST);
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/account/getmyclients", method = RequestMethod.GET)
+    public ResponseEntity<?> getMyClients() {
+        CustomUserDetails principal = userHelper.principalHelper();
+        String username = principal.getUsername();
+
+        HealthWorker currentUser = healthworkerRepository.findByUsername(username);
+        Iterable<Client> myClients = clientRepository.findByHealthWorker(currentUser);
+        int size;
+
+        if(myClients instanceof Collection<?>) {
+            size = ((Collection<?>) myClients).size();
+            if (size == 0) {
+                return new ResponseEntity<Object>("You don't have any Clients bound to you", HttpStatus.NO_CONTENT);
+            } else
+                return new ResponseEntity<Object>(myClients, HttpStatus.OK);
+        }
+        return new ResponseEntity<Object>("Something went wrong", HttpStatus.I_AM_A_TEAPOT);
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/account/setmyhealthworker/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<?> setMyHealthWorker(@PathVariable("id") long id) {
+        CustomUserDetails principal = userHelper.principalHelper();
+        String username = principal.getUsername();
+        Client currentUser = clientRepository.findByUsername(username);
+
+        HealthWorker choosenHealthWorker = healthworkerRepository.findOne(id);
+
+        if(choosenHealthWorker != null) {
+            currentUser.setHealthWorker(choosenHealthWorker);
+            clientRepository.save(currentUser);
+            return new ResponseEntity<Object>("Your selected health worker: " + choosenHealthWorker.getFirstName() + " " +choosenHealthWorker.getLastName(), HttpStatus.OK);
+        }
+
+        return new ResponseEntity<Object>("Something went wrong", HttpStatus.I_AM_A_TEAPOT);
     }
 }

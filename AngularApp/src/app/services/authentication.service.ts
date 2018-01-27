@@ -7,9 +7,7 @@ import { Constants } from '../Constants';
 import { Credentials } from '../models/credentials';
 import { Token } from '../models/token';
 import { AccountDetails } from '../models/accountDetails';
-import {RoleName} from '../models/roleName';
-import {forEach} from '@angular/router/src/utils/collection';
-import {element} from 'protractor';
+import {RegisterForm} from '../models/registerForm';
 
 /** constant for defining the content type */
 const httpCredentialOptions = {
@@ -22,10 +20,10 @@ const httpCredentialOptions = {
 export class AuthenticationService {
 
   public httpTokenOptions;
-  // public accountDetails: AccountDetails;
 
   private oauthUrl = Constants.API_URL + 'oauth/token';  // URL to web api
   private accountDetailsUrl = Constants.API_URL + 'account/me';  // URL to web api
+  private createHealhworkerUrl = Constants.API_URL + 'healthworkers/register';  // URL to web api
 
   constructor(
     private http: HttpClient,
@@ -49,6 +47,14 @@ export class AuthenticationService {
         this.saveCookies(accountDetails as AccountDetails, token);
       });
     });
+  }
+
+  public register (registerFrom: RegisterForm) {
+    this.submitNewAccount(registerFrom as object).subscribe(response => {console.log(response);});
+  }
+
+  private submitNewAccount (registerForm: object): Observable<object> {
+    return this.http.post(this.createHealhworkerUrl, registerForm, this.httpTokenOptions);
   }
 
   private requestToken (httpBody: string): Observable<Token> {

@@ -3,6 +3,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { Credentials} from './models/credentials';
 import {Bench} from './models/bench';
 import {AuthenticationService} from './services/authentication.service';
+import {RegisterForm} from './models/registerForm';
 
 @Component({
   selector: 'body',
@@ -11,8 +12,9 @@ import {AuthenticationService} from './services/authentication.service';
 })
 export class AppComponent implements OnInit{
   title = 'app';
-
-  credentials: Object = {};
+  public authorizationPanel = 'LOGIN';
+  public credentials: Object = {};
+  public registerForm: RegisterForm = new RegisterForm();
 
   get diagnostic() { return JSON.stringify(this.credentials); }
 
@@ -32,7 +34,17 @@ export class AppComponent implements OnInit{
     }
   }
 
+  register(): void {
+    if (this.registerForm != null) {
+      this.authenticationService.register(this.registerForm);
+    }
+  }
+
   logout(): void {
     this.cookieService.deleteAll();
+  }
+
+  switchPage(page: string) {
+    this.authorizationPanel = page;
   }
 }
