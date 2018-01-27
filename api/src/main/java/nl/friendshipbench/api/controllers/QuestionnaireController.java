@@ -14,6 +14,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 /**
  * Created by Jan-Bert on 23-1-2018.
  */
@@ -34,7 +39,23 @@ public class QuestionnaireController
 	@CrossOrigin
 	@GetMapping(value = "/questionnaires")
 	public ResponseEntity<Iterable<Questionnaire>> getAllQuestionnaires() {
-		return new ResponseEntity<>(questionnaireRepository.findAll(), HttpStatus.OK);
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		CustomUserDetails principal = (CustomUserDetails) authentication.getPrincipal();
+
+		HealthWorker healthworker = healthworkerRepository.findByUsername(principal.getUsername());
+
+		Iterable<Client> clients = clientRepository.findByHealthWorker(healthworker);
+
+		List<Questionnaire> allQuestionnaires = new ArrayList<>();
+
+		for(Client client : clients)
+		{
+			List<Questionnaire> questionnaires = questionnaireRepository.findByClient(client);
+			allQuestionnaires = Stream.concat(allQuestionnaires.stream(), questionnaires.stream())
+				.collect(Collectors.toList());
+		}
+
+		return new ResponseEntity<>(allQuestionnaires, HttpStatus.OK);
 	}
 
 	@CrossOrigin

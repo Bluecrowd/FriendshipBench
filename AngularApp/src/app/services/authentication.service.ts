@@ -39,16 +39,14 @@ export class AuthenticationService {
                      '&password=' + credentials.password +
                      '&grant_type=' + credentials.grant_type;
 
-    return this.requestToken(httpBody).subscribe(token => {
+    this.requestToken(httpBody).subscribe(token => {
       this.httpTokenOptions = {headers: new HttpHeaders({
           'Content-Type': 'application/json',
           'Authorization': 'bearer ' + token.access_token
         })
       };
       this.requestAccountDetails().subscribe(accountDetails => {
-        this.saveCookies(accountDetails as AccountDetails);
-        // this.accountDetails = accountDetails as AccountDetails;
-        // console.log(this.accountDetails);
+        this.saveCookies(accountDetails as AccountDetails, token);
       });
     });
   }
@@ -61,30 +59,33 @@ export class AuthenticationService {
     return this.http.get<AccountDetails>(this.accountDetailsUrl, this.httpTokenOptions);
   }
 
-  private saveCookies (accountDetails: AccountDetails) {
+  private saveCookies (accountDetails: AccountDetails, token: Token) {
     const expireDate = new Date(Date.now());
     expireDate.setHours( expireDate.getHours() + 1);
-    console.log(expireDate);
-    console.log(accountDetails);
 
-    for (let role of accountDetails.roles) {
+    let saveAccessToken = false;
 
+    for (const role of accountDetails.roles) {
       switch (role.roleName){
         case 'ADMIN': {
           this.cookieService.set('UserRights', 'ADMIN', expireDate );
+          saveAccessToken = true;
           break;
         }
         case 'CLIENT': {
           this.cookieService.set('UserRights', 'CLIENT', expireDate );
+          saveAccessToken = true;
           break;
         }
         case 'HEALTHWORKER': {
           this.cookieService.set('UserRights', 'HEALTHWORKER', expireDate );
+          saveAccessToken = true;
           break;
         }
-
       }
-
+    }
+    if (saveAccessToken) {
+      this.cookieService.set('UserAccessToken', token.access_token, expireDate );
     }
   }
 
