@@ -123,9 +123,6 @@ public class QuestionnaireController
 
 				if (questionnaire.getClient().equals(client))
 				{
-					System.out.println("BAD client:");
-					System.out.println(questionnaire.getClient().getId() + " doesn't equal " + client.getId());
-
 					break;
 				}
 				else
