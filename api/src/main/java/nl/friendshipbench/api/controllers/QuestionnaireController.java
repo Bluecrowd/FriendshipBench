@@ -87,6 +87,59 @@ public class QuestionnaireController
 	}
 
 	/**
+	 * Method to get a questionnaire bound to a health worker or client by id
+	 *
+	 * @method HTTP GET
+	 * @endpoint /api/questionnaires/{id}
+	 * @return specific questionnaire
+	 */
+	@CrossOrigin
+	@PreAuthorize("hasAuthority('ROLE_CLIENT') or hasAuthority('ROLE_HEALTHWORKER')")
+	@GetMapping(value = "/questionnaires/{id}")
+	public ResponseEntity<Questionnaire> getSpecificQuestionnaire(@PathVariable("id") long id) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		CustomUserDetails principal = (CustomUserDetails) authentication.getPrincipal();
+
+		Questionnaire questionnaire = questionnaireRepository.findOne(id);
+
+		for( GrantedAuthority authority : principal.getAuthorities())
+		{
+			if (authority.toString().equals("ROLE_HEALTHWORKER"))
+			{
+				HealthWorker healthworker = healthworkerRepository.findByUsername(principal.getUsername());
+
+				if (questionnaire.client.getHealthWorker().equals(healthworker))
+				{
+					break;
+				}
+				else
+				{
+					return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+				}
+
+			}
+			if (authority.toString().equals("ROLE_CLIENT"))
+			{
+				Client client = clientRepository.findByUsername(principal.getUsername());
+
+				if (questionnaire.client.equals(client))
+				{
+					System.out.println("BAD client:");
+					System.out.println(questionnaire.client.getId() + " doesn't equal " + client.getId());
+
+					break;
+				}
+				else
+				{
+					return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+				}
+			}
+		}
+
+		return new ResponseEntity<>(questionnaire, HttpStatus.OK);
+	}
+
+	/**
 	 * Method to get a questionnaire from a bound client
 	 *
 	 * @method HTTP GET
