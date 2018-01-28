@@ -18,7 +18,7 @@
         <tbody>
         <tr *ngFor="let questionnaire of questionnaires">
           <td>{{questionnaire.id}}</td>
-          <td>{{questionnaire.timeStamp | date:'yyyy-MM-dd HH:mm:ss Z'}}</td>
+          <td>{{questionnaire.timestamp | date:'yyyy-MM-dd HH:mm:ss Z'}}</td>
           <td *ngIf="questionnaire.redFlag">Yes</td>
           <td *ngIf="!questionnaire.redFlag">No</td>
           <td><a routerLink="/clients/{{questionnaire.client.id}}">{{questionnaire.client.firstName + ' ' + questionnaire.client.lastName}}</a></td>

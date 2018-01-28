@@ -1,3 +1,4 @@
 export class RoleName {
-  roleName: string;
+  constructor(
+  public roleName: string) {}
 }

@@ -5,7 +5,7 @@ export class Questionnaire {
 
   constructor(
     public id: number,
-    public timeStamp: Date,
+    public timestamp: string,
     public redFlag: boolean,
     public client: Client,
     public answers: Answer[]
