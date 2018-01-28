@@ -7,7 +7,6 @@ import nl.friendshipbench.api.models.User;
 import nl.friendshipbench.api.repositories.ClientRepository;
 import nl.friendshipbench.api.repositories.HealthworkerRepository;
 import nl.friendshipbench.api.repositories.UserRepository;
-import nl.friendshipbench.api.services.RegisterService;
 import nl.friendshipbench.oauth2.security.CustomUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,9 +28,6 @@ import java.util.HashMap;
 public class AccountController {
 
     @Autowired
-    private RegisterService registerService;
-
-    @Autowired
     private ClientRepository clientRepository;
     
     @Autowired
@@ -48,13 +44,13 @@ public class AccountController {
     /**
      * Method to show the details of the logged in user
      *
-     * @method GET
+     * @method HTTP GET
      * @endpoint api/account/me
      * @return ResponseEntity
      */
     @CrossOrigin
     @RequestMapping(value = "/account/me", method = RequestMethod.GET)
-    @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_USER') or hasAuthority('ROLE_HEALTHWORKER') or hasAuthority('ROLE_CLIENT')")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_PENDING') or hasAuthority('ROLE_HEALTHWORKER') or hasAuthority('ROLE_CLIENT')")
     public ResponseEntity<?> getUserInfo() {
         CustomUserDetails principal = userHelper.principalHelper();
         String username = principal.getUsername();
@@ -82,15 +78,15 @@ public class AccountController {
     /**
      * Method to update the user values of each type op user which is currently logged in
      *
-     * @method PUT
+     * @method HTTP PUT
+     * @endpoint /api/account/me
      * @param mapper
      * @return ResponseEntity
      * @throws Exception
-     * @endpoint /api/account/me
      */
     @CrossOrigin
     @RequestMapping(value = "/account/me", method = RequestMethod.PUT)
-    @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_USER') or hasAuthority('ROLE_HEALTHWORKER') or hasAuthority('ROLE_CLIENT')")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_PENDING') or hasAuthority('ROLE_HEALTHWORKER') or hasAuthority('ROLE_CLIENT')")
     public ResponseEntity<?> editUserInfo(@RequestBody HashMap<String, Object> mapper) throws Exception {
         CustomUserDetails principal = userHelper.principalHelper();
         String currentUsername = principal.getUsername();
@@ -170,7 +166,15 @@ public class AccountController {
         return new ResponseEntity<>("Something went wrong ", HttpStatus.BAD_REQUEST);
     }
 
+    /**
+     * Method to get the clients who are bound to the healthworker
+     *
+     * @method HTTP GET
+     * @endpoint /api/account/getmyclients
+     * @return myClients
+     */
     @CrossOrigin
+    @PreAuthorize("hasAuthority('ROLE_HEALTHWORKER')")
     @RequestMapping(value = "/account/getmyclients", method = RequestMethod.GET)
     public ResponseEntity<?> getMyClients() {
         CustomUserDetails principal = userHelper.principalHelper();
@@ -190,19 +194,28 @@ public class AccountController {
         return new ResponseEntity<Object>("Something went wrong", HttpStatus.I_AM_A_TEAPOT);
     }
 
+    /**
+     * Method to chose and set your health worker as a client
+     *
+     * @method HTTP PUT
+     * @endpoint /api/account/setmyhealthworker/{id}
+     * @param id
+     * @return
+     */
     @CrossOrigin
+    @PreAuthorize("hasAuthority('ROLE_CLIENT')")
     @RequestMapping(value = "/account/setmyhealthworker/{id}", method = RequestMethod.PUT)
     public ResponseEntity<?> setMyHealthWorker(@PathVariable("id") long id) {
         CustomUserDetails principal = userHelper.principalHelper();
         String username = principal.getUsername();
         Client currentUser = clientRepository.findByUsername(username);
 
-        HealthWorker choosenHealthWorker = healthworkerRepository.findOne(id);
+        HealthWorker chosenHealthWorker = healthworkerRepository.findOne(id);
 
-        if(choosenHealthWorker != null) {
-            currentUser.setHealthWorker(choosenHealthWorker);
+        if(chosenHealthWorker != null) {
+            currentUser.setHealthWorker(chosenHealthWorker);
             clientRepository.save(currentUser);
-            return new ResponseEntity<Object>("Your selected health worker: " + choosenHealthWorker.getFirstName() + " " +choosenHealthWorker.getLastName(), HttpStatus.OK);
+            return new ResponseEntity<Object>("Your selected health worker: " + chosenHealthWorker.getFirstName() + " " +chosenHealthWorker.getLastName(), HttpStatus.OK);
         }
 
         return new ResponseEntity<Object>("Something went wrong", HttpStatus.I_AM_A_TEAPOT);

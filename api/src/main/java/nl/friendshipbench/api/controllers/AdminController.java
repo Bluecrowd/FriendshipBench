@@ -16,6 +16,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Arrays;
 import java.util.HashMap;
 
+/**
+ * Admin controller for all possible http operations regarding getting all admins, get one by id and creating one
+ *
+ * @author Nick Oosterhuis
+ */
 @RestController
 public class AdminController {
 
@@ -34,10 +39,12 @@ public class AdminController {
     /**
      * GET Method to gather all admins
      *
+     * @method HTTP GET
      * @endpoint api/admins
      * @return all admins
      */
     @CrossOrigin
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping(value = "/admins")
     public ResponseEntity<Iterable<User>> getAllAdmins() {
         return new ResponseEntity<>(userRepository.findAll(), HttpStatus.OK);
@@ -46,11 +53,13 @@ public class AdminController {
     /**
      * GET Method to gather one admin by id
      *
+     * @method HTTP GET
      * @endpoint /api/admins/{id}
      * @param id
      * @return specific admin
      */
     @CrossOrigin
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping(value = "/admins/{id}")
     public ResponseEntity<User> getAdminById(@PathVariable("id") long id) {
         User user = userRepository.findOne(id);
@@ -67,7 +76,7 @@ public class AdminController {
      * Method makes it possible to register an admin
      * Expects an username, password and role
      *
-     *
+     * @method HTTP POST
      * @endpoint api/admins/register
      * @param user
      * @return ResponseEntity
@@ -83,7 +92,18 @@ public class AdminController {
         return new ResponseEntity<>("successfully created admin", HttpStatus.CREATED);
     }
 
+    /**
+     * Method to approve a healthworker by injecting custom JSON
+     * it expects "approve": true or false in boolean format
+     *
+     * @method HTTP PUT
+     * @endpoint /admins/approvehealthworker/{id}
+     * @param id
+     * @param mapper
+     * @return ResponseEntity
+     */
     @CrossOrigin
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @PutMapping(value = "/admins/approvehealthworker/{id}")
     public  ResponseEntity<?> approveHealthWorkerRole(@PathVariable("id") long id, @RequestBody HashMap<String, Object> mapper) {
         HealthWorker healthWorker = healthworkerRepository.findOne(id);
@@ -91,8 +111,6 @@ public class AdminController {
         boolean approve = (boolean) mapper.get("approve");
 
         if(approve) {
-
-
             healthWorker.setRoles(Arrays.asList(role));
             return ResponseEntity.ok("Health worker role is approved");
         }
