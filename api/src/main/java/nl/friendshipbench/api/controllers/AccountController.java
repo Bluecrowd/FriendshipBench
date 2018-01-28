@@ -62,7 +62,7 @@ public class AccountController {
                 Client request = clientRepository.findByUsername(username);
                 return new ResponseEntity<Object>(request, HttpStatus.OK);
             }
-            else if(authority.getAuthority().equals("ROLE_HEALTHWORKER")) {
+            else if(authority.getAuthority().equals("ROLE_HEALTHWORKER") || authority.getAuthority().equals("ROLE_PENDING")) {
                 HealthWorker request = healthworkerRepository.findByUsername(username);
                 return new ResponseEntity<Object>(request, HttpStatus.OK);
             }

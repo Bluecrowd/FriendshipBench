@@ -10,6 +10,7 @@ import nl.friendshipbench.oauth2.security.CustomUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,6 +22,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
+ * Questionnaire controller defines all possible HTTP methods for the questionnaires
+ *
  * Created by Jan-Bert on 23-1-2018.
  */
 @RestController
@@ -37,7 +40,15 @@ public class QuestionnaireController
 	@Autowired
 	private QuestionnaireRepository questionnaireRepository;
 
+	/**
+	 * Method to get all questionnaires bound to a health worker or client
+	 *
+	 * @method HTTP GET
+	 * @endpoint /api/questionnaires
+	 * @return all questionnaires
+	 */
 	@CrossOrigin
+	@PreAuthorize("hasAuthority('ROLE_CLIENT') or hasAuthority('ROLE_HEALTHWORKER')")
 	@GetMapping(value = "/questionnaires")
 	public ResponseEntity<Iterable<Questionnaire>> getAllQuestionnaires() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -75,7 +86,16 @@ public class QuestionnaireController
 		return new ResponseEntity<>(allQuestionnaires, HttpStatus.OK);
 	}
 
+	/**
+	 * Method to get a questionnaire from a bound client
+	 *
+	 * @method HTTP GET
+	 * @endpoint /api/questionnaires/client/{id}
+	 * @param clientId
+	 * @return
+	 */
 	@CrossOrigin
+	@PreAuthorize("hasAuthority('ROLE_HEALTHWORKER')")
 	@GetMapping(value = "/questionnaires/client/{id}")
 	public ResponseEntity<Iterable<Questionnaire>> getAllQuestionnairesMyClientMade(@PathVariable("id") long clientId) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -99,7 +119,17 @@ public class QuestionnaireController
 
 	}
 
+	/**
+	 * Method to update a specific questionnaire by id
+	 *
+	 * @method HTTP PUT
+	 * @endpoint /api/
+	 * @param id
+	 * @param questionnaire
+	 * @return
+	 */
 	@CrossOrigin
+	@PreAuthorize("hasAuthority('ROLE_HEALTHWORKER') or hasAuthority('ROLE_ADMIN')")
 	@PutMapping(value = "/questionnaires/{id}")
 	public ResponseEntity<Questionnaire> updateQuestionnaire(@PathVariable("id") long id, @RequestBody Questionnaire questionnaire) {
 		questionnaire.id = id;
@@ -109,7 +139,16 @@ public class QuestionnaireController
 		return new ResponseEntity<Questionnaire>(questionnaireRepository.findOne(id), HttpStatus.OK);
 	}
 
+	/**
+	 * Method to create a questionnaire
+	 *
+	 * @method HTTP POST
+	 * @endpoint /api/questionnaires
+	 * @param questionnaire
+	 * @return
+	 */
 	@CrossOrigin
+	@PreAuthorize("hasAuthority('ROLE_HEALTHWORKER') or hasAuthority('ROLE_ADMIN')")
 	@PostMapping(value = "/questionnaires")
 	public ResponseEntity<Questionnaire> createQuestionnaire(@RequestBody Questionnaire questionnaire) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
