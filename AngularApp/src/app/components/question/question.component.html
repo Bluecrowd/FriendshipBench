@@ -1,0 +1,16 @@
+<div *ngIf  ="question">
+  <h2>Edit Question</h2>
+  <table>
+    <tr>
+      <td><span>{{bench.id}}</span></td>
+      <td>
+        <label>Question:
+          <input [(ngModel)]="question.question_text" placeholder=`{{question.question_text}}` />
+        </label>
+      </td>
+      <td><button (click)="save()">Save</button></td>
+      <td><button (click)="close()">close</button></td>
+    </tr>
+  </table>
+
+</div>

@@ -29,6 +29,10 @@ import { QuestionnairesComponent } from './components/questionnaires/questionnai
 import {QuestionnairesService} from './services/questionnaires.service';
 import { HealthworkersComponent } from './components/healthworkers/healthworkers.component';
 import {HealthworkersService} from './services/healthworkers.service';
+import { QuestionsComponent } from './components/questions/questions.component';
+import {QuestionsService} from './services/questions.service';
+import { QuestionFormComponent } from './components/question-form/question-form.component';
+import { QuestionComponent } from './components/question/question.component';
 import {AuthenticationService} from './services/authentication.service';
 
 
@@ -46,7 +50,10 @@ import {AuthenticationService} from './services/authentication.service';
     BenchFormComponent,
     AppointmentsComponent,
     QuestionnairesComponent,
-    HealthworkersComponent
+    HealthworkersComponent,
+    QuestionsComponent,
+    QuestionFormComponent,
+    QuestionComponent
   ],
   imports: [
     BrowserModule,
@@ -65,8 +72,8 @@ import {AuthenticationService} from './services/authentication.service';
     QuestionnairesService,
     HealthworkersService,
     CookieService,
+    QuestionsService,
     AuthenticationService
-
 ],
   bootstrap: [AppComponent]
 })
