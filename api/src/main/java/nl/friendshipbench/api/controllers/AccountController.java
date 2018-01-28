@@ -286,19 +286,19 @@ public class AccountController {
         boolean approve = (boolean) mapper.get("approve");
 
         HealthWorker healthWorker = healthworkerRepository.findOne(id);
+        List<Role> currentRoles = healthWorker.getRoles();
 
-        if(healthWorker != null && approve) {
-            List<Role> currentRoles = healthWorker.getRoles();
-            currentRoles.clear();
-            currentRoles.add(role);
+        if(healthWorker != null && !currentRoles.contains(role)) {
+            if (approve) {
+                currentRoles.clear();
+                currentRoles.add(role);
 
-            healthWorker.setRoles(currentRoles);
-            healthworkerRepository.save(healthWorker);
-            return ResponseEntity.ok("Health worker role is approved" + role.getRoleName());
+                healthWorker.setRoles(currentRoles);
+                healthworkerRepository.save(healthWorker);
+                return ResponseEntity.ok("Health worker role is approved" + role.getRoleName());
+            } else if (approve == false)
+                return ResponseEntity.ok("Health worker is not approved");
         }
-        else if (approve == false)
-            return ResponseEntity.ok("Health worker is not approved");
-
         return new ResponseEntity<Object>("Something went wrong", HttpStatus.BAD_REQUEST);
     }
 }
