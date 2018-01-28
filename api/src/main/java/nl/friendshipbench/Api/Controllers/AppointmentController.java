@@ -1,5 +1,6 @@
 package nl.friendshipbench.api.controllers;
 
+import nl.friendshipbench.api.Helpers.UserHelper;
 import nl.friendshipbench.api.enums.AppointmentStatusEnum;
 import nl.friendshipbench.api.models.Appointment;
 import nl.friendshipbench.api.models.Client;
@@ -32,8 +33,7 @@ public class AppointmentController
 	@Autowired
 	private AppointmentRepository appointmentRepository;
 
-	@Autowired
-	private BenchRepository benchRepository;
+	private UserHelper userHelper = new UserHelper();
 
 	/**
 	 * This method will return all the appointments a logged in user has
@@ -47,8 +47,7 @@ public class AppointmentController
 	@PreAuthorize("hasAuthority('ROLE_CLIENT') or hasAuthority('ROLE_HEALTHWORKER')")
 	@GetMapping(value = "/appointments")
 	public ResponseEntity<Iterable<Appointment>> getAllAppointmentsIHave() {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		CustomUserDetails principal = (CustomUserDetails) authentication.getPrincipal();
+		CustomUserDetails principal = userHelper.principalHelper();
 
 		Iterable<Appointment> appointments = null;
 
@@ -83,8 +82,7 @@ public class AppointmentController
 	@PreAuthorize("hasAuthority('ROLE_CLIENT') or hasAuthority('ROLE_HEALTHWORKER')")
 	@GetMapping(value = "/appointments/{id}")
 	public ResponseEntity<Appointment> getAppointmentById(@PathVariable("id") long id) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		CustomUserDetails principal = (CustomUserDetails) authentication.getPrincipal();
+		CustomUserDetails principal = userHelper.principalHelper();
 
 		Appointment appointment = appointmentRepository.findOne(id);
 
@@ -99,7 +97,7 @@ public class AppointmentController
 				}
 				else
 				{
-					return new ResponseEntity<Appointment>(HttpStatus.FORBIDDEN);
+					return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 				}
 			}
 			if (authority.toString().equals("ROLE_CLIENT"))
@@ -111,7 +109,7 @@ public class AppointmentController
 				}
 				else
 				{
-					return new ResponseEntity<Appointment>(HttpStatus.FORBIDDEN);
+					return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 				}
 			}
 		}
@@ -131,21 +129,18 @@ public class AppointmentController
 	@PreAuthorize("hasAuthority('ROLE_CLIENT') or hasAuthority('ROLE_HEALTHWORKER')")
 	@PostMapping(value = "/appointments")
 	public ResponseEntity<Appointment> createAppointment(@RequestBody Appointment appointment) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		CustomUserDetails principal = (CustomUserDetails) authentication.getPrincipal();
+		CustomUserDetails principal = userHelper.principalHelper();
 
 		for( GrantedAuthority authority : principal.getAuthorities())
 		{
 			if (authority.toString().equals("ROLE_HEALTHWORKER"))
 			{
-				HealthWorker healthworker = healthworkerRepository.findByUsername(principal.getUsername());
-				appointment.healthWorker = healthworker;
+				appointment.healthWorker = healthworkerRepository.findByUsername(principal.getUsername());
 				break;
 			}
 			if (authority.toString().equals("ROLE_CLIENT"))
 			{
-				Client client = clientRepository.findByUsername(principal.getUsername());
-				appointment.client = client;
+				appointment.client = clientRepository.findByUsername(principal.getUsername());
 				break;
 			}
 		}
@@ -155,7 +150,7 @@ public class AppointmentController
 
 		appointmentRepository.save(appointment);
 
-		return new ResponseEntity<Appointment>(appointmentRepository.findOne(appointment.id), HttpStatus.CREATED);
+		return new ResponseEntity<>(appointmentRepository.findOne(appointment.id), HttpStatus.CREATED);
 	}
 
 	/**
@@ -175,7 +170,7 @@ public class AppointmentController
 
 		appointmentRepository.save(appointment);
 
-		return new ResponseEntity<Appointment>(appointmentRepository.findOne(id), HttpStatus.OK);
+		return new ResponseEntity<>(appointmentRepository.findOne(id), HttpStatus.OK);
 	}
 
 	/**
@@ -195,7 +190,7 @@ public class AppointmentController
 		appointment.status = AppointmentStatusEnum.ACCEPTED;
 		appointmentRepository.save(appointment);
 
-		return new ResponseEntity<Appointment>(appointment, HttpStatus.OK);
+		return new ResponseEntity<>(appointment, HttpStatus.OK);
 	}
 
 	/**
@@ -215,6 +210,6 @@ public class AppointmentController
 		appointment.status = AppointmentStatusEnum.CANCELLED;
 		appointmentRepository.save(appointment);
 
-		return new ResponseEntity<Appointment>(appointment, HttpStatus.OK);
+		return new ResponseEntity<>(appointment, HttpStatus.OK);
 	}
 }

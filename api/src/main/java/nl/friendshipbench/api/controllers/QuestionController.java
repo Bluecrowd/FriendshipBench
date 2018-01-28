@@ -2,15 +2,11 @@ package nl.friendshipbench.api.controllers;
 
 import nl.friendshipbench.api.models.Question;
 import nl.friendshipbench.api.repositories.QuestionRepository;
-import org.apache.commons.collections4.IterableUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Collections;
-import java.util.List;
 
 /**
  * Question controller defines all possible HTTP methods for the questions
@@ -39,7 +35,7 @@ public class QuestionController
 	{
 		boolean showOnlyActive = Boolean.parseBoolean(onlyActive);
 
-		Iterable<Question> results = null;
+		Iterable<Question> results;
 		if(showOnlyActive)
 		{
 			results = questionRepository.findByActiveTrue();
@@ -51,11 +47,11 @@ public class QuestionController
 
 		if (results != null)
 		{
-			return new ResponseEntity<Iterable<Question>>(results, HttpStatus.OK);
+			return new ResponseEntity<>(results, HttpStatus.OK);
 		}
 		else
 		{
-			return new ResponseEntity<Iterable<Question>>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -76,10 +72,10 @@ public class QuestionController
 
 		if (question != null)
 		{
-			return new ResponseEntity<Question>(question, HttpStatus.OK);
+			return new ResponseEntity<>(question, HttpStatus.OK);
 		}
 
-		return new ResponseEntity<Question>(HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 
 	/**
@@ -96,7 +92,7 @@ public class QuestionController
 	public ResponseEntity<Question> createQuestion(@RequestBody Question question) {
 		questionRepository.save(question);
 
-		return new ResponseEntity<Question>(questionRepository.findOne(question.id), HttpStatus.CREATED);
+		return new ResponseEntity<>(questionRepository.findOne(question.id), HttpStatus.CREATED);
 	}
 
 	/**
@@ -116,6 +112,6 @@ public class QuestionController
 
 		questionRepository.save(question);
 
-		return new ResponseEntity<Question>(questionRepository.findOne(id), HttpStatus.OK);
+		return new ResponseEntity<>(questionRepository.findOne(id), HttpStatus.OK);
 	}
 }
