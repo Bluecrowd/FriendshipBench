@@ -5,10 +5,10 @@ import nl.friendshipbench.api.models.Role;
 import nl.friendshipbench.api.repositories.ClientRepository;
 import nl.friendshipbench.api.repositories.RoleRepository;
 import nl.friendshipbench.api.services.RegisterService;
-import nl.friendshipbench.oauth2.security.CustomUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
@@ -33,10 +33,12 @@ public class ClientController {
     /**
      * GET Method to gather all clients
      *
+     * @method HTTP GET
      * @endpoint api/clients
      * @return all Clients
      */
     @CrossOrigin
+    @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_HEALTHWORKER')")
     @GetMapping(value = "/clients")
     public ResponseEntity<Iterable<Client>> getAllClients() {
         return new ResponseEntity<>(clientRepository.findAll(), HttpStatus.OK);
@@ -45,10 +47,13 @@ public class ClientController {
     /**
      * GET Method to gather one client by id
      *
+     * @method HTTP GET
+     * @endpoint /api/clients/{id}
      * @param id
      * @return specific client
      */
     @CrossOrigin
+    @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_HEALTHWORKER')")
     @GetMapping(value = "/clients/{id}")
     public ResponseEntity<Client> getClientbyId(@PathVariable("id") long id) {
         Client client = clientRepository.findOne(id);
@@ -57,13 +62,13 @@ public class ClientController {
         {
             return new ResponseEntity<>(client, HttpStatus.OK);
         }
-
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     /**
      * Method makes it possible to register an client
      *
+     * @method HTTP POST
      * @endpoint api/clients/register
      * @param client
      * @return ResponseEntity
@@ -78,5 +83,4 @@ public class ClientController {
 
         return new ResponseEntity<>("Successfully created client", HttpStatus.CREATED);
     }
-
 }

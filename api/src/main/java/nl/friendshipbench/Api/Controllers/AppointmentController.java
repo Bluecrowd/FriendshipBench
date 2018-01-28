@@ -9,12 +9,15 @@ import nl.friendshipbench.oauth2.security.CustomUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 /**
+ * Appointment controller defines all possible HTTP methods for the appointments
+ *
  * Created by Jan-Bert on 27-1-2018.
  */
 @RestController
@@ -32,7 +35,16 @@ public class AppointmentController
 	@Autowired
 	private BenchRepository benchRepository;
 
+	/**
+	 * This method will return all the appointments a logged in user has
+	 * user can be either healthworker or client
+	 *
+	 * @method HTTP GET
+	 * @endpoint /api/appointments
+	 * @return all apointments bound to a healthworker or client
+	 */
 	@CrossOrigin
+	@PreAuthorize("hasAuthority('ROLE_CLIENT') or hasAuthority('ROLE_HEALTHWORKER')")
 	@GetMapping(value = "/appointments")
 	public ResponseEntity<Iterable<Appointment>> getAllAppointmentsIHave() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -59,7 +71,16 @@ public class AppointmentController
 		return new ResponseEntity<>(appointments, HttpStatus.OK);
 	}
 
+	/**
+	 * This method makes it possible for either a healthworker or client to create a appointment
+	 *
+	 * @method HTTP POST
+	 * @endpoint /api/appointments
+	 * @param appointment
+	 * @return Response
+	 */
 	@CrossOrigin
+	@PreAuthorize("hasAuthority('ROLE_CLIENT') or hasAuthority('ROLE_HEALTHWORKER')")
 	@PostMapping(value = "/appointments")
 	public ResponseEntity<Appointment> createAppointment(@RequestBody Appointment appointment) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -89,7 +110,17 @@ public class AppointmentController
 		return new ResponseEntity<Appointment>(appointmentRepository.findOne(appointment.id), HttpStatus.CREATED);
 	}
 
+	/**
+	 * This method makes it possible to update a specific appointment
+	 *
+	 * @method HTTP PUT
+	 * @endpoint /api/appointments/{id}
+	 * @param id
+	 * @param appointment
+	 * @return
+	 */
 	@CrossOrigin
+	@PreAuthorize("hasAuthority('ROLE_CLIENT') or hasAuthority('ROLE_HEALTHWORKER')")
 	@PutMapping(value = "/appointments/{id}")
 	public ResponseEntity<Appointment> updateAppointment(@PathVariable("id") long id, @RequestBody Appointment appointment) {
 		appointment.id = id;
@@ -99,7 +130,16 @@ public class AppointmentController
 		return new ResponseEntity<Appointment>(appointmentRepository.findOne(id), HttpStatus.OK);
 	}
 
+	/**
+	 * This method makes it possible to accept a planned appointment
+	 *
+	 * @method HTTP PUT
+	 * @endpoint /api/appointments/{id}/accept
+	 * @param id
+	 * @return response
+	 */
 	@CrossOrigin
+	@PreAuthorize("hasAuthority('ROLE_CLIENT') or hasAuthority('ROLE_HEALTHWORKER')")
 	@PutMapping(value = "/appointments/{id}/accept")
 	public ResponseEntity<Appointment> setAccepted(@PathVariable("id") long id)
 	{
@@ -110,7 +150,16 @@ public class AppointmentController
 		return new ResponseEntity<Appointment>(appointment, HttpStatus.OK);
 	}
 
+	/**
+	 * This method makes it possible to cancel a specific appointment
+	 *
+	 * @method HTTP PUT
+	 * @endpoint /api/appointments/{id}/cancel
+	 * @param id
+	 * @return
+	 */
 	@CrossOrigin
+	@PreAuthorize("hasAuthority('ROLE_CLIENT') or hasAuthority('ROLE_HEALTHWORKER')")
 	@PutMapping(value = "/appointments/{id}/cancel")
 	public ResponseEntity<Appointment> setCancelled(@PathVariable("id") long id)
 	{
@@ -120,5 +169,4 @@ public class AppointmentController
 
 		return new ResponseEntity<Appointment>(appointment, HttpStatus.OK);
 	}
-
 }
