@@ -98,8 +98,6 @@ public class AccountController {
         CustomUserDetails principal = userHelper.principalHelper();
         String currentUsername = principal.getUsername();
 
-        String oldPassword = (String) mapper.get("oldPassword");
-        String newPassword = (String) mapper.get("newPassword");
         String firstName = (String) mapper.get("firstName");
         String lastName = (String) mapper.get("lastName");
         String gender = (String) mapper.get("gender");
@@ -118,11 +116,6 @@ public class AccountController {
             //Users with role CLIENT
             if(authority.getAuthority().equals("ROLE_CLIENT")) {
                 Client currentUser = clientRepository.findByUsername(currentUsername);
-                String dbPassword = currentUser.getPassword();
-
-                if(passwordEncoder.matches(dbPassword, oldPassword))
-                    if(newPassword != null && !newPassword.isEmpty() && !newPassword.equals(""))
-                        currentUser.setPassword(passwordEncoder.encode(newPassword));
 
                 currentUser.setFirstName(firstName);
                 currentUser.setLastName(lastName);
@@ -141,11 +134,6 @@ public class AccountController {
             //users with role HEALTHWORKER
             else if(authority.getAuthority().equals("ROLE_HEALTHWORKER") || authority.getAuthority().equals("ROLE_PENDING")) {
                 HealthWorker currentUser = healthworkerRepository.findByUsername(currentUsername);
-                String dbPassword = currentUser.getPassword();
-
-                if (passwordEncoder.matches(dbPassword, oldPassword))
-                    if (newPassword != null && !newPassword.isEmpty() && !newPassword.equals(""))
-                        currentUser.setPassword(passwordEncoder.encode(newPassword));
 
                 currentUser.setFirstName(firstName);
                 currentUser.setLastName(lastName);
@@ -157,17 +145,68 @@ public class AccountController {
                 healthworkerRepository.save(currentUser);
                 return ResponseEntity.ok("User updated successfully");
             }
+        }
+        return new ResponseEntity<>("Something went wrong ", HttpStatus.BAD_REQUEST);
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/account/changepassword", method = RequestMethod.PUT)
+    public ResponseEntity<?> changePassword(@RequestBody HashMap<String, Object> mapper) throws Exception {
+        CustomUserDetails principal = userHelper.principalHelper();
+        String currentUsername = principal.getUsername();
+
+        String oldPassword = (String) mapper.get("oldPassword");
+        String newPassword = (String) mapper.get("newPassword");
+
+        String encodedOldPassword = passwordEncoder.encode(oldPassword);
+
+        Collection<? extends GrantedAuthority> authorities = principal.getAuthorities();
+
+        for (GrantedAuthority authority : authorities) {
+
+            //Users with role CLIENT
+            if (authority.getAuthority().equals("ROLE_CLIENT")) {
+                Client currentUser = clientRepository.findByUsername(currentUsername);
+                String dbPassword = currentUser.getPassword();
+
+                if (passwordEncoder.matches(dbPassword, encodedOldPassword)) {
+                    if (newPassword != null && !newPassword.isEmpty() && !newPassword.equals(""))
+                        currentUser.setPassword(passwordEncoder.encode(newPassword));
+
+                    clientRepository.save(currentUser);
+                    return ResponseEntity.ok("User updated successfully");
+                } else
+                    return new ResponseEntity<Object>("Passwords don't match", HttpStatus.BAD_REQUEST);
+            }
+            //users with role HEALTHWORKER
+            else if(authority.getAuthority().equals("ROLE_HEALTHWORKER") || authority.getAuthority().equals("ROLE_PENDING")) {
+                HealthWorker currentUser = healthworkerRepository.findByUsername(currentUsername);
+                String dbPassword = currentUser.getPassword();
+
+                if (passwordEncoder.matches(dbPassword, encodedOldPassword)) {
+                    if (newPassword != null && !newPassword.isEmpty() && !newPassword.equals(""))
+                        currentUser.setPassword(passwordEncoder.encode(newPassword));
+
+                    healthworkerRepository.save(currentUser);
+                    return ResponseEntity.ok("User updated successfully");
+                } else
+                    return new ResponseEntity<Object>("Passwords don't match", HttpStatus.BAD_REQUEST);
+
+            }
             //users with role ADMIN
             else if(authority.getAuthority().equals("ROLE_ADMIN")) {
                 User currentUser = userRepository.findByUsername(currentUsername);
                 String dbPassword = currentUser.getPassword();
 
-                if(passwordEncoder.matches(dbPassword, oldPassword))
-                    if(newPassword != null && !newPassword.isEmpty() && !newPassword.equals(""))
+                if(passwordEncoder.matches(dbPassword, encodedOldPassword)) {
+                    if (newPassword != null && !newPassword.isEmpty() && !newPassword.equals(""))
                         currentUser.setPassword(passwordEncoder.encode(newPassword));
 
-                userRepository.save(currentUser);
-                return ResponseEntity.ok("User updated successfully");
+                    userRepository.save(currentUser);
+                    return ResponseEntity.ok("User updated successfully");
+                } else
+                    return new ResponseEntity<Object>("Passwords don't match", HttpStatus.BAD_REQUEST);
+
             }
         }
         return new ResponseEntity<>("Something went wrong ", HttpStatus.BAD_REQUEST);
@@ -233,14 +272,14 @@ public class AccountController {
      * it expects "approve": true or false in boolean format
      *
      * @method HTTP PUT
-     * @endpoint /admins/approvehealthworker/{id}
+     * @endpoint /account/approve/{id}
      * @param id
      * @param mapper
      * @return ResponseEntity
      */
     @CrossOrigin
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    @PutMapping(value = "/account/approvehealthworker/{id}")
+    @PutMapping(value = "/account/approve/{id}")
     public  ResponseEntity<?> approveHealthWorkerRole(@PathVariable("id") long id, @RequestBody HashMap<String, Object> mapper) {
 
         Role role = roleRepository.getByRoleName("HEALTHWORKER");
@@ -249,8 +288,8 @@ public class AccountController {
         HealthWorker healthWorker = healthworkerRepository.findOne(id);
 
         if(healthWorker != null && approve) {
-
             List<Role> currentRoles = healthWorker.getRoles();
+            currentRoles.clear();
             currentRoles.add(role);
 
             healthWorker.setRoles(currentRoles);
