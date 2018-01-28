@@ -196,7 +196,7 @@ public class QuestionnaireController
 	 * @return
 	 */
 	@CrossOrigin
-	@PreAuthorize("hasAuthority('ROLE_HEALTHWORKER') or hasAuthority('ROLE_ADMIN')")
+	@PreAuthorize("hasAuthority('ROLE_CLIENT') or hasAuthority('ROLE_HEALTHWORKER') or hasAuthority('ROLE_ADMIN')")
 	@PostMapping(value = "/questionnaires")
 	public ResponseEntity<Questionnaire> createQuestionnaire(@RequestBody Questionnaire questionnaire) {
 		CustomUserDetails principal = userHelper.principalHelper();
