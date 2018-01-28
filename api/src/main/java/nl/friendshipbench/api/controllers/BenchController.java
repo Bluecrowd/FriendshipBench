@@ -71,7 +71,7 @@ public class BenchController
 	public ResponseEntity<Bench> createBench(@RequestBody Bench bench) {
 		benchRepository.save(bench);
 
-		return new ResponseEntity<>(benchRepository.findOne(bench.id), HttpStatus.CREATED);
+		return new ResponseEntity<>(benchRepository.findOne(bench.getId()), HttpStatus.CREATED);
 	}
 
 	/**
@@ -87,7 +87,7 @@ public class BenchController
 	@PreAuthorize("hasAuthority('ROLE_HEALTHWORKER') or hasAuthority('ROLE_ADMIN')")
 	@PutMapping(value = "/benches/{id}")
 	public ResponseEntity<Bench> updateBench(@PathVariable("id") long id, @RequestBody Bench bench) {
-		bench.id = id;
+		bench.setId(id);
 
 		benchRepository.save(bench);
 

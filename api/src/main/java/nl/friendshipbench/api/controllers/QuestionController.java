@@ -92,7 +92,7 @@ public class QuestionController
 	public ResponseEntity<Question> createQuestion(@RequestBody Question question) {
 		questionRepository.save(question);
 
-		return new ResponseEntity<>(questionRepository.findOne(question.id), HttpStatus.CREATED);
+		return new ResponseEntity<>(questionRepository.findOne(question.getId()), HttpStatus.CREATED);
 	}
 
 	/**
@@ -108,7 +108,7 @@ public class QuestionController
 	@PreAuthorize("hasAuthority('ROLE_HEALTHWORKER') or hasAuthority('ROLE_ADMIN')")
 	@PutMapping(value = "/questions/{id}")
 	public ResponseEntity<Question> updateQuestion(@PathVariable("id") long id, @RequestBody Question question) {
-		question.id = id;
+		question.setId(id);
 
 		questionRepository.save(question);
 

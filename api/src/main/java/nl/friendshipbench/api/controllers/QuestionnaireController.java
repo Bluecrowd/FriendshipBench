@@ -12,9 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -109,7 +107,7 @@ public class QuestionnaireController
 			{
 				HealthWorker healthworker = healthworkerRepository.findByUsername(principal.getUsername());
 
-				if (questionnaire.client.getHealthWorker().equals(healthworker))
+				if (questionnaire.getClient().getHealthWorker().equals(healthworker))
 				{
 					break;
 				}
@@ -123,10 +121,10 @@ public class QuestionnaireController
 			{
 				Client client = clientRepository.findByUsername(principal.getUsername());
 
-				if (questionnaire.client.equals(client))
+				if (questionnaire.getClient().equals(client))
 				{
 					System.out.println("BAD client:");
-					System.out.println(questionnaire.client.getId() + " doesn't equal " + client.getId());
+					System.out.println(questionnaire.getClient().getId() + " doesn't equal " + client.getId());
 
 					break;
 				}
@@ -185,7 +183,7 @@ public class QuestionnaireController
 	@PreAuthorize("hasAuthority('ROLE_HEALTHWORKER') or hasAuthority('ROLE_ADMIN')")
 	@PutMapping(value = "/questionnaires/{id}")
 	public ResponseEntity<Questionnaire> updateQuestionnaire(@PathVariable("id") long id, @RequestBody Questionnaire questionnaire) {
-		questionnaire.id = id;
+		questionnaire.setId(id);
 
 		questionnaireRepository.save(questionnaire);
 
@@ -207,12 +205,12 @@ public class QuestionnaireController
 		CustomUserDetails principal = userHelper.principalHelper();
 
 		Client client = clientRepository.findByUsername(principal.getUsername());
-		questionnaire.client = client;
+		questionnaire.setClient(client);
 
 		if(client != null)
 		{
 			questionnaireRepository.save(questionnaire);
-			return new ResponseEntity<>(questionnaireRepository.findOne(questionnaire.id), HttpStatus.CREATED);
+			return new ResponseEntity<>(questionnaireRepository.findOne(questionnaire.getId()), HttpStatus.CREATED);
 		}
 		else
 		{
