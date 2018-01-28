@@ -28,9 +28,6 @@ public class AdminController {
     private UserRepository userRepository;
 
     @Autowired
-    private HealthworkerRepository healthworkerRepository;
-
-    @Autowired
     private RegisterService registerService;
 
     @Autowired
@@ -91,32 +88,4 @@ public class AdminController {
 
         return new ResponseEntity<>("successfully created admin", HttpStatus.CREATED);
     }
-
-    /**
-     * Method to approve a healthworker by injecting custom JSON
-     * it expects "approve": true or false in boolean format
-     *
-     * @method HTTP PUT
-     * @endpoint /admins/approvehealthworker/{id}
-     * @param id
-     * @param mapper
-     * @return ResponseEntity
-     */
-    @CrossOrigin
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    @PutMapping(value = "/admins/approvehealthworker/{id}")
-    public  ResponseEntity<?> approveHealthWorkerRole(@PathVariable("id") long id, @RequestBody HashMap<String, Object> mapper) {
-        HealthWorker healthWorker = healthworkerRepository.findOne(id);
-        Role role = roleRepository.getByRoleName("HEALTHWORKER");
-        boolean approve = (boolean) mapper.get("approve");
-
-        if(approve) {
-            healthWorker.setRoles(Arrays.asList(role));
-            return ResponseEntity.ok("Health worker role is approved");
-        }
-        else
-            return ResponseEntity.ok("Health worker is not approved");
-    }
-
-
 }

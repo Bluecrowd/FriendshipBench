@@ -3,9 +3,11 @@ package nl.friendshipbench.api.controllers;
 import nl.friendshipbench.api.Helpers.UserHelper;
 import nl.friendshipbench.api.models.Client;
 import nl.friendshipbench.api.models.HealthWorker;
+import nl.friendshipbench.api.models.Role;
 import nl.friendshipbench.api.models.User;
 import nl.friendshipbench.api.repositories.ClientRepository;
 import nl.friendshipbench.api.repositories.HealthworkerRepository;
+import nl.friendshipbench.api.repositories.RoleRepository;
 import nl.friendshipbench.api.repositories.UserRepository;
 import nl.friendshipbench.oauth2.security.CustomUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +18,10 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * RestController for all account features
@@ -35,6 +39,9 @@ public class AccountController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private RoleRepository roleRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -219,5 +226,40 @@ public class AccountController {
         }
 
         return new ResponseEntity<Object>("Something went wrong", HttpStatus.I_AM_A_TEAPOT);
+    }
+
+    /**
+     * Method to approve a healthworker by injecting custom JSON
+     * it expects "approve": true or false in boolean format
+     *
+     * @method HTTP PUT
+     * @endpoint /admins/approvehealthworker/{id}
+     * @param id
+     * @param mapper
+     * @return ResponseEntity
+     */
+    @CrossOrigin
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @PutMapping(value = "/account/approvehealthworker/{id}")
+    public  ResponseEntity<?> approveHealthWorkerRole(@PathVariable("id") long id, @RequestBody HashMap<String, Object> mapper) {
+
+        Role role = roleRepository.getByRoleName("HEALTHWORKER");
+        boolean approve = (boolean) mapper.get("approve");
+
+        HealthWorker healthWorker = healthworkerRepository.findOne(id);
+
+        if(healthWorker != null && approve) {
+
+            List<Role> currentRoles = healthWorker.getRoles();
+            currentRoles.add(role);
+
+            healthWorker.setRoles(currentRoles);
+            healthworkerRepository.save(healthWorker);
+            return ResponseEntity.ok("Health worker role is approved" + role.getRoleName());
+        }
+        else if (approve == false)
+            return ResponseEntity.ok("Health worker is not approved");
+
+        return new ResponseEntity<Object>("Something went wrong", HttpStatus.BAD_REQUEST);
     }
 }
