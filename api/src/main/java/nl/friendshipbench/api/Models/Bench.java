@@ -13,13 +13,63 @@ public class Bench
 {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	public Long id;
+	private Long id;
 	
-	public String streetname;
+	private String streetname;
 
-	public String housenumber;
+	private String housenumber;
 
-	public String province;
+	private String province;
 
-	public String district;
+	private String district;
+
+	public Long getId()
+	{
+		return id;
+	}
+
+	public void setId(Long id)
+	{
+		this.id = id;
+	}
+
+	public String getStreetname()
+	{
+		return streetname;
+	}
+
+	public void setStreetname(String streetname)
+	{
+		this.streetname = streetname;
+	}
+
+	public String getHousenumber()
+	{
+		return housenumber;
+	}
+
+	public void setHousenumber(String housenumber)
+	{
+		this.housenumber = housenumber;
+	}
+
+	public String getProvince()
+	{
+		return province;
+	}
+
+	public void setProvince(String province)
+	{
+		this.province = province;
+	}
+
+	public String getDistrict()
+	{
+		return district;
+	}
+
+	public void setDistrict(String district)
+	{
+		this.district = district;
+	}
 }
