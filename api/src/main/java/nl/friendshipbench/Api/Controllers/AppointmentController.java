@@ -72,6 +72,54 @@ public class AppointmentController
 	}
 
 	/**
+	 * Get a specific appointment the logged in user has
+	 *
+	 * @method HTTP GET
+	 * @endpoint /api/appointments/{id}
+	 * @param id
+	 * @return specific appointment
+	 */
+	@CrossOrigin
+	@PreAuthorize("hasAuthority('ROLE_CLIENT') or hasAuthority('ROLE_HEALTHWORKER')")
+	@GetMapping(value = "/appointments/{id}")
+	public ResponseEntity<Appointment> getAppointmentById(@PathVariable("id") long id) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		CustomUserDetails principal = (CustomUserDetails) authentication.getPrincipal();
+
+		Appointment appointment = appointmentRepository.findOne(id);
+
+		for( GrantedAuthority authority : principal.getAuthorities())
+		{
+			if (authority.toString().equals("ROLE_HEALTHWORKER"))
+			{
+				HealthWorker healthworker = healthworkerRepository.findByUsername(principal.getUsername());
+				if (appointment.healthWorker.equals(healthworker))
+				{
+					break;
+				}
+				else
+				{
+					return new ResponseEntity<Appointment>(HttpStatus.FORBIDDEN);
+				}
+			}
+			if (authority.toString().equals("ROLE_CLIENT"))
+			{
+				Client client = clientRepository.findByUsername(principal.getUsername());
+				if (appointment.client.equals(client))
+				{
+					break;
+				}
+				else
+				{
+					return new ResponseEntity<Appointment>(HttpStatus.FORBIDDEN);
+				}
+			}
+		}
+
+		return new ResponseEntity<>(appointment, HttpStatus.OK);
+	}
+
+	/**
 	 * This method makes it possible for either a healthworker or client to create a appointment
 	 *
 	 * @method HTTP POST
