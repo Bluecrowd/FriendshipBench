@@ -1,5 +1,5 @@
 <h2>All Appointments</h2>
-<button (click)="toggleAddAppointment()">Create Appointment</button>
+<button class="btn btn-primary btn-block" (click)="toggleAddAppointment()">Create Appointment</button>
 <br>
 
 <app-appointments-form [addAppointmentToggle] = "addAppointmentsToggle"></app-appointments-form>
@@ -27,7 +27,7 @@
             <td><a routerLink="/clients/{{appointment.client.id}}">{{appointment.client.firstName + ' ' + appointment.client.lastName}}</a></td>
             <td>
               <div *ngIf="appointment.status != 'CANCELLED'">
-                <button (click)="cancelAppointment(appointment)">Cancel</button>
+                <button class="btn btn-secondary btn-block" title="Cancel Appointment" style="!important;color: #fff" (click)="cancelAppointment(appointment)">Cancel</button>
               </div>
             </td>
           </tr>

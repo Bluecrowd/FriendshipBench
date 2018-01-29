@@ -26,9 +26,7 @@ export class QuestionnairesComponent implements OnInit {
   }
 
   setRedFlag(questionnaire: Questionnaire): void {
-    this.questionnairesService.toggleRedFlag(questionnaire).subscribe();
-
-    this.refresh();
+    this.questionnairesService.toggleRedFlag(questionnaire).subscribe(_ => this.refresh());
   }
 
   refresh(): void {
