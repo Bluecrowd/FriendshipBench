@@ -1,0 +1,55 @@
+<div *ngIf="questionnaire" class="row">
+  <div class="offset-3 offset-xl-3 offset-sm-6 col-xl-6 col-sm-12 mb-6">
+    <div class="card text-dark o-hidden h-100">
+      <div class="card-header">
+        <div style="text-align: center;">
+          <h2>
+            Questionnaire
+          </h2>
+        </div>
+        <i class="fa fa-user"></i>
+        <a routerLink="/clients/{{questionnaire.client.id}}">{{questionnaire.client.firstName + ' ' + questionnaire.client.lastName}}</a>
+        <br>
+        <i class="fa fa-clock-o"></i>
+        Submitted on: {{questionnaire.timestamp | date: 'yyyy-mm-dd hh:mm'}}
+      </div>
+      <div class="card-body">
+        <div class="card-body-icon">
+          <i class="fa fa-fw fa-list"></i>
+        </div>
+        <div class="list-group list-group-flush">
+          <li class="list-group-item" style="text-align: center">Answers</li>
+          <table style="width: 100%;">
+            <thead>
+              <th>Question</th>
+              <th>Answer</th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let answer of questionnaire.answers">
+                <td>
+                  {{answer.question.question_text}}
+                </td>
+                <td>
+                  <i *ngIf="!answer.answer" class="fa fa-times fa-2x"></i>
+                  <i *ngIf="answer.answer" class="fa fa-check fa-2x"></i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card-footer text-dark clearfix small z-1" style="text-align: center">
+        <button *ngIf="questionnaire.redflag" class="btn btn-danger">Red Flag!</button>
+        <button *ngIf="!questionnaire.redflag" class="btn btn-success">No Red Flag!</button>
+      </div>
+      <a routerLink="/questionnaires" class="card-footer text-dark clearfix small z-1" href="#">
+        <span class="float-left">Back to all Questionnaires</span>
+        <span class="float-right">
+          <i class="fa fa-angle-right"></i>
+        </span>
+      </a>
+    </div>
+  </div>
+</div>
+
+

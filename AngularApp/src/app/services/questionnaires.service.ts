@@ -36,7 +36,7 @@ export class QuestionnairesService {
   getQuestionnaire(id: number): Observable<Questionnaire> {
     this.setHeaderOptions()
     const url = `${this.questionnairesUrl}/${id}`;
-    return this.http.get<Questionnaire>(this.questionnairesUrl, this.httpOptions)
+    return this.http.get<Questionnaire>(url, this.httpOptions)
       .pipe(
         tap( _ => this.handleErrorService.log(`QuestionnairesService: fetched questionnaire id=${id}`)),
         catchError(this.handleErrorService.handleError<Questionnaire>('getQuestionnaireById'))
@@ -46,7 +46,7 @@ export class QuestionnairesService {
   /** PUT questionnaire for manually setting a red flag*/
   toggleRedFlag(questionnaire: Questionnaire): Observable<Questionnaire> {
     this.setHeaderOptions()
-    questionnaire.redFlag = !questionnaire.redFlag;
+    questionnaire.redflag = !questionnaire.redflag;
     return this.http.put(this.questionnairesUrl + '/' + questionnaire.id, questionnaire, this.httpOptions)
       .pipe(
         tap( _ => this.handleErrorService.log(`toggled red flag questionnaire id=${questionnaire.id}`)),

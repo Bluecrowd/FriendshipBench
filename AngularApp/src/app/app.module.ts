@@ -37,6 +37,7 @@ import {AuthenticationService} from './services/authentication.service';
 import { HealthworkerComponent } from './components/healthworker/healthworker.component';
 import { AppointmentsFormComponent } from './components/appointments-form/appointments-form.component';
 import { AppointmentComponent } from './components/appointment/appointment.component';
+import { QuestionnaireComponent } from './components/questionnaire/questionnaire.component';
 
 
 @NgModule({
@@ -59,7 +60,8 @@ import { AppointmentComponent } from './components/appointment/appointment.compo
     QuestionComponent,
     HealthworkerComponent,
     AppointmentsFormComponent,
-    AppointmentComponent
+    AppointmentComponent,
+    QuestionnaireComponent
   ],
   imports: [
     BrowserModule,
