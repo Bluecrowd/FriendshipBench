@@ -82,6 +82,8 @@ export class AppointmentsFormComponent implements OnInit {
         .subscribe(appointment => {this.appointmentsComponent.appointments.push(appointment);
         });
     }
+
+    this.appointmentsComponent.getAppointments();
   }
 
   closeAddAppointment(): void {
