@@ -42,25 +42,25 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarResponsive">
     <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
-      <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
+      <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Appointments">
         <a class="nav-link" routerLink="/appointments">
           <i class="fa fa-fw fa-calendar-check-o"></i>
           <span class="nav-link-text">Appointments</span>
         </a>
       </li>
-      <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+      <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Benches">
         <a class="nav-link" routerLink="/benches">
           <i class="fa fa-fw fa-map-marker"></i>
           <span class="nav-link-text">Benches</span>
         </a>
       </li>
-      <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
+      <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Clients">
         <a class="nav-link" routerLink="/clients">
           <i class="fa fa-fw fa-address-card-o"></i>
           <span class="nav-link-text">Clients</span>
         </a>
       </li>
-      <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
+      <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Healtworkers">
         <a class="nav-link" routerLink="/healthworkers">
           <i class="fa fa-fw fa-user-md"></i>
           <span class="nav-link-text">Healtworkers</span>
@@ -236,6 +236,10 @@
         </form>
       </li> -->
       <li class="nav-item">
+        <a style="color: rgba(255,255,255,.5); display: block; padding-right: .5rem; padding-left: .5rem; padding: .5rem 1rem;">
+          <i class="fa fa-fw fa-user-circle-o" ></i> {{cookieService.get('UserName')}}</a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
           <i class="fa fa-fw fa-sign-out"></i>Logout</a>
       </li>
@@ -253,19 +257,19 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Appointments">
           <a class="nav-link" routerLink="/appointments">
             <i class="fa fa-fw fa-calendar-check-o"></i>
             <span class="nav-link-text">Appointments</span>
           </a>
         </li>
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Clients">
           <a class="nav-link" routerLink="/clients">
             <i class="fa fa-fw fa-address-card-o"></i>
             <span class="nav-link-text">Clients</span>
           </a>
         </li>
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Questionnaires">
           <a class="nav-link" routerLink="/questionnaires">
             <i class="fa fa-fw fa-pencil-square-o"></i>
             <span class="nav-link-text">Questionnaires</span>
@@ -440,6 +444,10 @@
             </div>
           </form>
         </li> -->
+        <li class="nav-item">
+          <a style="color: rgba(255,255,255,.5); display: block; padding-right: .5rem; padding-left: .5rem; padding: .5rem 1rem;">
+            <i class="fa fa-fw fa-user-circle-o" ></i> {{cookieService.get('UserName')}}</a>
+        </li>
         <li class="nav-item">
           <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
             <i class="fa fa-fw fa-sign-out"></i>Logout</a>
