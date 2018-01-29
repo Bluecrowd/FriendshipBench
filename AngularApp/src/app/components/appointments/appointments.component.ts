@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {AppointmentsService} from '../../services/appointments.service';
+import {Appointment} from '../../models/appointment';
+
+declare var $: any;
 
 @Component({
   selector: 'app-appointments',
@@ -7,12 +10,35 @@ import {AppointmentsService} from '../../services/appointments.service';
   styleUrls: ['./appointments.component.css']
 })
 export class AppointmentsComponent implements OnInit {
+  appointments: Appointment[];
+
+  public addAppointmentsToggle = false;
 
   constructor(
     private appointmentsService: AppointmentsService,
   ) { }
 
   ngOnInit() {
+    this.getAppointments();
+  }
+
+  toggleAddAppointment(): void {
+    this.addAppointmentsToggle = !this.addAppointmentsToggle;
+  }
+
+  cancelAppointment(app: Appointment): void {
+      app.status = 'CANCELLED';
+    this.appointmentsService.cancelAppointment(app.id).subscribe();
+  }
+
+  getAppointments(): void {
+    this.appointmentsService.getAppointments()
+      .subscribe(appointments => {this.appointments = appointments; setTimeout(() => { $('#dataTable').DataTable(); }, 350); });
+  }
+
+  refreshAppointments(): void {
+    this.appointmentsService.getAppointments()
+      .subscribe(appointments => this.appointments = appointments);
   }
 
 }

@@ -22,7 +22,7 @@ export class QuestionFormComponent implements OnInit {
   constructor(
     private questionsComponent: QuestionsComponent,
     private questionsService: QuestionsService,
-  ) { }
+  ) { }ng
 
   ngOnInit() {
   }

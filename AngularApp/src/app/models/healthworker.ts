@@ -1,15 +1,14 @@
 import {Role} from './role';
 
 export class Healthworker {
+  id: number;
+  username: string;
+  roles: Role[];
+  firstName: string;
+  lastName: string;
+  gender: string;
+  email: string;
+  phonenumber: string;
 
-  constructor(
-    public id: number,
-    public username: string,
-    public roles: Role[],
-    public firstName: string,
-    public lastName: string,
-    public gender: string,
-    public email: string,
-    public phonenumber: string
-  ) {}
+  constructor( ) {}
 }
