@@ -1,6 +1,5 @@
 package nl.friendshipbench.api.repositories;
 
-import com.sun.scenario.effect.Offset;
 import nl.friendshipbench.api.models.Messages;
 import org.springframework.data.repository.CrudRepository;
 
