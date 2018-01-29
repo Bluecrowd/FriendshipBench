@@ -28,7 +28,7 @@ public class Client extends User {
     private String district;
     @Column(nullable = false, unique = true)
     private String email;
-    @Column(name = "phone_number", nullable = false)
+    @Column(name = "phone_number")
     private String phoneNumber;
 
     @ManyToOne(cascade = CascadeType.DETACH)

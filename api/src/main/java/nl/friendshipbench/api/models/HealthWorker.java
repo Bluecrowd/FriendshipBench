@@ -21,7 +21,7 @@ public class HealthWorker extends User {
     private OffsetDateTime birthDay;
     @Column(nullable = false)
     private String email;
-    @Column(name = "phone_number", nullable = false)
+    @Column(name = "phone_number")
     private String phoneNumber;
 
     public HealthWorker() { }
