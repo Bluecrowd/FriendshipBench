@@ -93,7 +93,7 @@ public class AccountController {
      */
     @CrossOrigin
     @RequestMapping(value = "/account/me", method = RequestMethod.PUT)
-    @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_PENDING') or hasAuthority('ROLE_HEALTHWORKER') or hasAuthority('ROLE_CLIENT')")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_HEALTHWORKER') or hasAuthority('ROLE_CLIENT')")
     public ResponseEntity<?> editUserInfo(@RequestBody HashMap<String, Object> mapper) throws Exception {
         CustomUserDetails principal = userHelper.principalHelper();
         String currentUsername = principal.getUsername();
@@ -127,7 +127,7 @@ public class AccountController {
                 return ResponseEntity.ok("User updated successfully");
             }
             //users with role HEALTHWORKER
-            else if(authority.getAuthority().equals("ROLE_HEALTHWORKER") || authority.getAuthority().equals("ROLE_PENDING")) {
+            else if(authority.getAuthority().equals("ROLE_HEALTHWORKER")) {
                 HealthWorker currentUser = healthworkerRepository.findByUsername(currentUsername);
 
                 currentUser.setFirstName(firstName);
@@ -152,7 +152,7 @@ public class AccountController {
      */
     @CrossOrigin
     @RequestMapping(value = "/account/details/me", method = RequestMethod.PUT)
-    @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_PENDING') or hasAuthority('ROLE_HEALTHWORKER') or hasAuthority('ROLE_CLIENT')")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_HEALTHWORKER') or hasAuthority('ROLE_CLIENT')")
     public ResponseEntity<?> editAccountInfo(@RequestBody HashMap<String, Object> mapper) throws Exception {
         CustomUserDetails principal = userHelper.principalHelper();
         String currentUsername = principal.getUsername();
@@ -178,7 +178,7 @@ public class AccountController {
                 return ResponseEntity.ok("User updated successfully");
             }
             //users with role HEALTHWORKER
-            else if(authority.getAuthority().equals("ROLE_HEALTHWORKER") || authority.getAuthority().equals("ROLE_PENDING")) {
+            else if(authority.getAuthority().equals("ROLE_HEALTHWORKER")) {
                 HealthWorker currentUser = healthworkerRepository.findByUsername(currentUsername);
 
                 currentUser.setEmail(email);

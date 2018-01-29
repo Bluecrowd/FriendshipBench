@@ -1,9 +1,6 @@
 package nl.friendshipbench.api.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * Created by Jan-Bert on 22-1-2018.
@@ -14,7 +11,7 @@ public class Bench
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	
+
 	private String streetname;
 
 	private String housenumber;

@@ -12,8 +12,10 @@ public class Question
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
+	@Column(nullable = false)
 	private String question_text;
 
+	@Column(nullable = false)
 	private Boolean active;
 
 	public Long getId()

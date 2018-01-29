@@ -15,10 +15,12 @@ public class Answer
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
+	@Column(nullable = false)
 	private Boolean answer;
 
 	@ManyToOne(cascade=CascadeType.DETACH)
 	@JoinColumn(referencedColumnName = "id")
+	@Column(nullable = false)
 	private Question question;
 
 	public Question getQuestion()

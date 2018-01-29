@@ -15,12 +15,14 @@ public class Questionnaire
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
+	@Column(nullable = false)
 	private OffsetDateTime timestamp;
 
 	private Boolean redflag;
 
 	@ManyToOne(cascade=CascadeType.DETACH)
 	@JoinColumn(referencedColumnName = "id")
+	@Column(nullable = false)
 	private Client client;
 
 	@OneToMany(cascade=CascadeType.ALL)

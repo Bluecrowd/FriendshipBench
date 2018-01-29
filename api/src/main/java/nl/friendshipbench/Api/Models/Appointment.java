@@ -15,21 +15,26 @@ public class Appointment
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
+	@Column(nullable = false)
 	private OffsetDateTime timestamp;
 
 	@Enumerated(EnumType.ORDINAL)
+	@Column(nullable = false)
 	private AppointmentStatusEnum status;
 
 	@ManyToOne(cascade=CascadeType.DETACH)
 	@JoinColumn(referencedColumnName = "id")
+	@Column(nullable = false)
 	private Bench bench;
 
 	@ManyToOne(cascade=CascadeType.DETACH)
 	@JoinColumn(referencedColumnName = "id")
+	@Column(nullable = false)
 	private Client client;
 
 	@ManyToOne(cascade=CascadeType.DETACH)
 	@JoinColumn(referencedColumnName = "id")
+	@Column(nullable = false)
 	private HealthWorker healthWorker;
 
 
