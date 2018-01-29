@@ -12,7 +12,7 @@
       </td>
       <td>
         <select required [(ngModel)]="model.active" name="active">
-          <option *ngFor="let state of states" [value]="state">{{state}}</option>
+          <option *ngFor="let state of states" value="state">{{state}}</option>
         </select>
       <td>
         <button (click)="add()">Create</button>
