@@ -22,7 +22,6 @@ public class Questionnaire
 
 	@ManyToOne(cascade=CascadeType.DETACH)
 	@JoinColumn(referencedColumnName = "id")
-	@Column(nullable = false)
 	private Client client;
 
 	@OneToMany(cascade=CascadeType.ALL)

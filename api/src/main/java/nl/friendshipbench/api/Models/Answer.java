@@ -20,7 +20,6 @@ public class Answer
 
 	@ManyToOne(cascade=CascadeType.DETACH)
 	@JoinColumn(referencedColumnName = "id")
-	@Column(nullable = false)
 	private Question question;
 
 	public Question getQuestion()
