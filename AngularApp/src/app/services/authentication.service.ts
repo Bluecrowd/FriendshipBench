@@ -8,6 +8,8 @@ import { Credentials } from '../models/credentials';
 import { Token } from '../models/token';
 import { AccountDetails } from '../models/accountDetails';
 import {RegisterForm} from '../models/registerForm';
+import {Subscription} from 'rxjs/Subscription';
+import {rootRoute} from '@angular/router/src/router_module';
 
 /** constant for defining the content type */
 const httpCredentialOptions = {
@@ -92,6 +94,7 @@ export class AuthenticationService {
     }
     if (saveAccessToken) {
       this.cookieService.set('UserAccessToken', token.access_token, expireDate );
+      this.cookieService.set('UserName', accountDetails.username, expireDate );
     }
   }
 

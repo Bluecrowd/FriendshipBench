@@ -13,17 +13,68 @@ public class Questionnaire
 {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	public Long id;
+	private Long id;
 
-	public OffsetDateTime timestamp;
+	@Column(nullable = false)
+	private OffsetDateTime timestamp;
 
-	public Boolean redflag;
+	private Boolean redflag;
 
 	@ManyToOne(cascade=CascadeType.DETACH)
 	@JoinColumn(referencedColumnName = "id")
-	public Client client;
+	@Column(nullable = false)
+	private Client client;
 
 	@OneToMany(cascade=CascadeType.ALL)
-	public List<Answer> answers;
+	private List<Answer> answers;
 
+	public Long getId()
+	{
+		return id;
+	}
+
+	public void setId(Long id)
+	{
+		this.id = id;
+	}
+
+	public OffsetDateTime getTimestamp()
+	{
+		return timestamp;
+	}
+
+	public void setTimestamp(OffsetDateTime timestamp)
+	{
+		this.timestamp = timestamp;
+	}
+
+	public Boolean getRedflag()
+	{
+		return redflag;
+	}
+
+	public void setRedflag(Boolean redflag)
+	{
+		this.redflag = redflag;
+	}
+
+	public Client getClient()
+	{
+		return client;
+	}
+
+	public void setClient(Client client)
+	{
+		this.client = client;
+	}
+
+	public List<Answer> getAnswers()
+	{
+		return answers;
+	}
+
+	public void setAnswers(List<Answer> answers)
+	{
+		this.answers = answers;
+	}
 }

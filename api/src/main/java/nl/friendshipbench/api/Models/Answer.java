@@ -13,12 +13,14 @@ public class Answer
 {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	public Long id;
+	private Long id;
 
-	public Boolean answer;
+	@Column(nullable = false)
+	private Boolean answer;
 
 	@ManyToOne(cascade=CascadeType.DETACH)
 	@JoinColumn(referencedColumnName = "id")
+	@Column(nullable = false)
 	private Question question;
 
 	public Question getQuestion()
@@ -29,5 +31,25 @@ public class Answer
 	public void setQuestion(Question question)
 	{
 		this.question = question;
+	}
+
+	public Long getId()
+	{
+		return id;
+	}
+
+	public void setId(Long id)
+	{
+		this.id = id;
+	}
+
+	public Boolean getAnswer()
+	{
+		return answer;
+	}
+
+	public void setAnswer(Boolean answer)
+	{
+		this.answer = answer;
 	}
 }

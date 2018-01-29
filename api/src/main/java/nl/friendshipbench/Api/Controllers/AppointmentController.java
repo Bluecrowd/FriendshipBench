@@ -1,5 +1,6 @@
 package nl.friendshipbench.api.controllers;
 
+import nl.friendshipbench.api.Helpers.UserHelper;
 import nl.friendshipbench.api.enums.AppointmentStatusEnum;
 import nl.friendshipbench.api.models.Appointment;
 import nl.friendshipbench.api.models.Client;
@@ -10,9 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -32,8 +31,7 @@ public class AppointmentController
 	@Autowired
 	private AppointmentRepository appointmentRepository;
 
-	@Autowired
-	private BenchRepository benchRepository;
+	private UserHelper userHelper = new UserHelper();
 
 	/**
 	 * This method will return all the appointments a logged in user has
@@ -47,8 +45,7 @@ public class AppointmentController
 	@PreAuthorize("hasAuthority('ROLE_CLIENT') or hasAuthority('ROLE_HEALTHWORKER')")
 	@GetMapping(value = "/appointments")
 	public ResponseEntity<Iterable<Appointment>> getAllAppointmentsIHave() {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		CustomUserDetails principal = (CustomUserDetails) authentication.getPrincipal();
+		CustomUserDetails principal = userHelper.principalHelper();
 
 		Iterable<Appointment> appointments = null;
 
@@ -83,8 +80,7 @@ public class AppointmentController
 	@PreAuthorize("hasAuthority('ROLE_CLIENT') or hasAuthority('ROLE_HEALTHWORKER')")
 	@GetMapping(value = "/appointments/{id}")
 	public ResponseEntity<Appointment> getAppointmentById(@PathVariable("id") long id) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		CustomUserDetails principal = (CustomUserDetails) authentication.getPrincipal();
+		CustomUserDetails principal = userHelper.principalHelper();
 
 		Appointment appointment = appointmentRepository.findOne(id);
 
@@ -93,25 +89,25 @@ public class AppointmentController
 			if (authority.toString().equals("ROLE_HEALTHWORKER"))
 			{
 				HealthWorker healthworker = healthworkerRepository.findByUsername(principal.getUsername());
-				if (appointment.healthWorker.equals(healthworker))
+				if (appointment.getHealthWorker().equals(healthworker))
 				{
 					break;
 				}
 				else
 				{
-					return new ResponseEntity<Appointment>(HttpStatus.FORBIDDEN);
+					return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 				}
 			}
 			if (authority.toString().equals("ROLE_CLIENT"))
 			{
 				Client client = clientRepository.findByUsername(principal.getUsername());
-				if (appointment.client.equals(client))
+				if (appointment.getClient().equals(client))
 				{
 					break;
 				}
 				else
 				{
-					return new ResponseEntity<Appointment>(HttpStatus.FORBIDDEN);
+					return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 				}
 			}
 		}
@@ -131,31 +127,28 @@ public class AppointmentController
 	@PreAuthorize("hasAuthority('ROLE_CLIENT') or hasAuthority('ROLE_HEALTHWORKER')")
 	@PostMapping(value = "/appointments")
 	public ResponseEntity<Appointment> createAppointment(@RequestBody Appointment appointment) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		CustomUserDetails principal = (CustomUserDetails) authentication.getPrincipal();
+		CustomUserDetails principal = userHelper.principalHelper();
 
 		for( GrantedAuthority authority : principal.getAuthorities())
 		{
 			if (authority.toString().equals("ROLE_HEALTHWORKER"))
 			{
-				HealthWorker healthworker = healthworkerRepository.findByUsername(principal.getUsername());
-				appointment.healthWorker = healthworker;
+				appointment.setHealthWorker(healthworkerRepository.findByUsername(principal.getUsername()));
 				break;
 			}
 			if (authority.toString().equals("ROLE_CLIENT"))
 			{
-				Client client = clientRepository.findByUsername(principal.getUsername());
-				appointment.client = client;
+				appointment.setClient(clientRepository.findByUsername(principal.getUsername()));
 				break;
 			}
 		}
 
 
-		appointment.status = AppointmentStatusEnum.PENDING;
+		appointment.setStatus(AppointmentStatusEnum.PENDING);
 
 		appointmentRepository.save(appointment);
 
-		return new ResponseEntity<Appointment>(appointmentRepository.findOne(appointment.id), HttpStatus.CREATED);
+		return new ResponseEntity<>(appointmentRepository.findOne(appointment.getId()), HttpStatus.CREATED);
 	}
 
 	/**
@@ -171,11 +164,11 @@ public class AppointmentController
 	@PreAuthorize("hasAuthority('ROLE_CLIENT') or hasAuthority('ROLE_HEALTHWORKER')")
 	@PutMapping(value = "/appointments/{id}")
 	public ResponseEntity<Appointment> updateAppointment(@PathVariable("id") long id, @RequestBody Appointment appointment) {
-		appointment.id = id;
+		appointment.setId(id);
 
 		appointmentRepository.save(appointment);
 
-		return new ResponseEntity<Appointment>(appointmentRepository.findOne(id), HttpStatus.OK);
+		return new ResponseEntity<>(appointmentRepository.findOne(id), HttpStatus.OK);
 	}
 
 	/**
@@ -192,10 +185,10 @@ public class AppointmentController
 	public ResponseEntity<Appointment> setAccepted(@PathVariable("id") long id)
 	{
 		Appointment appointment = appointmentRepository.findOne(id);
-		appointment.status = AppointmentStatusEnum.ACCEPTED;
+		appointment.setStatus(AppointmentStatusEnum.ACCEPTED);
 		appointmentRepository.save(appointment);
 
-		return new ResponseEntity<Appointment>(appointment, HttpStatus.OK);
+		return new ResponseEntity<>(appointment, HttpStatus.OK);
 	}
 
 	/**
@@ -212,9 +205,9 @@ public class AppointmentController
 	public ResponseEntity<Appointment> setCancelled(@PathVariable("id") long id)
 	{
 		Appointment appointment = appointmentRepository.findOne(id);
-		appointment.status = AppointmentStatusEnum.CANCELLED;
+		appointment.setStatus(AppointmentStatusEnum.CANCELLED);
 		appointmentRepository.save(appointment);
 
-		return new ResponseEntity<Appointment>(appointment, HttpStatus.OK);
+		return new ResponseEntity<>(appointment, HttpStatus.OK);
 	}
 }

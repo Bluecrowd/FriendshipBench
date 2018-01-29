@@ -30,7 +30,7 @@ public class BenchController
 	@PreAuthorize("hasAuthority('ROLE_CLIENT') or hasAuthority('ROLE_HEALTHWORKER') or hasAuthority('ROLE_ADMIN')")
 	@GetMapping(value = "/benches")
 	public ResponseEntity<Iterable<Bench>> getAllBenches() {
-		return new ResponseEntity<Iterable<Bench>>(benchRepository.findAll(), HttpStatus.OK);
+		return new ResponseEntity<>(benchRepository.findAll(), HttpStatus.OK);
 	}
 
 	/**
@@ -50,10 +50,10 @@ public class BenchController
 
 		if (bench != null)
 		{
-			return new ResponseEntity<Bench>(bench, HttpStatus.OK);
+			return new ResponseEntity<>(bench, HttpStatus.OK);
 		}
 
-		return new ResponseEntity<Bench>(HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
 	}
 
@@ -71,7 +71,7 @@ public class BenchController
 	public ResponseEntity<Bench> createBench(@RequestBody Bench bench) {
 		benchRepository.save(bench);
 
-		return new ResponseEntity<Bench>(benchRepository.findOne(bench.id), HttpStatus.CREATED);
+		return new ResponseEntity<>(benchRepository.findOne(bench.getId()), HttpStatus.CREATED);
 	}
 
 	/**
@@ -87,10 +87,11 @@ public class BenchController
 	@PreAuthorize("hasAuthority('ROLE_HEALTHWORKER') or hasAuthority('ROLE_ADMIN')")
 	@PutMapping(value = "/benches/{id}")
 	public ResponseEntity<Bench> updateBench(@PathVariable("id") long id, @RequestBody Bench bench) {
-		//TODO: Fix dingen met id
+		bench.setId(id);
+
 		benchRepository.save(bench);
 
-		return new ResponseEntity<Bench>(benchRepository.findOne(id), HttpStatus.OK);
+		return new ResponseEntity<>(benchRepository.findOne(id), HttpStatus.OK);
 	}
 
 	/**
@@ -107,7 +108,7 @@ public class BenchController
 	public ResponseEntity<Bench> updateBench(@PathVariable("id") long id) {
 		benchRepository.delete(id);
 
-		return new ResponseEntity<Bench>(HttpStatus.NO_CONTENT);
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 
 

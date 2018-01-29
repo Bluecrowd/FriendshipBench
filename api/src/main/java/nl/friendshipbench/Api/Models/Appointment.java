@@ -13,23 +13,88 @@ public class Appointment
 {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	public Long id;
+	private Long id;
 
-	public OffsetDateTime timestamp;
+	@Column(nullable = false)
+	private OffsetDateTime timestamp;
 
 	@Enumerated(EnumType.ORDINAL)
-	public AppointmentStatusEnum status;
+	@Column(nullable = false)
+	private AppointmentStatusEnum status;
 
 	@ManyToOne(cascade=CascadeType.DETACH)
 	@JoinColumn(referencedColumnName = "id")
-	public Bench bench;
+	@Column(nullable = false)
+	private Bench bench;
 
 	@ManyToOne(cascade=CascadeType.DETACH)
 	@JoinColumn(referencedColumnName = "id")
-	public Client client;
+	@Column(nullable = false)
+	private Client client;
 
 	@ManyToOne(cascade=CascadeType.DETACH)
 	@JoinColumn(referencedColumnName = "id")
-	public HealthWorker healthWorker;
+	@Column(nullable = false)
+	private HealthWorker healthWorker;
 
+
+	public Long getId()
+	{
+		return id;
+	}
+
+	public void setId(Long id)
+	{
+		this.id = id;
+	}
+
+	public OffsetDateTime getTimestamp()
+	{
+		return timestamp;
+	}
+
+	public void setTimestamp(OffsetDateTime timestamp)
+	{
+		this.timestamp = timestamp;
+	}
+
+	public AppointmentStatusEnum getStatus()
+	{
+		return status;
+	}
+
+	public void setStatus(AppointmentStatusEnum status)
+	{
+		this.status = status;
+	}
+
+	public Bench getBench()
+	{
+		return bench;
+	}
+
+	public void setBench(Bench bench)
+	{
+		this.bench = bench;
+	}
+
+	public Client getClient()
+	{
+		return client;
+	}
+
+	public void setClient(Client client)
+	{
+		this.client = client;
+	}
+
+	public HealthWorker getHealthWorker()
+	{
+		return healthWorker;
+	}
+
+	public void setHealthWorker(HealthWorker healthWorker)
+	{
+		this.healthWorker = healthWorker;
+	}
 }

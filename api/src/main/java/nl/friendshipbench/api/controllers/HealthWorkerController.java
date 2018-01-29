@@ -38,7 +38,7 @@ public class HealthWorkerController {
      * @return all health workers
      */
     @CrossOrigin
-    @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_HEALTHWORKER')")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_HEALTHWORKER') or hasAuthority('ROLE_CLIENT')")
     @GetMapping(value = "/healthworkers")
     public ResponseEntity<Iterable<HealthWorker>> getAllHealthWorkers() {
         return new ResponseEntity<>(healthworkerRepository.findAll(), HttpStatus.OK);
@@ -53,7 +53,7 @@ public class HealthWorkerController {
      * @return specific health worker
      */
     @CrossOrigin
-    @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_HEALTHWORKER')")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_HEALTHWORKER') or hasAuthority('ROLE_CLIENT')")
     @GetMapping(value = "/healthworkers/{id}")
     public ResponseEntity<HealthWorker> getHealthWorkerById(@PathVariable("id") long id) {
         HealthWorker healthWorker = healthworkerRepository.findOne(id);

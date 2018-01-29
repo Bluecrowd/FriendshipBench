@@ -1,5 +1,6 @@
 package nl.friendshipbench.api.controllers;
 
+import nl.friendshipbench.api.Helpers.UserHelper;
 import nl.friendshipbench.api.models.Client;
 import nl.friendshipbench.api.models.HealthWorker;
 import nl.friendshipbench.api.models.Questionnaire;
@@ -11,9 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -40,6 +39,8 @@ public class QuestionnaireController
 	@Autowired
 	private QuestionnaireRepository questionnaireRepository;
 
+	private UserHelper userHelper = new UserHelper();
+
 	/**
 	 * Method to get all questionnaires bound to a health worker or client
 	 *
@@ -51,8 +52,7 @@ public class QuestionnaireController
 	@PreAuthorize("hasAuthority('ROLE_CLIENT') or hasAuthority('ROLE_HEALTHWORKER')")
 	@GetMapping(value = "/questionnaires")
 	public ResponseEntity<Iterable<Questionnaire>> getAllQuestionnaires() {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		CustomUserDetails principal = (CustomUserDetails) authentication.getPrincipal();
+		CustomUserDetails principal = userHelper.principalHelper();
 
 		List<Questionnaire> allQuestionnaires = new ArrayList<>();
 
@@ -97,8 +97,7 @@ public class QuestionnaireController
 	@PreAuthorize("hasAuthority('ROLE_CLIENT') or hasAuthority('ROLE_HEALTHWORKER')")
 	@GetMapping(value = "/questionnaires/{id}")
 	public ResponseEntity<Questionnaire> getSpecificQuestionnaire(@PathVariable("id") long id) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		CustomUserDetails principal = (CustomUserDetails) authentication.getPrincipal();
+		CustomUserDetails principal = userHelper.principalHelper();
 
 		Questionnaire questionnaire = questionnaireRepository.findOne(id);
 
@@ -108,7 +107,7 @@ public class QuestionnaireController
 			{
 				HealthWorker healthworker = healthworkerRepository.findByUsername(principal.getUsername());
 
-				if (questionnaire.client.getHealthWorker().equals(healthworker))
+				if (questionnaire.getClient().getHealthWorker().equals(healthworker))
 				{
 					break;
 				}
@@ -122,11 +121,8 @@ public class QuestionnaireController
 			{
 				Client client = clientRepository.findByUsername(principal.getUsername());
 
-				if (questionnaire.client.equals(client))
+				if (questionnaire.getClient().equals(client))
 				{
-					System.out.println("BAD client:");
-					System.out.println(questionnaire.client.getId() + " doesn't equal " + client.getId());
-
 					break;
 				}
 				else
@@ -151,8 +147,7 @@ public class QuestionnaireController
 	@PreAuthorize("hasAuthority('ROLE_HEALTHWORKER')")
 	@GetMapping(value = "/questionnaires/client/{id}")
 	public ResponseEntity<Iterable<Questionnaire>> getAllQuestionnairesMyClientMade(@PathVariable("id") long clientId) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		CustomUserDetails principal = (CustomUserDetails) authentication.getPrincipal();
+		CustomUserDetails principal = userHelper.principalHelper();
 
 		HealthWorker healthworker = healthworkerRepository.findByUsername(principal.getUsername());
 
@@ -185,11 +180,11 @@ public class QuestionnaireController
 	@PreAuthorize("hasAuthority('ROLE_HEALTHWORKER') or hasAuthority('ROLE_ADMIN')")
 	@PutMapping(value = "/questionnaires/{id}")
 	public ResponseEntity<Questionnaire> updateQuestionnaire(@PathVariable("id") long id, @RequestBody Questionnaire questionnaire) {
-		questionnaire.id = id;
+		questionnaire.setId(id);
 
 		questionnaireRepository.save(questionnaire);
 
-		return new ResponseEntity<Questionnaire>(questionnaireRepository.findOne(id), HttpStatus.OK);
+		return new ResponseEntity<>(questionnaireRepository.findOne(id), HttpStatus.OK);
 	}
 
 	/**
@@ -201,23 +196,22 @@ public class QuestionnaireController
 	 * @return
 	 */
 	@CrossOrigin
-	@PreAuthorize("hasAuthority('ROLE_HEALTHWORKER') or hasAuthority('ROLE_ADMIN')")
+	@PreAuthorize("hasAuthority('ROLE_CLIENT') or hasAuthority('ROLE_HEALTHWORKER') or hasAuthority('ROLE_ADMIN')")
 	@PostMapping(value = "/questionnaires")
 	public ResponseEntity<Questionnaire> createQuestionnaire(@RequestBody Questionnaire questionnaire) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		CustomUserDetails principal = (CustomUserDetails) authentication.getPrincipal();
+		CustomUserDetails principal = userHelper.principalHelper();
 
 		Client client = clientRepository.findByUsername(principal.getUsername());
-		questionnaire.client = client;
+		questionnaire.setClient(client);
 
 		if(client != null)
 		{
 			questionnaireRepository.save(questionnaire);
-			return new ResponseEntity<Questionnaire>(questionnaireRepository.findOne(questionnaire.id), HttpStatus.CREATED);
+			return new ResponseEntity<>(questionnaireRepository.findOne(questionnaire.getId()), HttpStatus.CREATED);
 		}
 		else
 		{
-			return new ResponseEntity<Questionnaire>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 
 	}
