@@ -149,69 +149,6 @@ public class AccountController {
         return new ResponseEntity<>("Something went wrong ", HttpStatus.BAD_REQUEST);
     }
 
-    @CrossOrigin
-    @RequestMapping(value = "/account/changepassword", method = RequestMethod.PUT)
-    public ResponseEntity<?> changePassword(@RequestBody HashMap<String, Object> mapper) throws Exception {
-        CustomUserDetails principal = userHelper.principalHelper();
-        String currentUsername = principal.getUsername();
-
-        String oldPassword = (String) mapper.get("oldPassword");
-        String newPassword = (String) mapper.get("newPassword");
-
-        String encodedOldPassword = passwordEncoder.encode(oldPassword);
-
-        Collection<? extends GrantedAuthority> authorities = principal.getAuthorities();
-
-        for (GrantedAuthority authority : authorities) {
-
-            //Users with role CLIENT
-            if (authority.getAuthority().equals("ROLE_CLIENT")) {
-                Client currentUser = clientRepository.findByUsername(currentUsername);
-                String dbPassword = currentUser.getPassword();
-
-                if (passwordEncoder.matches(dbPassword, encodedOldPassword)) {
-                    if (newPassword != null && !newPassword.isEmpty() && !newPassword.equals(""))
-                        currentUser.setPassword(passwordEncoder.encode(newPassword));
-
-                    clientRepository.save(currentUser);
-                    return ResponseEntity.ok("User updated successfully");
-                } else
-                    return new ResponseEntity<Object>("Passwords don't match", HttpStatus.BAD_REQUEST);
-            }
-            //users with role HEALTHWORKER
-            else if(authority.getAuthority().equals("ROLE_HEALTHWORKER") || authority.getAuthority().equals("ROLE_PENDING")) {
-                HealthWorker currentUser = healthworkerRepository.findByUsername(currentUsername);
-                String dbPassword = currentUser.getPassword();
-
-                if (passwordEncoder.matches(dbPassword, encodedOldPassword)) {
-                    if (newPassword != null && !newPassword.isEmpty() && !newPassword.equals(""))
-                        currentUser.setPassword(passwordEncoder.encode(newPassword));
-
-                    healthworkerRepository.save(currentUser);
-                    return ResponseEntity.ok("User updated successfully");
-                } else
-                    return new ResponseEntity<Object>("Passwords don't match", HttpStatus.BAD_REQUEST);
-
-            }
-            //users with role ADMIN
-            else if(authority.getAuthority().equals("ROLE_ADMIN")) {
-                User currentUser = userRepository.findByUsername(currentUsername);
-                String dbPassword = currentUser.getPassword();
-
-                if(passwordEncoder.matches(dbPassword, encodedOldPassword)) {
-                    if (newPassword != null && !newPassword.isEmpty() && !newPassword.equals(""))
-                        currentUser.setPassword(passwordEncoder.encode(newPassword));
-
-                    userRepository.save(currentUser);
-                    return ResponseEntity.ok("User updated successfully");
-                } else
-                    return new ResponseEntity<Object>("Passwords don't match", HttpStatus.BAD_REQUEST);
-
-            }
-        }
-        return new ResponseEntity<>("Something went wrong ", HttpStatus.BAD_REQUEST);
-    }
-
     /**
      * Method to get the clients who are bound to the healthworker
      *
