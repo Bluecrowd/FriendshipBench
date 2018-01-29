@@ -4,6 +4,8 @@ import {Healthworker} from '../../models/healthworker';
 import {Role} from '../../models/role';
 import {RoleName} from '../../models/roleName';
 
+declare var $: any;
+
 @Component({
   selector: 'app-healthworkers',
   templateUrl: './healthworkers.component.html',
@@ -22,7 +24,7 @@ export class HealthworkersComponent implements OnInit {
 
   getHealthworkers(): void {
     this.healthworkersService.getHealthworkers()
-      .subscribe( healthworkers => this.healthWorkers = healthworkers);
+      .subscribe( healthworkers => {this.healthWorkers = healthworkers; setTimeout(() => { $('#dataTable').DataTable(); }, 350);});
   }
 
   approveHealthworker(hw: Healthworker): void {

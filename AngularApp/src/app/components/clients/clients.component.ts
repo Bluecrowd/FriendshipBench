@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {ClientsService} from '../../services/clients.service';
 import {Client} from '../../models/client';
 
+declare var $: any;
+
 @Component({
   selector: 'app-clients',
   templateUrl: './clients.component.html',
@@ -18,7 +20,7 @@ export class ClientsComponent implements OnInit {
 
   getClients(): void {
     this.clientsService.getClients()
-      .subscribe(clients => this.clients = clients);
+      .subscribe(clients => { this.clients = clients; setTimeout(() => { $('#dataTable').DataTable(); }, 350); } );
   }
 
 }
