@@ -24,17 +24,14 @@ public class Appointment
 
 	@ManyToOne(cascade=CascadeType.DETACH)
 	@JoinColumn(referencedColumnName = "id")
-	@Column(nullable = false)
 	private Bench bench;
 
 	@ManyToOne(cascade=CascadeType.DETACH)
 	@JoinColumn(referencedColumnName = "id")
-	@Column(nullable = false)
 	private Client client;
 
 	@ManyToOne(cascade=CascadeType.DETACH)
 	@JoinColumn(referencedColumnName = "id")
-	@Column(nullable = false)
 	private HealthWorker healthWorker;
 
 
