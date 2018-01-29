@@ -5,6 +5,7 @@ import {Bench} from './models/bench';
 import {AuthenticationService} from './services/authentication.service';
 import {RegisterForm} from './models/registerForm';
 
+
 @Component({
   selector: 'body',
   templateUrl: './app.component.html',
@@ -20,7 +21,7 @@ export class AppComponent implements OnInit{
 
   constructor(
     public cookieService: CookieService,
-    private authenticationService: AuthenticationService,
+    private authenticationService: AuthenticationService
     ) {}
 
   ngOnInit() {
@@ -42,6 +43,7 @@ export class AppComponent implements OnInit{
 
   logout(): void {
     this.cookieService.deleteAll();
+    location.assign('/');
   }
 
   switchPage(page: string) {
