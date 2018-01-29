@@ -1,10 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms'; // <-- NgModel lives here
-import { HttpClientModule} from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 
-import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { InMemoryDataService } from './in-memory-data.service';
+import {I1, I2} from './models/httpinterceptors';
 
 
 import { AppComponent } from './app.component';
@@ -32,6 +31,11 @@ import { QuestionnairesComponent } from './components/questionnaires/questionnai
 import {QuestionnairesService} from './services/questionnaires.service';
 import { HealthworkersComponent } from './components/healthworkers/healthworkers.component';
 import {HealthworkersService} from './services/healthworkers.service';
+import { QuestionsComponent } from './components/questions/questions.component';
+import {QuestionsService} from './services/questions.service';
+import { QuestionFormComponent } from './components/question-form/question-form.component';
+import { QuestionComponent } from './components/question/question.component';
+import {AuthenticationService} from './services/authentication.service';
 
 
 @NgModule({
@@ -49,13 +53,15 @@ import {HealthworkersService} from './services/healthworkers.service';
     BenchFormComponent,
     AppointmentsComponent,
     QuestionnairesComponent,
-    HealthworkersComponent
+    HealthworkersComponent,
+    QuestionsComponent,
+    QuestionFormComponent,
+    QuestionComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     AppRoutingModule,
-    HttpClientModule,
     HttpClientModule,
 
   ],
@@ -69,8 +75,11 @@ import {HealthworkersService} from './services/healthworkers.service';
     QuestionnairesService,
     HealthworkersService,
     GoogleMapsService,
-    CookieService
-  ],
+    CookieService,
+    CookieService,
+    QuestionsService,
+    AuthenticationService
+],
   bootstrap: [AppComponent]
 })
 export class AppModule {

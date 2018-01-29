@@ -8,16 +8,20 @@ import {GoogleMapsComponent} from "../components/google-maps/google-maps.compone
 import {AppointmentsComponent} from '../components/appointments/appointments.component';
 import {QuestionnairesComponent} from '../components/questionnaires/questionnaires.component';
 import {HealthworkersComponent} from '../components/healthworkers/healthworkers.component';
+import {QuestionsComponent} from '../components/questions/questions.component';
+import {ClientComponent} from '../components/client/client.component';
 
 const routes: Routes = [
   { path: 'user', component: UserComponent },
   { path: 'users', component: UsersComponent },
   { path: 'clients', component: ClientsComponent },
+  { path: 'clients/:id', component: ClientComponent },
   { path: 'benches', component: BenchesComponent },
   { path: 'googleMaps', component: GoogleMapsComponent },
   { path: 'appointments', component: AppointmentsComponent },
   { path: 'questionnaires', component: QuestionnairesComponent },
   { path: 'healthworkers', component: HealthworkersComponent },
+  { path: 'questions', component: QuestionsComponent },
 ];
 
 

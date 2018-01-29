@@ -10,12 +10,39 @@ public class Question
 {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	public Long id;
+	private Long id;
 
-	public String question_text;
+	private String question_text;
 
-	public Boolean active;
+	private Boolean active;
 
-	@Column(unique = true)
-	public Long question_order;
+	public Long getId()
+	{
+		return id;
+	}
+
+	public void setId(Long id)
+	{
+		this.id = id;
+	}
+
+	public String getQuestion_text()
+	{
+		return question_text;
+	}
+
+	public void setQuestion_text(String question_text)
+	{
+		this.question_text = question_text;
+	}
+
+	public Boolean getActive()
+	{
+		return active;
+	}
+
+	public void setActive(Boolean active)
+	{
+		this.active = active;
+	}
 }

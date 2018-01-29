@@ -7,9 +7,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -51,9 +53,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/").permitAll()
-                .antMatchers("/signup").permitAll()
-                .antMatchers("/oauth/token").permitAll()
+                .antMatchers(HttpMethod.OPTIONS,"/").permitAll()
+                .antMatchers(HttpMethod.OPTIONS,"/signup").permitAll()
+                .antMatchers(HttpMethod.OPTIONS,"/oauth/token").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic()
@@ -72,11 +74,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
-
-//	@Bean
-//	public TokenStore tokenStore() {
-//		return new InMemoryTokenStore();
-//	}
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring()
+                .antMatchers(HttpMethod.OPTIONS);
+    }
 
 
     //use the JdbcTokenStore to store tokens

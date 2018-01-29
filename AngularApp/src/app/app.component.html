@@ -32,9 +32,8 @@
 
   </div>
 
-<!-- Navigation-->
-</nav>
-<div *ngIf="userLogged && userType == 'Admin'; then adminNavbar"></div>
+</nav>-->
+<div *ngIf="cookieService.check('UserRights') && cookieService.get('UserRights') == 'ADMIN'; then adminNavbar"></div>
 <ng-template #adminNavbar>
 <!-- Admin Navigation-->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
@@ -44,25 +43,31 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarResponsive">
     <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
-      <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
-        <a class="nav-link" href="index.html">
-          <i class="fa fa-fw fa-dashboard"></i>
-          <span class="nav-link-text">Dashboard</span>
-        </a>
-      </li>
       <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
-        <a class="nav-link" href="charts.html">
-          <i class="fa fa-fw fa-area-chart"></i>
-          <span class="nav-link-text">Charts</span>
+        <a class="nav-link" routerLink="/appointments">
+          <i class="fa fa-fw fa-calendar-check-o"></i>
+          <span class="nav-link-text">Appointments</span>
         </a>
       </li>
       <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-        <a class="nav-link" href="tables.html">
-          <i class="fa fa-fw fa-table"></i>
-          <span class="nav-link-text">Tables</span>
+        <a class="nav-link" routerLink="/benches">
+          <i class="fa fa-fw fa-map-marker"></i>
+          <span class="nav-link-text">Benches</span>
         </a>
       </li>
-      <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
+      <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
+        <a class="nav-link" routerLink="/clients">
+          <i class="fa fa-fw fa-address-card-o"></i>
+          <span class="nav-link-text">Clients</span>
+        </a>
+      </li>
+      <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
+        <a class="nav-link" routerLink="/healthworkers">
+          <i class="fa fa-fw fa-user-md"></i>
+          <span class="nav-link-text">Healtworkers</span>
+        </a>
+      </li>
+      <!-- <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
         <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
           <i class="fa fa-fw fa-wrench"></i>
           <span class="nav-link-text">Components</span>
@@ -132,7 +137,7 @@
           <i class="fa fa-fw fa-link"></i>
           <span class="nav-link-text">Link</span>
         </a>
-      </li>
+      </li> -->
     </ul>
     <ul class="navbar-nav sidenav-toggler">
       <li class="nav-item">
@@ -239,7 +244,7 @@
   </div>
 </nav>
 </ng-template>
-<div *ngIf="userLogged && userType == 'HealthWorker'; then  healthworkerNavbar"></div>
+<div *ngIf="cookieService.check('UserRights') && cookieService.get('UserRights') == 'HEALTHWORKER'; then  healthworkerNavbar"></div>
 <ng-template #healthworkerNavbar>
   <!-- HealthWorker Navigation-->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
@@ -249,25 +254,25 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
-          <a class="nav-link" href="index.html">
-            <i class="fa fa-fw fa-dashboard"></i>
-            <span class="nav-link-text">Dashboard</span>
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
+          <a class="nav-link" routerLink="/appointments">
+            <i class="fa fa-fw fa-calendar-check-o"></i>
+            <span class="nav-link-text">Appointments</span>
           </a>
         </li>
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
-          <a class="nav-link" href="charts.html">
-            <i class="fa fa-fw fa-area-chart"></i>
-            <span class="nav-link-text">Charts</span>
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
+          <a class="nav-link" routerLink="/clients">
+            <i class="fa fa-fw fa-address-card-o"></i>
+            <span class="nav-link-text">Clients</span>
           </a>
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-          <a class="nav-link" href="tables.html">
-            <i class="fa fa-fw fa-table"></i>
-            <span class="nav-link-text">Tables</span>
+          <a class="nav-link" routerLink="/questionnaires">
+            <i class="fa fa-fw fa-pencil-square-o"></i>
+            <span class="nav-link-text">Questionnaires</span>
           </a>
         </li>
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
+        <!-- <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
           <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
             <i class="fa fa-fw fa-wrench"></i>
             <span class="nav-link-text">Components</span>
@@ -337,7 +342,7 @@
             <i class="fa fa-fw fa-link"></i>
             <span class="nav-link-text">Link</span>
           </a>
-        </li>
+        </li> -->
       </ul>
       <ul class="navbar-nav sidenav-toggler">
         <li class="nav-item">
@@ -445,36 +450,110 @@
   </nav>
 </ng-template>
 
-<div *ngIf="userLogged; then appPage else loginPage"></div>
-<ng-template #loginPage>
-  <div class="container">
-    <div class="card card-login mx-auto mt-5">
-      <div class="card-header">Login</div>
-      <div class="card-body">
-        <form>
-          <div class="form-group">
-            <label for="exampleInputEmail1">Email address</label>
-            <input class="form-control" id="exampleInputEmail1" type="email" aria-describedby="emailHelp" placeholder="Enter email">
-          </div>
-          <div class="form-group">
-            <label for="exampleInputPassword1">Password</label>
-            <input class="form-control" id="exampleInputPassword1" type="password" placeholder="Password">
-          </div>
-          <div class="form-group">
-            <div class="form-check">
-              <label class="form-check-label">
-                <input class="form-check-input" type="checkbox"> Remember Password</label>
+<div *ngIf="cookieService.check('UserRights'); then appPage else authorizationPage"></div>
+<ng-template #authorizationPage>
+  <div *ngIf="authorizationPanel == 'LOGIN'; then loginPage"></div>
+  <div *ngIf="authorizationPanel == 'REGISTER'; then registerPage"></div>
+  <ng-template #loginPage>
+    <div class="container">
+      <div class="card card-login mx-auto mt-5">
+        <div class="card-header">Login</div>
+        <div class="card-body">
+          <form>
+            {{diagnostic}}
+            <div class="form-group">
+              <label for="exampleInputEmail1">Username</label>
+              <input [(ngModel)]="credentials.username" required #spy name="username" class="form-control" id="exampleInputEmail1" type="email" aria-describedby="emailHelp" placeholder="Username">
             </div>
+            <div class="form-group">
+              <label for="exampleInputPassword1">Password</label>
+              <input [(ngModel)]="credentials.password" required #spy1 name="password" class="form-control" id="exampleInputPassword1" type="password" placeholder="Password">
+            </div>
+
+            <div class="form-group">
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input class="form-check-input" type="checkbox"> Remember Password</label>
+              </div>
+            </div>
+            <a class="btn btn-primary btn-block" (click)="login()">Login</a>
+          </form>
+          <div class="text-center">
+            <a class="d-block small mt-3" (click)="switchPage('REGISTER')" routerLink="">Register an Account</a>
+            <a class="d-block small">Forgot Password?</a>
           </div>
-          <a class="btn btn-primary btn-block" href="index.html">Login</a>
-        </form>
-        <div class="text-center">
-          <a class="d-block small mt-3" href="register.html">Register an Account</a>
-          <a class="d-block small" href="forgot-password.html">Forgot Password?</a>
         </div>
       </div>
     </div>
-  </div>
+  </ng-template>
+  <ng-template #registerPage>
+    <div class="container">
+      <div class="card card-register mx-auto mt-5">
+        <div class="card-header">Register an Account</div>
+        <div class="card-body">
+          <form>
+            <div class="form-group">
+              <div class="form-row">
+                <div class="col-md-6">
+                  <label for="InputFirstName">First name</label>
+                  <input [(ngModel)]="registerForm.firstName" name="InputFirstName" id="InputFirstName" class="form-control" type="text" aria-describedby="nameHelp" placeholder="Enter first name">
+                </div>
+                <div class="col-md-6">
+                  <label for="InputLastName">Last name</label>
+                  <input [(ngModel)]="registerForm.lastName" name="InputLastName" class="form-control" id="InputLastName" type="text" aria-describedby="nameHelp" placeholder="Enter last name">
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="form-row">
+                <div class="col-md-6">
+                  <label for="InputPhoneNumber">Phone number</label>
+                  <input [(ngModel)]="registerForm.phonenumber" name="InputPhoneNumber" id="InputPhoneNumber" class="form-control" type="text" aria-describedby="nameHelp" placeholder="Enter phone number">
+                </div>
+                <div class="col-md-4">
+                  <label for="InputGender">Gender</label>
+                  <input [(ngModel)]="registerForm.gender" name="InputGender" id="InputGender" class="form-control" type="text" aria-describedby="nameHelp" placeholder="Enter gender">
+                </div>
+                <div class="col-md-2">
+                  <label for="InputAge">Age</label>
+                  <input [(ngModel)]="registerForm.age" name="InputAge" id="InputAge" class="form-control" type="text" aria-describedby="nameHelp" placeholder="Enter age">
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="form-row">
+              <div class="col-md-4">
+                <label for="InputUserName">User name</label>
+                <input [(ngModel)]="registerForm.username" name="InputUserName" id="InputUserName" class="form-control" type="email" aria-describedby="emailHelp" placeholder="Enter username">
+              </div>
+              <div class="col-md-8">
+                <label for="InputEmai1">Email address</label>
+                <input [(ngModel)]="registerForm.email" name="InputEmai1" id="InputEmai1" class="form-control" type="email" aria-describedby="emailHelp" placeholder="Enter email">
+              </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="form-row">
+                <div class="col-md-6">
+                  <label for="InputPassword1">Password</label>
+                  <input [(ngModel)]="registerForm.password" name="InputPassword1" id="InputPassword1" class="form-control" type="password" placeholder="Password">
+                </div>
+                <div class="col-md-6">
+                  <label for="exampleConfirmPassword">Confirm password</label>
+                  <input class="form-control" id="exampleConfirmPassword" type="password" placeholder="Confirm password">
+                </div>
+              </div>
+            </div>
+            <a class="btn btn-primary btn-block" (click)="register()">Register</a>
+          </form>
+          <div class="text-center">
+            <a class="d-block small mt-3" (click)="switchPage('LOGIN')" routerLink="">Login Page</a>
+            <a class="d-block small" >Forgot Password?</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
 </ng-template>
 <ng-template #appPage>
   <div class="content-wrapper">
@@ -520,7 +599,8 @@
         <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="login.html">Logout</a>
+          <button class="btn btn-primary" type="button" data-dismiss="modal" (click)="logout()" >Logout</button>
+          <!-- <a class="btn btn-primary" (click)="logout()" >Logout</a> -->
         </div>
       </div>
     </div>
