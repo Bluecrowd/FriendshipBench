@@ -68,7 +68,8 @@ import {HealthworkersService} from './services/healthworkers.service';
     AppointmentsService,
     QuestionnairesService,
     HealthworkersService,
-    GoogleMapsService
+    GoogleMapsService,
+    CookieService
   ],
   bootstrap: [AppComponent]
 })

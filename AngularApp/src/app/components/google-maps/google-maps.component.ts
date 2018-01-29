@@ -20,5 +20,4 @@ export class GoogleMapsComponent implements OnInit {
     this.googleMapsService.getGoogleMaps()
       .subscribe(googleMaps => this.googleMaps = googleMaps);
   }
-
 }
