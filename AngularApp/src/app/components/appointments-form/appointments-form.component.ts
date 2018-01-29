@@ -82,14 +82,25 @@ export class AppointmentsFormComponent implements OnInit {
         .subscribe(appointment => {this.appointmentsComponent.appointments.push(appointment);
         });
     }
-
-    this.appointmentsComponent.getAppointments();
+    this.closeAddAppointment();
+    this.appointmentsComponent.refreshAppointments();
   }
 
   closeAddAppointment(): void {
     this.addAppointmentToggle = false;
     this.appointmentsComponent.addAppointmentsToggle = false;
-    this.model = {};
+    this.model = {
+      'timestamp': '',
+      bench: {
+        id: null
+      },
+      client: {
+        id: null
+      },
+      healthWorker: {
+        id: null
+      }
+    };
   }
 
 }

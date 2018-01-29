@@ -2,6 +2,8 @@ import {Component, Input, OnInit} from '@angular/core';
 import {AppointmentsService} from '../../services/appointments.service';
 import {Appointment} from '../../models/appointment';
 
+declare var $: any;
+
 @Component({
   selector: 'app-appointments',
   templateUrl: './appointments.component.html',
@@ -30,6 +32,11 @@ export class AppointmentsComponent implements OnInit {
   }
 
   getAppointments(): void {
+    this.appointmentsService.getAppointments()
+      .subscribe(appointments => {this.appointments = appointments; setTimeout(() => { $('#dataTable').DataTable(); }, 350); });
+  }
+
+  refreshAppointments(): void {
     this.appointmentsService.getAppointments()
       .subscribe(appointments => this.appointments = appointments);
   }

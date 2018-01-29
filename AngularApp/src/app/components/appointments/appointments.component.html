@@ -26,7 +26,9 @@
             <td>{{appointment.bench.streetname + ' ' + appointment.bench.housenumber + ', ' + appointment.bench.province + ', ' + appointment.bench.district }}</td>
             <td><a routerLink="/clients/{{appointment.client.id}}">{{appointment.client.firstName + ' ' + appointment.client.lastName}}</a></td>
             <td>
-              <button (click)="cancelAppointment(appointment)">Cancel</button>
+              <div *ngIf="appointment.status != 'CANCELLED'">
+                <button (click)="cancelAppointment(appointment)">Cancel</button>
+              </div>
             </td>
           </tr>
           </tbody>
