@@ -9,7 +9,7 @@ import {Message} from '../models/message';
 
 @Injectable()
 export class ChatService {
-  private url = 'http://128.199.63.13:3000';
+  private url = 'https://hpa-chat.figueus.com';
   private socket;
   private chatUrl = Constants.API_URL + 'messages';  // URL to web api
   private httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' })};
