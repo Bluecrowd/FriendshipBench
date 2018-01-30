@@ -188,7 +188,7 @@ public class AccountController {
                 //currentUser.setBirthDay(birthday);
 
                 healthworkerRepository.save(currentUser);
-                return ResponseEntity.ok("User updated successfully");
+                return new ResponseEntity<Object>(HttpStatus.OK); 
             }
         }
         return new ResponseEntity<>("Something went wrong ", HttpStatus.BAD_REQUEST);
