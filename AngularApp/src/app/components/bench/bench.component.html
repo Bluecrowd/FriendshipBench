@@ -1,31 +1,43 @@
-<div *ngIf  ="bench">
-  <h2>Edit Bench location</h2>
-  <table>
-    <tr>
-      <td><span>{{bench.id}}</span></td>
-      <td>
-        <label>streetname:
-          <input [(ngModel)]="bench.streetname" placeholder=`{{bench.streetname}}` />
-        </label>
-      </td>
-      <td>
-        <label>housenumber:
-          <input [(ngModel)]="bench.housenumber" placeholder=`{{bench.housenumber}}` />
-        </label>
-      </td>
-      <td>
-        <label>province:
-          <input [(ngModel)]="bench.province" placeholder=`{{bench.province}}` />
-        </label>
-      </td>
-      <td>
-        <label>district:
-          <input [(ngModel)]="bench.district" placeholder=`{{bench.district}}` />
-        </label>
-      </td>
-      <td><button (click)="save()">Save</button></td>
-      <td><button (click)="close()">close</button></td>
-    </tr>
-  </table>
+<form *ngIf="bench" appointmentForm="ngForm">
+  <div class="form-group">
+    <label for="timestamp">Streetname</label>
+    <input type="text"
+           required
+           class="form-control"
+           id="timestamp"
+           [(ngModel)]="bench.streetname" name="streetname" placeholder="{{bench.streetname}}">
+  </div>
+  <div class="form-group">
+    <label for="housenumber">Housenumber</label>
+    <input type="text"
+           required
+           class="form-control"
+           id="housenumber"
+           [(ngModel)]="bench.housenumber" name="housenumber" placeholder="{{bench.housenumber}}">
+  </div>
+  <div class="form-group">
+    <label for="province">Province</label>
+    <input type="text"
+           required
+           class="form-control"
+           id="province"
+           [(ngModel)]="bench.province" name="province" placeholder="{{bench.province}}">
 
-</div>
+  </div>
+  <div class="form-group">
+    <label for="district">District</label>
+    <input type="text"
+           required
+           class="form-control"
+           id="district"
+           [(ngModel)]="bench.district" name="province" placeholder="{{bench.district}}">
+
+  </div>
+    <button
+      class="btn btn-primary"
+      (click)="save()">Save
+    </button>
+    <button
+      class="btn btn-secondary"
+      (click)="close()">close</button>
+</form>
