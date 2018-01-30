@@ -461,14 +461,13 @@
         <div class="card-header">Login</div>
         <div class="card-body">
           <form>
-            {{diagnostic}}
             <div class="form-group">
               <label for="exampleInputEmail1">Username</label>
-              <input [(ngModel)]="credentials.username" required #spy name="username" class="form-control" id="exampleInputEmail1" type="email" aria-describedby="emailHelp" placeholder="Username">
+              <input [(ngModel)]="credentials.username" required name="username" class="form-control" id="exampleInputEmail1" type="email" aria-describedby="emailHelp" placeholder="Username">
             </div>
             <div class="form-group">
               <label for="exampleInputPassword1">Password</label>
-              <input [(ngModel)]="credentials.password" required #spy1 name="password" class="form-control" id="exampleInputPassword1" type="password" placeholder="Password">
+              <input [(ngModel)]="credentials.password" required name="password" class="form-control" id="exampleInputPassword1" type="password" placeholder="Password">
             </div>
 
             <div class="form-group">
