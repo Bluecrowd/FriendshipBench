@@ -14,6 +14,7 @@
           <th>Gender</th>
           <th>Email</th>
           <th>Phonenumber</th>
+          <th>Approve?</th>
         </tr>
         </thead>
         <tbody>
@@ -24,8 +25,6 @@
             <div *ngFor="let role of hw.roles">
               <div *ngIf="role.roleName == 'PENDING'">
                 Pending
-                <br>
-                <button (click)="approveHealthworker(hw)">Approve</button>
               </div>
               <div *ngIf="role.roleName == 'HEALTHWORKER'">
                 Healthworker
@@ -36,6 +35,16 @@
           <td>{{hw.gender}}</td>
           <td>{{hw.email}}</td>
           <td>{{hw.phonenumber}}</td>
+          <td>
+            <div *ngFor="let role of hw.roles">
+              <div *ngIf="role.roleName == 'PENDING'">
+                <button
+                  class="btn btn-primary"
+                  (click)="approveHealthworker(hw)">Approve
+                </button>
+              </div>
+            </div>
+          </td>
         </tr>
         </tbody>
         <tfoot>
@@ -47,6 +56,7 @@
           <th>Name</th>
           <th>email</th>
           <th>phonenumber</th>
+          <th>Approve?</th>
         </tr>
         </tfoot>
       </table>
