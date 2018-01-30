@@ -1,38 +1,42 @@
 <form *ngIf="addBenchToggle" benchForm="ngForm">
-  <table>
-    <br>
-    <tbody>
-      {{diagnostic}}
-      <tr>
-        <td>
-          <input type="text"
-                 required
-                 [(ngModel)]="model.streetname" name="streetname" placeholder="streetname" #spy>
-          <br>TODO: remove this: {{spy.className}}
-        </td>
-        <td>
-          <input type="text"
-                 required
-                 [(ngModel)]="model.housenumber" name="housenumber" placeholder="housenumber">
-        </td>
-        <td>
-          <input type="text"
-                 required
-                 [(ngModel)]="model.province" name="province" placeholder="province">
-        </td>
-        <td>
-          <input type="text"
-                 required
-                 [(ngModel)]="model.district" name="district" placeholder="district">
-        </td>
-        <td>
-          <button (click)="add()">Create</button>
-        </td>
-        <td>
-          <button (click)="closeAddBench()">Close</button>
-        </td>
-      </tr>
-    </tbody>
-    <br>
-  </table>
+  <div class="form-group">
+    <label for="timestamp">Streetname</label>
+    <input type="text"
+           required
+           class="form-control"
+           id="timestamp"
+           [(ngModel)]="model.streetname" name="streetname" placeholder="streetname">
+  </div>
+  <div class="form-group">
+    <label for="housenumber">Housenumber</label>
+    <input type="text"
+           required
+           class="form-control"
+           id="housenumber"
+           [(ngModel)]="model.housenumber" name="housenumber" placeholder="housenumber">
+  </div>
+  <div class="form-group">
+    <label for="province">Province</label>
+    <input type="text"
+           required
+           class="form-control"
+           id="province"
+           [(ngModel)]="model.province" name="province" placeholder="province">
+  </div>
+  <div class="form-group">
+    <label for="district">District</label>
+    <input type="text"
+           required
+           class="form-control"
+           id="district"
+           [(ngModel)]="model.district" name="district" placeholder="district">
+  </div>
+    <button
+      class="btn btn-primary"
+      (click)="add()">Create
+    </button>
+    <button
+      class="btn btn-secondary"
+      (click)="closeAddBench()">Close
+    </button>
 </form>
