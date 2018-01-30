@@ -40,6 +40,10 @@ import { MomentModule } from 'angular2-moment';
 import { DatePipe } from '@angular/common';
 import { ConversationsComponent } from './components/conversations/conversations.component';
 import { TimeAgoPipe } from 'time-ago-pipe';
+import { HealthworkerComponent } from './components/healthworker/healthworker.component';
+import { AppointmentsFormComponent } from './components/appointments-form/appointments-form.component';
+import { AppointmentComponent } from './components/appointment/appointment.component';
+import { QuestionnaireComponent } from './components/questionnaire/questionnaire.component';
 
 
 @NgModule({
@@ -62,7 +66,11 @@ import { TimeAgoPipe } from 'time-ago-pipe';
     QuestionComponent,
     ChatComponent,
     ConversationsComponent,
-    TimeAgoPipe
+    TimeAgoPipe,
+    HealthworkerComponent,
+    AppointmentsFormComponent,
+    AppointmentComponent,
+    QuestionnaireComponent
   ],
   imports: [
     BrowserModule,

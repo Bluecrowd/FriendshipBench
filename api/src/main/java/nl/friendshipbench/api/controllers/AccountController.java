@@ -105,6 +105,7 @@ public class AccountController {
         String houseNumber = (String) mapper.get("houseNumber");
         String province = (String) mapper.get("province");
         String district = (String) mapper.get("district");
+        //OffsetDateTime birthday = (OffsetDateTime) mapper.get("birthDay");
 
         Collection<? extends GrantedAuthority> authorities = principal.getAuthorities();
 
@@ -121,6 +122,7 @@ public class AccountController {
                 currentUser.setHousenumber(houseNumber);
                 currentUser.setProvince(province);
                 currentUser.setDistrict(district);
+                //currentUser.setBirthDay(birthday);
 
 
                 clientRepository.save(currentUser);
@@ -159,7 +161,7 @@ public class AccountController {
 
         String email = (String) mapper.get("email");
         String phoneNumber = (String) mapper.get("phonenumber");
-        OffsetDateTime birthday = (OffsetDateTime) mapper.get("birthday");
+        //OffsetDateTime birthday = (OffsetDateTime) mapper.get("birthday");
 
         Collection<? extends GrantedAuthority> authorities = principal.getAuthorities();
 
@@ -171,7 +173,7 @@ public class AccountController {
 
                 currentUser.setEmail(email);
                 currentUser.setPhonenumber(phoneNumber);
-                currentUser.setBirthDay(birthday);
+                //currentUser.setBirthDay(birthday);
 
 
                 clientRepository.save(currentUser);
@@ -183,10 +185,10 @@ public class AccountController {
 
                 currentUser.setEmail(email);
                 currentUser.setPhonenumber(phoneNumber);
-                currentUser.setBirthDay(birthday);
+                //currentUser.setBirthDay(birthday);
 
                 healthworkerRepository.save(currentUser);
-                return ResponseEntity.ok("User updated successfully");
+                return new ResponseEntity<Object>(HttpStatus.OK); 
             }
         }
         return new ResponseEntity<>("Something went wrong ", HttpStatus.BAD_REQUEST);

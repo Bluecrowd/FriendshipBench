@@ -105,7 +105,7 @@ public class BenchController
 	@CrossOrigin
 	@PreAuthorize("hasAuthority('ROLE_HEALTHWORKER') or hasAuthority('ROLE_ADMIN')")
 	@DeleteMapping(value = "/benches/{id}")
-	public ResponseEntity<Bench> updateBench(@PathVariable("id") long id) {
+	public ResponseEntity<Bench> deleteBench(@PathVariable("id") long id) {
 		benchRepository.delete(id);
 
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);

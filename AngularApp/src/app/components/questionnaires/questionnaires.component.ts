@@ -25,11 +25,12 @@ export class QuestionnairesComponent implements OnInit {
       .subscribe(questionnaires => { this.questionnaires = questionnaires; setTimeout(() => { $('#dataTable').DataTable(); }, 350); });
   }
 
-  toggleRedFlag(questionnaire: Questionnaire): void {
-    this.questionnairesService.toggleRedFlag(questionnaire).subscribe();
+  setRedFlag(questionnaire: Questionnaire): void {
+    this.questionnairesService.toggleRedFlag(questionnaire).subscribe(_ => this.refresh());
   }
 
-  delete(id: number): void {
+  refresh(): void {
+    this.questionnairesService.getQuestionnaires()
+      .subscribe(questionnaires => this.questionnaires = questionnaires);
   }
-
 }
