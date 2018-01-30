@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ChatService } from '../../services/chat.service';
 import { Message } from '../../models/message';
 import {CookieService} from 'ngx-cookie-service';
+import { ClientsService } from '../../services/clients.service';
 import {DatePipe} from '@angular/common';
+import {Client} from '../../models/client';
 
 declare var $: any;
 
@@ -14,10 +16,27 @@ declare var $: any;
 export class ConversationsComponent implements OnInit {
   message: string;
   messages: Message[] = [];
+  clients: Client[] = [];
 
   constructor(public cookieService: CookieService,
-              private chatService: ChatService,
+              public chatService: ChatService,
+              private clientService: ClientsService,
               private datepipe: DatePipe) {
+  }
+
+  joinConversation(clientID) {
+    this.chatService.joinChat(clientID);
+    this.messages = [];
+    this.chatService.requestChatMessages().subscribe(messages => {
+      this.messages = messages;
+      setTimeout(() => { $('div[id=chat]').animate({scrollTop: $('ul.chat').height()}); }, 600);
+      this.chatService
+        .getMessages()
+        .subscribe((messageObject: Message) => {
+          this.messages.push(messageObject);
+          $('div[id=chat]').animate({scrollTop: $('ul.chat').height()});
+        });
+    });
   }
 
   sendMessage() {
@@ -30,6 +49,7 @@ export class ConversationsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.clientService.getClients().subscribe( clients => {this.clients = clients; console.log(this.clients); });
     this.chatService.requestChatMessages().subscribe(messages => {
       this.messages = messages;
       setTimeout(() => { $('div[id=chat]').animate({scrollTop: $('ul.chat').height()}); }, 600);
