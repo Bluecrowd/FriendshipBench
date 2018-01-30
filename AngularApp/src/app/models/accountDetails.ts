@@ -4,4 +4,9 @@ export class AccountDetails {
   id: number;
   username: string;
   roles: [RoleName];
+  firstName: string;
+  lastName: string;
+  birthDay: string;
+  email: string;
+  phonenumber: string;
 }
