@@ -7,6 +7,7 @@ import { Constants } from '../Constants';
 
 import { HandleErrorService} from './handle-error.service';
 import {CookieService} from 'ngx-cookie-service';
+import {Questionnaire} from '../models/questionnaire';
 
 @Injectable()
 export class ClientsService {
@@ -27,6 +28,17 @@ export class ClientsService {
       .pipe(
         tap(clients => this.handleErrorService.log(`ClientService: fetched clients`)),
         catchError(this.handleErrorService.handleError('getClients', []))
+      );
+  }
+
+  /** GET client by id. Will 404 if id not found */
+  getClient(id: number): Observable<Client> {
+    this.setHeaderOptions()
+    const url = `${this.clientsUrl}/${id}`;
+    return this.http.get<Client>(url, this.httpOptions)
+      .pipe(
+        tap( _ => this.handleErrorService.log(`ClientsService: fetched client id=${id}`)),
+        catchError(this.handleErrorService.handleError<Client>('getClientById'))
       );
   }
 

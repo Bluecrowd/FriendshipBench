@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ClientsService} from '../../services/clients.service';
 import {Client} from '../../models/client';
+import {AuthenticationService} from '../../services/authentication.service';
 
 declare var $: any;
 
@@ -12,10 +13,14 @@ declare var $: any;
 export class ClientsComponent implements OnInit {
   clients: Client[];
 
+  role: string;
 
-  constructor(private clientsService: ClientsService) { }
+
+  constructor(
+    private clientsService: ClientsService) { }
 
   ngOnInit() {
+    this.getClients();
   }
 
   getClients(): void {

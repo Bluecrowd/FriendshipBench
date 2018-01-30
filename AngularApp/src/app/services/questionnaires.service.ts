@@ -43,6 +43,16 @@ export class QuestionnairesService {
       );
   }
 
+  /** GET questionnaires by CLIENT id from the server */
+  getAllQuestionnairesMyclientMade(id: number): Observable<Questionnaire[]> {
+    this.setHeaderOptions();
+    return this.http.get<Questionnaire[]>(this.questionnairesUrl + '/client/' + id, this.httpOptions)
+      .pipe(
+        tap(questionnaires => this.handleErrorService.log(`QuestionnairesService: fetched questionnaires by client id= ${id}`)),
+        catchError(this.handleErrorService.handleError('getAllQuestionnairesMyclientMade', []))
+      );
+  }
+
   /** PUT questionnaire for manually setting a red flag*/
   toggleRedFlag(questionnaire: Questionnaire): Observable<Questionnaire> {
     this.setHeaderOptions()
