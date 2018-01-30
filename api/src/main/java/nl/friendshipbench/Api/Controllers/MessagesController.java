@@ -22,30 +22,26 @@ public class MessagesController
 	private MessagesRepository messagesRepository;
 
 	/**
-	 * Method to get all active questions
+	 * Method to get all message
 	 *
 	 * @method HTTP GET
-	 * @endpoint /api/questions
+	 * @endpoint /api/messages
 	 * @param room
 	 * @param timestamp
-	 * @return all questions
+	 * @return all message
 	 */
 	@CrossOrigin
 	@PreAuthorize("hasAuthority('ROLE_CLIENT') or hasAuthority('ROLE_HEALTHWORKER') or hasAuthority('ROLE_ADMIN')")
 	@GetMapping(value = "/messages/{room}")
-	public ResponseEntity<Iterable<Messages>> getQuestions(@PathVariable("room") String room, @RequestParam(value="timestamp", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) OffsetDateTime timestamp)
+	public ResponseEntity<Iterable<Messages>> getMessages(@PathVariable("room") String room, @RequestParam(value="timestamp", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) OffsetDateTime timestamp)
 	{
 		if(timestamp != null)
 		{
-			System.out.println(timestamp);
-			System.out.println(room);
 			Iterable<Messages> messages = messagesRepository.findByRoomAndTimeAfter(room, timestamp);
 			return new ResponseEntity<>(messages, HttpStatus.OK);
 		}
 		else
 		{
-			System.out.println(timestamp);
-			System.out.println(room);
 			Iterable<Messages> messages = messagesRepository.findByRoom(room);
 			return new ResponseEntity<>(messages, HttpStatus.OK);
 		}

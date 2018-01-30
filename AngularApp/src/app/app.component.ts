@@ -37,6 +37,7 @@ export class AppComponent implements OnInit{
 
   register(): void {
     if (this.registerForm != null) {
+      this.registerForm.setBirthday(this.registerForm.birthDay);
       this.authenticationService.register(this.registerForm);
     }
   }

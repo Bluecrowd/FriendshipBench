@@ -6,6 +6,7 @@ export class Healthworker {
   roles: Role[];
   firstName: string;
   lastName: string;
+  birthDay: string;
   gender: string;
   email: string;
   phonenumber: string;
