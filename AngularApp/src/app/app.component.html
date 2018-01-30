@@ -230,8 +230,17 @@
         </form>
       </li> -->
       <li class="nav-item">
+        <div *ngIf="cookieService.check('UserRights') && cookieService.get('UserRights') == 'HEALTHWORKER';">
+          <a routerLink="/healthworker/{{cookieService.get('UserID')}}"
+             class="nav-link"
+             style="color: rgba(255,255,255,.5); display: block; padding-right: .5rem; padding-left: .5rem; padding: .5rem 1rem;">
+            <i class="fa fa-fw fa-user-circle-o"></i> {{cookieService.get('UserName')}}
+          </a>
+        </div>
+        <div *ngIf="cookieService.check('UserRights') && cookieService.get('UserRights') == 'ADMIN';">
         <a style="color: rgba(255,255,255,.5); display: block; padding-right: .5rem; padding-left: .5rem; padding: .5rem 1rem;">
           <i class="fa fa-fw fa-user-circle-o" ></i> {{cookieService.get('UserName')}}</a>
+        </div>
       </li>
       <li class="nav-item">
         <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
@@ -445,8 +454,17 @@
           </form>
         </li> -->
         <li class="nav-item">
-          <a style="color: rgba(255,255,255,.5); display: block; padding-right: .5rem; padding-left: .5rem; padding: .5rem 1rem;">
-            <i class="fa fa-fw fa-user-circle-o" ></i> {{cookieService.get('UserName')}}</a>
+          <div *ngIf="cookieService.check('UserRights') && cookieService.get('UserRights') == 'HEALTHWORKER';">
+            <a routerLink="/healthworkers/{{cookieService.get('UserID')}}"
+               class="nav-link"
+               style="color: rgba(255,255,255,.5); display: block; padding-right: .5rem; padding-left: .5rem; padding: .5rem 1rem;">
+              <i class="fa fa-fw fa-user-circle-o"></i> {{cookieService.get('UserName')}}
+            </a>
+          </div>
+          <div *ngIf="cookieService.check('UserRights') && cookieService.get('UserRights') == 'ADMIN';">
+            <a style="color: rgba(255,255,255,.5); display: block; padding-right: .5rem; padding-left: .5rem; padding: .5rem 1rem;">
+              <i class="fa fa-fw fa-user-circle-o" ></i> {{cookieService.get('UserName')}}</a>
+          </div>
         </li>
         <li class="nav-item">
           <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
@@ -464,7 +482,10 @@
   <ng-template #loginPage>
     <div class="container">
       <div class="card card-login mx-auto mt-5">
-        <div class="card-header">Login</div>
+        <div class="card-header" style="text-align: center;">
+          <img src="../assets/images/friendshipbench.jpeg" width="200px" height="200px">
+          <h2>Login</h2>
+        </div>
         <div class="card-body">
           <form>
             <div class="form-group">
@@ -522,7 +543,7 @@
                 </div>
                 <div class="col-md-2">
                   <label for="InputAge">Age</label>
-                  <input [(ngModel)]="registerForm.age" name="InputAge" id="InputAge" class="form-control" type="text" aria-describedby="nameHelp" placeholder="Enter age">
+                  <input [(ngModel)]="registerForm.birthDay" name="InputBirthDay" id="InputBirthDay" class="form-control" type="text" aria-describedby="nameHelp" placeholder="yyyy-mm-dd">
                 </div>
               </div>
             </div>

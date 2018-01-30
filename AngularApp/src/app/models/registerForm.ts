@@ -1,5 +1,5 @@
 export class RegisterForm {
-  age: number;
+  birthDay: string;
   email: string;
   firstName: string;
   gender: string;
@@ -7,4 +7,8 @@ export class RegisterForm {
   password: string;
   phonenumber: string;
   username: string;
+
+  setBirthday(birthday): void {
+    this.birthDay = birthday + 'T00:00:00Z';
+  }
 }
