@@ -105,6 +105,7 @@ public class AccountController {
         String houseNumber = (String) mapper.get("houseNumber");
         String province = (String) mapper.get("province");
         String district = (String) mapper.get("district");
+        OffsetDateTime birthday = (OffsetDateTime) mapper.get("birthDay");
 
         Collection<? extends GrantedAuthority> authorities = principal.getAuthorities();
 
@@ -121,6 +122,7 @@ public class AccountController {
                 currentUser.setHousenumber(houseNumber);
                 currentUser.setProvince(province);
                 currentUser.setDistrict(district);
+                currentUser.setBirthDay(birthday);
 
 
                 clientRepository.save(currentUser);
