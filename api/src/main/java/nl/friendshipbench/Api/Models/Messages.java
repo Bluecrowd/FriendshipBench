@@ -21,7 +21,7 @@ public class Messages
 	@Column(nullable = false)
 	private String user_name;
 
-	@Type(type="text")
+	@Type(type="blob")
 	private String message;
 
 	@Column(nullable = false)
