@@ -34,6 +34,12 @@ import {QuestionsService} from './services/questions.service';
 import { QuestionFormComponent } from './components/question-form/question-form.component';
 import { QuestionComponent } from './components/question/question.component';
 import {AuthenticationService} from './services/authentication.service';
+import {ChatService} from './services/chat.service';
+import { ChatComponent } from './components/chat/chat.component';
+import { MomentModule } from 'angular2-moment';
+import { DatePipe } from '@angular/common';
+import { ConversationsComponent } from './components/conversations/conversations.component';
+import { TimeAgoPipe } from 'time-ago-pipe';
 
 
 @NgModule({
@@ -53,14 +59,17 @@ import {AuthenticationService} from './services/authentication.service';
     HealthworkersComponent,
     QuestionsComponent,
     QuestionFormComponent,
-    QuestionComponent
+    QuestionComponent,
+    ChatComponent,
+    ConversationsComponent,
+    TimeAgoPipe
   ],
   imports: [
     BrowserModule,
     FormsModule,
     AppRoutingModule,
     HttpClientModule,
-
+    MomentModule
   ],
   providers: [
     UserService,
@@ -73,7 +82,9 @@ import {AuthenticationService} from './services/authentication.service';
     HealthworkersService,
     CookieService,
     QuestionsService,
-    AuthenticationService
+    AuthenticationService,
+    ChatService,
+    DatePipe
 ],
   bootstrap: [AppComponent]
 })

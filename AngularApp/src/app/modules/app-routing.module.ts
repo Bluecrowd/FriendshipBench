@@ -9,6 +9,7 @@ import {QuestionnairesComponent} from '../components/questionnaires/questionnair
 import {HealthworkersComponent} from '../components/healthworkers/healthworkers.component';
 import {QuestionsComponent} from '../components/questions/questions.component';
 import {ClientComponent} from '../components/client/client.component';
+import {ConversationsComponent} from '../components/conversations/conversations.component';
 
 const routes: Routes = [
   { path: 'user', component: UserComponent },
@@ -20,6 +21,7 @@ const routes: Routes = [
   { path: 'questionnaires', component: QuestionnairesComponent },
   { path: 'healthworkers', component: HealthworkersComponent },
   { path: 'questions', component: QuestionsComponent },
+  { path: 'conversations', component: ConversationsComponent },
 ];
 
 
