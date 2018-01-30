@@ -1,0 +1,25 @@
+<h2>My Users</h2>
+
+<div>
+  <label>User name:
+    <input #userName />
+  </label>
+  <!-- (click) passes input value to add() and then clears the input -->
+  <button (click)="add(userName.value); userName.value=''">
+    add
+  </button>
+</div>
+
+<ul class="heroes">
+  <li *ngFor="let user of users"
+      [class.selected]="hero === selectedHero"
+      (click)="onSelect(user)">
+    <span class="badge">{{user.id}}</span> {{user.name}}
+    <button class="delete" title="delete hero"
+            (click)="delete(user)">x</button>
+  </li>
+</ul>
+
+<app-user-search></app-user-search>
+
+<app-user [user]="selectedUser"></app-user>

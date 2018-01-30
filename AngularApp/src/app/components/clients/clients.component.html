@@ -1,0 +1,51 @@
+<h2>My Clients</h2>
+
+<div class="card mb-3">
+  <div class="card-header"><i class="fa fa-table"></i> Clients coupled to me</div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <thead>
+        <tr>
+          <th>ID</th>
+          <th>Username</th>
+          <th>Name</th>
+          <th>Gender</th>
+          <th>Bithday</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Show</th>
+        </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let client of clients">
+            <td>{{client.id}}</td>
+            <td>{{client.username}}</td>
+            <td>{{client.firstName + ' ' + client.lastName}}</td>
+            <td>{{client.gender}}</td>
+            <td>{{client.birthDay | date: 'yyyy-mm-dd'}}</td>
+            <td><a href="mailto:{{client.email}}">{{client.email}}</a></td>
+            <td><a href="tel:{{client.phonenumber}}">{{client.phonenumber}}</a></td>
+            <td>
+              <a class="btn btn-primary btn-block" title="Show" routerLink="/clients/{{client.id}}" style="!important;color: #fff">Show</a>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+          <th>ID</th>
+          <th>Username</th>
+          <th>Name</th>
+          <th>Gender</th>
+          <th>Bithday</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Show</th>
+        </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+  <div class="card-footer small text-muted"></div>
+</div>
+

@@ -1,0 +1,66 @@
+<h2>Healthworkers</h2>
+
+<div class="card mb-3">
+  <div class="card-header"><i class="fa fa-table"></i>Healthworkers</div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <thead>
+        <tr>
+          <th>Id</th>
+          <th>Username</th>
+          <th>Role</th>
+          <th>Name</th>
+          <th>Gender</th>
+          <th>Email</th>
+          <th>Phonenumber</th>
+          <th>Approve?</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let hw of healthWorkers">
+          <td>{{hw.id}}</td>
+          <td>{{hw.username}}</td>
+          <td>
+            <div *ngFor="let role of hw.roles">
+              <div *ngIf="role.roleName == 'PENDING'">
+                Pending
+              </div>
+              <div *ngIf="role.roleName == 'HEALTHWORKER'">
+                Healthworker
+              </div>
+            </div>
+          </td>
+          <td>{{hw.firstName + ' ' + hw.lastName}}</td>
+          <td>{{hw.gender}}</td>
+          <td>{{hw.email}}</td>
+          <td>{{hw.phonenumber}}</td>
+          <td>
+            <div *ngFor="let role of hw.roles">
+              <div *ngIf="role.roleName == 'PENDING'">
+                <button
+                  class="btn btn-primary"
+                  (click)="approveHealthworker(hw)">Approve
+                </button>
+              </div>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+          <th>ID</th>
+          <th>id</th>
+          <th>username</th>
+          <th>roles</th>
+          <th>Name</th>
+          <th>email</th>
+          <th>phonenumber</th>
+          <th>Approve?</th>
+        </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+  <div class="card-footer small text-muted"></div>
+</div>

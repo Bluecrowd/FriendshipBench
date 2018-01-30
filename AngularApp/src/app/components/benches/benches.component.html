@@ -1,0 +1,51 @@
+<h2>All benches</h2>
+<button class="btn btn-primary btn-block" (click)="toggleAddBench()">Add Bench</button>
+<br>
+
+<app-bench-form [addBenchToggle] ="addBenchToggle" ></app-bench-form>
+
+<app-bench [bench]="selectedBench" ></app-bench>
+
+<div class="card mb-3">
+  <div class="card-header"><i class="fa fa-table"></i> Data Table Example</div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Street name</th>
+            <th>House number</th>
+            <th>Province</th>
+            <th>District</th>
+            <th>Edit</th>
+          </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let bench of benches">
+          <td>{{bench.id}}</td>
+          <td>{{bench.streetname}}</td>
+          <td>{{bench.housenumber}}</td>
+          <td>{{bench.province}}</td>
+          <td>{{bench.district}}</td>
+          <td>
+            <a class="btn btn-primary btn-block" title="Edit bench" (click)="toggleBench(bench)" style="!important;color: #fff">Edit</a>
+            <a class="btn btn-secondary btn-block" title="Delete bench" (click)="delete(bench)" style="!important;color: #fff">Delete</a>
+          </td>
+        </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <th>ID</th>
+            <th>Street name</th>
+            <th>House number</th>
+            <th>Province</th>
+            <th>District</th>
+            <th>Edit</th>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+  <div class="card-footer small text-muted"></div>
+</div>

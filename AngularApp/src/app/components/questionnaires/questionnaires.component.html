@@ -1,0 +1,44 @@
+<h2>My Questionnaires</h2>
+
+<div class="card mb-3">
+  <div class="card-header"><i class="fa fa-table"></i> Questionnaires filled in by my clients</div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <thead>
+        <tr>
+          <th>ID</th>
+          <th>Date Submitted</th>
+          <th>Red Flag?</th>
+          <th>Client(url)</th>
+          <th>Show/Edit</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let questionnaire of questionnaires">
+          <td>{{questionnaire.id}}</td>
+          <td>{{questionnaire.timestamp | date:'yyyy-MM-dd HH:mm:ss Z'}}</td>
+          <td *ngIf="questionnaire.redflag">Yes</td>
+          <td *ngIf="!questionnaire.redflag">No</td>
+          <td><a routerLink="/clients/{{questionnaire.client.id}}">{{questionnaire.client.firstName + ' ' + questionnaire.client.lastName}}</a></td>
+          <td>
+            <a class="btn btn-primary btn-block" title="Show" routerLink="/questionnaires/{{questionnaire.id}}" style="!important;color: #fff">Show</a>
+            <a *ngIf="!questionnaire.redflag" class="btn btn-secondary btn-block" title="Set Redflag" (click)="setRedFlag(questionnaire)" style="!important;color: #fff">Set Red flag</a>
+            <a *ngIf="questionnaire.redflag" class="btn btn-secondary btn-block" title="Set Redflag" (click)="setRedFlag(questionnaire)" style="!important;color: #fff">Remove Red flag</a>
+          </td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+          <th>ID</th>
+          <th>Date Submitted</th>
+          <th>Red Flag?</th>
+          <th>Client(url)</th>
+          <th>Show</th>
+        </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+  <div class="card-footer small text-muted"></div>
+</div>
