@@ -1,34 +1,10 @@
 <h2>All benches</h2>
 <button (click)="toggleAddBench()">Add Bench</button>
 <br>
-
-<app-bench-form [addBenchToggle] ="addBenchToggle" ></app-bench-form>
-
-<table style="width:100%">
-  <thead>
-    <tr>
-      <th>id</th>
-      <th>STREETNAME</th>
-      <th>HOUSENUMBER</th>
-      <th>PROVINCE</th>
-      <th>DISTRICT</th>
-    </tr>
-  </thead>
-  <tbody>
-  <tr *ngFor="let bench of benches">
-    <td>{{bench.id}}</td>
-    <td>{{bench.streetname}}</td>
-    <td>{{bench.housenumber}}</td>
-    <td>{{bench.province}}</td>
-    <td>{{bench.district}}</td>
-    <td><button (click)="toggleBench(bench)">Edit</button></td>
-    <td><button class="delete" title="delete hero"
-                (click)="delete(bench)">delete</button></td>
-  </tr>
-  </tbody>
-</table>
-<app-bench [bench]="selectedBench" ></app-bench>
-
+<agm-map [latitude]="lat" [longitude]="lng">
+  <agm-marker [latitude]="lat" [longitude]="lng" [label]="lbl">
+  </agm-marker>
+</agm-map>
 <div class="card mb-3">
   <div class="card-header"><i class="fa fa-table"></i> Data Table Example</div>
   <div class="card-body">

@@ -1,6 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import {GoogleMapsService} from "../../services/google-maps.service";
-import {GoogleMaps} from "../../models/googleMaps";
+import { Component, OnInit, Input  } from '@angular/core';
 
 @Component({
   selector: 'app-google-maps',
@@ -8,16 +6,11 @@ import {GoogleMaps} from "../../models/googleMaps";
   styleUrls: ['./google-maps.component.css']
 })
 export class GoogleMapsComponent implements OnInit {
-  googleMaps: GoogleMaps[];
 
-
-  constructor(private googleMapsService: GoogleMapsService) { }
+  constructor() { }
 
   ngOnInit() {
+
   }
 
-  getGoogleMaps(): void {
-    this.googleMapsService.getGoogleMaps()
-      .subscribe(googleMaps => this.googleMaps = googleMaps);
-  }
 }

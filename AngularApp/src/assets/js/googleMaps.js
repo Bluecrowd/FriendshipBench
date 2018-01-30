@@ -1,9 +1,10 @@
+
 //https://hpa-api.figueus.com/api/benches
 var loc;
 
 function setLoc() {
   var ourRequest = new XMLHttpRequest();
-  ourRequest.open('GET', 'https://storage.googleapis.com/mapsdevsite/json/google.json', true);
+  ourRequest.open('GET', 'https://hpa-api.figueus.com/api/benches', true);
   ourRequest.onload = function () {
     var ourData = ourRequest.responseText;
     console.log(ourData.features[0]);
@@ -87,4 +88,5 @@ function geocodeAddress(geocoder, resultsMap, loc) {
     }
   });
 }
+
 

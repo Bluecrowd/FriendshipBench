@@ -20,23 +20,23 @@ import { ClientsService } from './services/clients.service';
 import { ClientComponent } from './components/client/client.component';
 import { BenchesComponent } from './components/benches/benches.component';
 import { BenchComponent } from './components/bench/bench.component';
-import {BenchesService} from './services/benches.service';
-import {HandleErrorService} from './services/handle-error.service';
-import { GoogleMapsComponent } from './components/google-maps/google-maps.component';
-import {GoogleMapsService} from "./services/google-maps.service";
+import { BenchesService } from './services/benches.service';
+import { HandleErrorService } from './services/handle-error.service';
 import { BenchFormComponent } from './components/bench-form/bench-form.component';
 import { AppointmentsComponent } from './components/appointments/appointments.component';
-import {AppointmentsService} from './services/appointments.service';
+import { AppointmentsService } from './services/appointments.service';
 import { QuestionnairesComponent } from './components/questionnaires/questionnaires.component';
-import {QuestionnairesService} from './services/questionnaires.service';
+import { QuestionnairesService } from './services/questionnaires.service';
 import { HealthworkersComponent } from './components/healthworkers/healthworkers.component';
-import {HealthworkersService} from './services/healthworkers.service';
+import { HealthworkersService } from './services/healthworkers.service';
 import { QuestionsComponent } from './components/questions/questions.component';
-import {QuestionsService} from './services/questions.service';
+import { QuestionsService } from './services/questions.service';
 import { QuestionFormComponent } from './components/question-form/question-form.component';
 import { QuestionComponent } from './components/question/question.component';
-import {AuthenticationService} from './services/authentication.service';
-
+import { AuthenticationService} from './services/authentication.service';
+import {AgmCoreModule, GoogleMapsAPIWrapper} from '@agm/core';
+import { environment } from '../environments/environment';
+import { AngularFireModule } from 'angularfire2';
 
 @NgModule({
   declarations: [
@@ -49,7 +49,6 @@ import {AuthenticationService} from './services/authentication.service';
     ClientComponent,
     BenchesComponent,
     BenchComponent,
-    GoogleMapsComponent,
     BenchFormComponent,
     AppointmentsComponent,
     QuestionnairesComponent,
@@ -63,6 +62,11 @@ import {AuthenticationService} from './services/authentication.service';
     FormsModule,
     AppRoutingModule,
     HttpClientModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyC_piA7v5a0P4w94rxxm19v7zUlgX_7M5s',
+      libraries: ["places", "geometry"]
+    })
 
   ],
   providers: [
@@ -74,11 +78,11 @@ import {AuthenticationService} from './services/authentication.service';
     AppointmentsService,
     QuestionnairesService,
     HealthworkersService,
-    GoogleMapsService,
     CookieService,
     CookieService,
     QuestionsService,
-    AuthenticationService
+    AuthenticationService,
+    GoogleMapsAPIWrapper
 ],
   bootstrap: [AppComponent]
 })

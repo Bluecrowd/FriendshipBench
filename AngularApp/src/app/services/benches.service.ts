@@ -1,24 +1,30 @@
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {Bench} from '../models/bench';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {Constants} from '../Constants';
 import {catchError, tap} from 'rxjs/operators';
+import { MapsAPILoader } from "@agm/core";
 
 import { HandleErrorService} from './handle-error.service';
 import { CookieService } from 'ngx-cookie-service';
+import { GoogleMapsAPIWrapper  } from "@agm/core";
+
+declare var google: any;
 
 @Injectable()
-export class BenchesService {
+export class BenchesService extends GoogleMapsAPIWrapper {
 
   private benchesUrl = Constants.API_URL + 'benches';  // URL to web api
   private httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' })};
 
+
   constructor(
     private http: HttpClient,
     public handleErrorService: HandleErrorService,
-    private cookieService: CookieService) {}
+    private cookieService: CookieService,
+    private __loader: MapsAPILoader, private __zone: NgZone) {super(__loader, __zone);}
 
   /** GET benches from the server */
   getBenches(): Observable<Bench[]> {
