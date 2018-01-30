@@ -7,6 +7,7 @@ import {HandleErrorService} from './handle-error.service';
 import {CookieService} from 'ngx-cookie-service';
 import {Constants} from '../Constants';
 import {Healthworker} from '../models/healthworker';
+import {Client} from '../models/client';
 
 @Injectable()
 export class HealthworkersService {
@@ -30,12 +31,31 @@ export class HealthworkersService {
       );
   }
 
+  getHealthworker(id: number): Observable<Healthworker> {
+    this.setHeaderOptions()
+    const url = `${this.healthworkersUrl}/${id}`;
+    return this.http.get<Healthworker>(url, this.httpOptions)
+      .pipe(
+        tap( _ => this.handleErrorService.log(`HealthworkersService: fetched healthworker id=${id}`)),
+        catchError(this.handleErrorService.handleError<Healthworker>('getHealthworkerById'))
+      );
+  }
+
   /** PUT: update the healthworker on the server */
   updateHealthworker (mapper: Object, id: number): Observable<any> {
     this.setHeaderOptions();
     return this.http.put(Constants.API_URL + 'account/approve/' + id, mapper, this.httpOptions).pipe(
       tap(_ => this.handleErrorService.log(`updated healthworker id=${id}`)),
       catchError(this.handleErrorService.handleError<any>('updateHealthworker'))
+    );
+  }
+
+  /** PUT: update the healthworker on the server */
+  editHw (mapper: Object, id: number): Observable<Object> {
+    this.setHeaderOptions();
+    return this.http.put(Constants.API_URL + 'account/me/', mapper, this.httpOptions).pipe(
+      tap(_ => this.handleErrorService.log(`updated healthworker id=${id}`)),
+      catchError(this.handleErrorService.handleError<Object>('editHw'))
     );
   }
 

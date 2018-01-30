@@ -1,3 +1,83 @@
-<p>
-  healthworker works!
-</p>
+<div *ngIf="healthworker">
+  <div class="row">
+    <div class="offset-3 offset-xl-3 offset-sm-6 col-xl-6 col-sm-12 mb-6">
+      <div class="card text-dark o-hidden h-100">
+        <div class="card-header">
+          <div style="text-align: center;">
+            <h2>
+              {{healthworker.firstName + ' ' + healthworker.lastName}}
+            </h2>
+            <h4>{{healthworker.username}}</h4>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-body-icon">
+            <i class="fa fa-fw fa-user"></i>
+          </div>
+          <div class="list-group list-group-flush">
+            <li class="list-group-item" style="text-align: center">
+                <button class="btn btn-secondary" (click)="toggleEdit()"><i class="fa fa-pencil-square-o fa-2x"></i></button>
+            </li>
+            <div *ngIf="!editToggle; then show else edit"></div>
+            <ng-template #show>
+              <li class="list-group-item" style="text-align: center">
+                Gender: {{healthworker.gender}}</li>
+              <li class="list-group-item" style="text-align: center">
+                Birthday: {{healthworker.birthDay | date: 'yyyy-mm-dd'}}
+              </li>
+              <li class="list-group-item" style="text-align: center">
+                Email:
+                <a href="mailto:{{healthworker.email}}">
+                  {{healthworker.email}}
+                </a>
+              </li>
+              <li class="list-group-item" style="text-align: center">
+                Phone:
+                <a href="tel:{{healthworker.phonenumber}}">
+                  {{healthworker.phonenumber}}
+                </a>
+              </li>
+            </ng-template>
+            <ng-template #edit>
+              <form>
+                <div class="form-group">
+                  <label for="firstname">Firstname</label>
+                  <input type="text"
+                         class="form-control"
+                         id="firstname"
+                         [(ngModel)]="model.firstName" [value]="healthworker.firstName" name="firstname" placeholder="{{healthworker.firstName}}">
+                </div>
+                <div class="form-group">
+                  <label for="lastname">Lastname</label>
+                  <input type="text"
+                         class="form-control"
+                         id="lastname"
+                         [(ngModel)]="model.lastName" [value]="healthworker.lastName" name="lastname" placeholder="{{healthworker.lastName}}">
+                </div>
+                <div class="form-group">
+                  <label for="gender">Gender</label>
+                  <input type="text"
+                         class="form-control"
+                         id="gender"
+                         [(ngModel)]="model.gender" [value]="healthworker.gender" name="gender" placeholder="{{healthworker.gender}}">
+                </div>
+                <button
+                class="btn btn-primary"
+                (click)="save()">Save</button>
+              </form>
+            </ng-template>
+
+          </div>
+        </div>
+        <a routerLink="/appointments" class="card-footer text-dark clearfix small z-1" href="#">
+          <span class="float-left">Back to my appointments</span>
+          <span class="float-right">
+            <i class="fa fa-angle-right"></i>
+          </span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
