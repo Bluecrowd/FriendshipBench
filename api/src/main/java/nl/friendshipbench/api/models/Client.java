@@ -1,6 +1,7 @@
 package nl.friendshipbench.api.models;
 
 import javax.persistence.*;
+import java.time.OffsetDateTime;
 
 /**
  * The Client model extends user
@@ -16,7 +17,7 @@ public class Client extends User {
     @Column(nullable = false)
     private String gender;
     @Column(nullable = false)
-    private int age;
+    private OffsetDateTime birthDay;
     @Column(name = "street_name", nullable = false)
     private String streetName;
     @Column(name = "house_number", nullable = false)
@@ -27,7 +28,7 @@ public class Client extends User {
     private String district;
     @Column(nullable = false, unique = true)
     private String email;
-    @Column(name = "phone_number", nullable = false)
+    @Column(name = "phone_number")
     private String phoneNumber;
 
     @ManyToOne(cascade = CascadeType.DETACH)
@@ -38,12 +39,12 @@ public class Client extends User {
 
     }
 
-    public Client(String firstName, String lastName, String gender, int age, String streetName,
+    public Client(String firstName, String lastName, String gender, OffsetDateTime birthDay, String streetName,
                   String houseNumber, String province, String district, String email, String phoneNumber, HealthWorker healthWorker) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
-        this.age = age;
+        this.birthDay = birthDay;
         this.streetName = streetName;
         this.houseNumber = houseNumber;
         this.province = province;
@@ -77,12 +78,12 @@ public class Client extends User {
         this.gender = gender;
     }
 
-    public int getAge() {
-        return age;
+    public OffsetDateTime getBirthDay() {
+        return birthDay;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public void setBirthDay(OffsetDateTime birthDay) {
+        this.birthDay = birthDay;
     }
 
     public String getStreetName() {

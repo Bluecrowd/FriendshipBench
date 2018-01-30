@@ -8,6 +8,7 @@ export class Client {
     public roles: Role[],
     public firstName: string,
     public lastName: string,
+    public birthDay: string,
     public gender: string,
     public age: number,
     public streetName: string,
@@ -15,8 +16,8 @@ export class Client {
     public district: string,
     public email: string,
     public healthworker: string,
-    public phoneNumber: string,
-    public houseNumber: string,
+    public phonenumber: string,
+    public housenumber: string,
   ) {}
 
 }

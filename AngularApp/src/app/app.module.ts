@@ -34,9 +34,20 @@ import { QuestionsService } from './services/questions.service';
 import { QuestionFormComponent } from './components/question-form/question-form.component';
 import { QuestionComponent } from './components/question/question.component';
 import { AuthenticationService} from './services/authentication.service';
-import {AgmCoreModule, GoogleMapsAPIWrapper} from '@agm/core';
+import { AgmCoreModule, GoogleMapsAPIWrapper} from '@agm/core';
 import { environment } from '../environments/environment';
 import { AngularFireModule } from 'angularfire2';
+import { ChatService} from './services/chat.service';
+import { ChatComponent } from './components/chat/chat.component';
+import { MomentModule } from 'angular2-moment';
+import { DatePipe } from '@angular/common';
+import { ConversationsComponent } from './components/conversations/conversations.component';
+import { TimeAgoPipe } from 'time-ago-pipe';
+import { HealthworkerComponent } from './components/healthworker/healthworker.component';
+import { AppointmentsFormComponent } from './components/appointments-form/appointments-form.component';
+import { AppointmentComponent } from './components/appointment/appointment.component';
+import { QuestionnaireComponent } from './components/questionnaire/questionnaire.component';
+
 
 @NgModule({
   declarations: [
@@ -55,18 +66,27 @@ import { AngularFireModule } from 'angularfire2';
     HealthworkersComponent,
     QuestionsComponent,
     QuestionFormComponent,
-    QuestionComponent
+    QuestionComponent,
+    ChatComponent,
+    ConversationsComponent,
+    TimeAgoPipe,
+    HealthworkerComponent,
+    AppointmentsFormComponent,
+    AppointmentComponent,
+    QuestionnaireComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     AppRoutingModule,
     HttpClientModule,
+    MomentModule,
     AngularFireModule.initializeApp(environment.firebase),
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyC_piA7v5a0P4w94rxxm19v7zUlgX_7M5s',
       libraries: ["places", "geometry"]
     })
+
 
   ],
   providers: [
@@ -82,7 +102,9 @@ import { AngularFireModule } from 'angularfire2';
     CookieService,
     QuestionsService,
     AuthenticationService,
-    GoogleMapsAPIWrapper
+    GoogleMapsAPIWrapper,
+    ChatService,
+    DatePipe
 ],
   bootstrap: [AppComponent]
 })

@@ -12,6 +12,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
+import java.time.OffsetDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 
 /**
@@ -66,7 +68,7 @@ public class RegisterService {
 
             healthWorker.setUsername("TestHW");
             healthWorker.setPassword(passwordEncoder.encode("test"));
-            healthWorker.setAge(24);
+            healthWorker.setBirthDay(OffsetDateTime.parse("1993-07-23T11:11:11+01:00", DateTimeFormatter.ISO_OFFSET_DATE_TIME));
             healthWorker.setEmail("test@example.com");
             healthWorker.setFirstName("firstname");
             healthWorker.setLastName("lastname");
@@ -85,7 +87,7 @@ public class RegisterService {
             client.setPassword(passwordEncoder.encode("test"));
             client.setFirstName("firstname");
             client.setLastName("lastname");
-            client.setAge(40);
+            client.setBirthDay(OffsetDateTime.parse("1993-07-23T11:11:11+01:00", DateTimeFormatter.ISO_OFFSET_DATE_TIME));
             client.setEmail("test@example.com");
             client.setGender("Female");
             client.setStreetName("streetname");

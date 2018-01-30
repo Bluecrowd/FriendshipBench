@@ -1,6 +1,7 @@
 package nl.friendshipbench.api.models;
 
 import javax.persistence.*;
+import java.time.OffsetDateTime;
 
 /**
  * The Healthworker model extends user
@@ -17,20 +18,20 @@ public class HealthWorker extends User {
     @Column(nullable = false)
     private String gender;
     @Column(nullable = false)
-    private int age;
+    private OffsetDateTime birthDay;
     @Column(nullable = false)
     private String email;
-    @Column(name = "phone_number", nullable = false, unique = true)
+    @Column(name = "phone_number")
     private String phoneNumber;
 
     public HealthWorker() { }
 
     public HealthWorker(String firstName, String lastname, String gender,
-                  int age, String email, String phoneNumber) {
+                        OffsetDateTime birthDay, String email, String phoneNumber) {
         this.firstName = firstName;
         this.lastName = lastname;
         this.gender = gender;
-        this.age = age;
+        this.birthDay = birthDay;
         this.email = email;
         this.phoneNumber = phoneNumber;
     }
@@ -59,12 +60,12 @@ public class HealthWorker extends User {
         this.gender = gender;
     }
 
-    public int getAge() {
-        return age;
+    public OffsetDateTime getBirthDay() {
+        return birthDay;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public void setBirthDay(OffsetDateTime birthDay) {
+        this.birthDay = birthDay;
     }
 
     public String getEmail() {

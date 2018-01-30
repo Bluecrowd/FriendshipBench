@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
+import java.util.*;
 
 /**
  * The health worker controller with all the possible HTTP methods
@@ -38,10 +38,26 @@ public class HealthWorkerController {
      * @return all health workers
      */
     @CrossOrigin
-    @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_HEALTHWORKER')")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_HEALTHWORKER') or hasAuthority('ROLE_CLIENT')")
     @GetMapping(value = "/healthworkers")
     public ResponseEntity<Iterable<HealthWorker>> getAllHealthWorkers() {
         return new ResponseEntity<>(healthworkerRepository.findAll(), HttpStatus.OK);
+    }
+
+    /**
+     * GET Method to gather all health workers by healthworker role
+     *
+     * @method HTTP GET
+     * @endpoint api/healthworkers
+     * @return all health workers
+     */
+    @CrossOrigin
+    @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_HEALTHWORKER') or hasAuthority('ROLE_CLIENT')")
+    @GetMapping(value = "/healthworkers/approved")
+    public ResponseEntity<Iterable<HealthWorker>> getAllHeathWorkersByRole() {
+        List<Role> role = new LinkedList<>();
+        role.add(roleRepository.getByRoleName("HEALTHWORKER"));
+        return new ResponseEntity<>(healthworkerRepository.findAllByRoles(role), HttpStatus.OK);
     }
 
     /**
@@ -53,7 +69,7 @@ public class HealthWorkerController {
      * @return specific health worker
      */
     @CrossOrigin
-    @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_HEALTHWORKER')")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_HEALTHWORKER') or hasAuthority('ROLE_CLIENT')")
     @GetMapping(value = "/healthworkers/{id}")
     public ResponseEntity<HealthWorker> getHealthWorkerById(@PathVariable("id") long id) {
         HealthWorker healthWorker = healthworkerRepository.findOne(id);

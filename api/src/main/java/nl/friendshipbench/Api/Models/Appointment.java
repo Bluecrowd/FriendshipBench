@@ -15,9 +15,11 @@ public class Appointment
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
+	@Column(nullable = false)
 	private OffsetDateTime timestamp;
 
 	@Enumerated(EnumType.ORDINAL)
+	@Column(nullable = false)
 	private AppointmentStatusEnum status;
 
 	@ManyToOne(cascade=CascadeType.DETACH)

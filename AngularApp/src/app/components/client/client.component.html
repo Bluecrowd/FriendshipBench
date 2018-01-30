@@ -1,4 +1,91 @@
-<p>
-  client works!
-</p>
+<div *ngIf="client">
+  <div class="row">
+    <div class="offset-3 offset-xl-3 offset-sm-6 col-xl-6 col-sm-12 mb-6">
+      <div class="card text-dark o-hidden h-100">
+        <div class="card-header">
+          <div style="text-align: center;">
+            <h2>
+              {{client.firstName + ' ' + client.lastName}}
+            </h2>
+            <h4>{{client.username}}</h4>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-body-icon">
+            <i class="fa fa-fw fa-user"></i>
+          </div>
+          <div class="list-group list-group-flush">
+            <li class="list-group-item" style="text-align: center">
+              Gender: {{client.gender}}</li>
+            <li class="list-group-item" style="text-align: center">
+              Birthday: {{client.birthDay}}
+            </li>
+            <li class="list-group-item" style="text-align: center">
+              Address: {{client.streetName + ' ' + client.housenumber + ', ' + client.district + ', ' + client.province}}
+            </li>
+            <li class="list-group-item" style="text-align: center">
+              Email:
+              <a href="mailto:{{client.email}}">
+                {{client.email}}
+              </a>
+            </li>
+            <li class="list-group-item" style="text-align: center">
+              Phone:
+              <a href="tel:{{client.phonenumber}}">
+                {{client.phonenumber}}
+              </a>
+            </li>
+
+          </div>
+        </div>
+        <a routerLink="/clients" class="card-footer text-dark clearfix small z-1" href="#">
+          <span class="float-left">Back to all clients</span>
+          <span class="float-right">
+            <i class="fa fa-angle-right"></i>
+          </span>
+        </a>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div class="card mb-3">
+    <div class="card-header"><i class="fa fa-table"></i> Questionnaires filled in by this client</div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+          <thead>
+          <tr>
+            <th>ID</th>
+            <th>Date Submitted</th>
+            <th>Red Flag?</th>
+            <th>Show/Edit</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let questionnaire of questionnaires">
+            <td>{{questionnaire.id}}</td>
+            <td>{{questionnaire.timestamp | date:'yyyy-MM-dd HH:mm:ss Z'}}</td>
+            <td *ngIf="questionnaire.redflag">Yes</td>
+            <td *ngIf="!questionnaire.redflag">No</td>
+            <td>
+              <a class="btn btn-primary btn-block" title="Show" routerLink="/questionnaires/{{questionnaire.id}}" style="!important;color: #fff">Show</a>
+              <a *ngIf="!questionnaire.redflag" class="btn btn-secondary btn-block" title="Set Redflag" (click)="setRedFlag(questionnaire)" style="!important;color: #fff">Set Red flag</a>
+              <a *ngIf="questionnaire.redflag" class="btn btn-secondary btn-block" title="Set Redflag" (click)="setRedFlag(questionnaire)" style="!important;color: #fff">Remove Red flag</a>
+            </td>
+          </tr>
+          </tbody>
+          <tfoot>
+          <tr>
+            <th>ID</th>
+            <th>Date Submitted</th>
+            <th>Red Flag?</th>
+            <th>Show</th>
+          </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+    <div class="card-footer small text-muted"></div>
+  </div>
+</div>
 

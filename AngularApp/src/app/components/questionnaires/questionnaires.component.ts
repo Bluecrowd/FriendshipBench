@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {Questionnaire} from '../../models/questionnaire';
 import {QuestionnairesService} from '../../services/questionnaires.service';
 
+declare var $: any;
+
 @Component({
   selector: 'app-questionnaires',
   templateUrl: './questionnaires.component.html',
@@ -20,14 +22,15 @@ export class QuestionnairesComponent implements OnInit {
 
   getQuestionnaires(): void {
     this.questionnairesService.getQuestionnaires()
+      .subscribe(questionnaires => { this.questionnaires = questionnaires; setTimeout(() => { $('#dataTable').DataTable(); }, 350); });
+  }
+
+  setRedFlag(questionnaire: Questionnaire): void {
+    this.questionnairesService.toggleRedFlag(questionnaire).subscribe(_ => this.refresh());
+  }
+
+  refresh(): void {
+    this.questionnairesService.getQuestionnaires()
       .subscribe(questionnaires => this.questionnaires = questionnaires);
   }
-
-  toggleRedFlag(questionnaire: Questionnaire): void {
-    this.questionnairesService.toggleRedFlag(questionnaire).subscribe();
-  }
-
-  delete(id: number): void {
-  }
-
 }

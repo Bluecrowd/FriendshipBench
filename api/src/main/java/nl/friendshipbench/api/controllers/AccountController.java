@@ -18,7 +18,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
+import java.time.OffsetDateTime;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -93,7 +93,7 @@ public class AccountController {
      */
     @CrossOrigin
     @RequestMapping(value = "/account/me", method = RequestMethod.PUT)
-    @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_PENDING') or hasAuthority('ROLE_HEALTHWORKER') or hasAuthority('ROLE_CLIENT')")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_HEALTHWORKER') or hasAuthority('ROLE_CLIENT')")
     public ResponseEntity<?> editUserInfo(@RequestBody HashMap<String, Object> mapper) throws Exception {
         CustomUserDetails principal = userHelper.principalHelper();
         String currentUsername = principal.getUsername();
@@ -101,13 +101,11 @@ public class AccountController {
         String firstName = (String) mapper.get("firstName");
         String lastName = (String) mapper.get("lastName");
         String gender = (String) mapper.get("gender");
-        int age = (int) mapper.get("age");
         String streetName = (String) mapper.get("streetName");
         String houseNumber = (String) mapper.get("houseNumber");
         String province = (String) mapper.get("province");
         String district = (String) mapper.get("district");
-        String email = (String) mapper.get("email");
-        String phoneNumber = (String) mapper.get("phoneNumber");
+        //OffsetDateTime birthday = (OffsetDateTime) mapper.get("birthDay");
 
         Collection<? extends GrantedAuthority> authorities = principal.getAuthorities();
 
@@ -120,97 +118,82 @@ public class AccountController {
                 currentUser.setFirstName(firstName);
                 currentUser.setLastName(lastName);
                 currentUser.setGender(gender);
-                currentUser.setAge(age);
                 currentUser.setStreetName(streetName);
                 currentUser.setHousenumber(houseNumber);
                 currentUser.setProvince(province);
                 currentUser.setDistrict(district);
-                currentUser.setEmail(email);
-                currentUser.setPhonenumber(phoneNumber);
+                //currentUser.setBirthDay(birthday);
+
 
                 clientRepository.save(currentUser);
                 return ResponseEntity.ok("User updated successfully");
             }
             //users with role HEALTHWORKER
-            else if(authority.getAuthority().equals("ROLE_HEALTHWORKER") || authority.getAuthority().equals("ROLE_PENDING")) {
+            else if(authority.getAuthority().equals("ROLE_HEALTHWORKER")) {
                 HealthWorker currentUser = healthworkerRepository.findByUsername(currentUsername);
 
                 currentUser.setFirstName(firstName);
                 currentUser.setLastName(lastName);
                 currentUser.setGender(gender);
-                currentUser.setAge(age);
-                currentUser.setEmail(email);
-                currentUser.setPhonenumber(phoneNumber);
 
                 healthworkerRepository.save(currentUser);
-                return ResponseEntity.ok("User updated successfully");
+                return new ResponseEntity<Object>(HttpStatus.OK);
             }
         }
         return new ResponseEntity<>("Something went wrong ", HttpStatus.BAD_REQUEST);
     }
 
+    /**
+     * Method to update the user values of each type op user which is currently logged in
+     *
+     * @method HTTP PUT
+     * @endpoint /api//account/details/me
+     * @param mapper
+     * @return ResponseEntity
+     * @throws Exception
+     */
     @CrossOrigin
-    @RequestMapping(value = "/account/changepassword", method = RequestMethod.PUT)
-    public ResponseEntity<?> changePassword(@RequestBody HashMap<String, Object> mapper) throws Exception {
+    @RequestMapping(value = "/account/details/me", method = RequestMethod.PUT)
+    @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_HEALTHWORKER') or hasAuthority('ROLE_CLIENT')")
+    public ResponseEntity<?> editAccountInfo(@RequestBody HashMap<String, Object> mapper) throws Exception {
         CustomUserDetails principal = userHelper.principalHelper();
         String currentUsername = principal.getUsername();
 
-        String oldPassword = (String) mapper.get("oldPassword");
-        String newPassword = (String) mapper.get("newPassword");
-
-        String encodedOldPassword = passwordEncoder.encode(oldPassword);
+        String email = (String) mapper.get("email");
+        String phoneNumber = (String) mapper.get("phonenumber");
+        //OffsetDateTime birthday = (OffsetDateTime) mapper.get("birthday");
 
         Collection<? extends GrantedAuthority> authorities = principal.getAuthorities();
 
         for (GrantedAuthority authority : authorities) {
 
             //Users with role CLIENT
-            if (authority.getAuthority().equals("ROLE_CLIENT")) {
+            if(authority.getAuthority().equals("ROLE_CLIENT")) {
                 Client currentUser = clientRepository.findByUsername(currentUsername);
-                String dbPassword = currentUser.getPassword();
 
-                if (passwordEncoder.matches(dbPassword, encodedOldPassword)) {
-                    if (newPassword != null && !newPassword.isEmpty() && !newPassword.equals(""))
-                        currentUser.setPassword(passwordEncoder.encode(newPassword));
+                currentUser.setEmail(email);
+                currentUser.setPhonenumber(phoneNumber);
+                //currentUser.setBirthDay(birthday);
 
-                    clientRepository.save(currentUser);
-                    return ResponseEntity.ok("User updated successfully");
-                } else
-                    return new ResponseEntity<Object>("Passwords don't match", HttpStatus.BAD_REQUEST);
+
+                clientRepository.save(currentUser);
+                return ResponseEntity.ok("User updated successfully");
             }
             //users with role HEALTHWORKER
-            else if(authority.getAuthority().equals("ROLE_HEALTHWORKER") || authority.getAuthority().equals("ROLE_PENDING")) {
+            else if(authority.getAuthority().equals("ROLE_HEALTHWORKER")) {
                 HealthWorker currentUser = healthworkerRepository.findByUsername(currentUsername);
-                String dbPassword = currentUser.getPassword();
 
-                if (passwordEncoder.matches(dbPassword, encodedOldPassword)) {
-                    if (newPassword != null && !newPassword.isEmpty() && !newPassword.equals(""))
-                        currentUser.setPassword(passwordEncoder.encode(newPassword));
+                currentUser.setEmail(email);
+                currentUser.setPhonenumber(phoneNumber);
+                //currentUser.setBirthDay(birthday);
 
-                    healthworkerRepository.save(currentUser);
-                    return ResponseEntity.ok("User updated successfully");
-                } else
-                    return new ResponseEntity<Object>("Passwords don't match", HttpStatus.BAD_REQUEST);
-
-            }
-            //users with role ADMIN
-            else if(authority.getAuthority().equals("ROLE_ADMIN")) {
-                User currentUser = userRepository.findByUsername(currentUsername);
-                String dbPassword = currentUser.getPassword();
-
-                if(passwordEncoder.matches(dbPassword, encodedOldPassword)) {
-                    if (newPassword != null && !newPassword.isEmpty() && !newPassword.equals(""))
-                        currentUser.setPassword(passwordEncoder.encode(newPassword));
-
-                    userRepository.save(currentUser);
-                    return ResponseEntity.ok("User updated successfully");
-                } else
-                    return new ResponseEntity<Object>("Passwords don't match", HttpStatus.BAD_REQUEST);
-
+                healthworkerRepository.save(currentUser);
+                return new ResponseEntity<Object>(HttpStatus.OK);
             }
         }
         return new ResponseEntity<>("Something went wrong ", HttpStatus.BAD_REQUEST);
     }
+
 
     /**
      * Method to get the clients who are bound to the healthworker

@@ -1,17 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { Bench } from '../../models/bench';
-import { BenchesService } from '../../services/benches.service';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
+import {Bench} from '../../models/bench';
+import {BenchesService} from '../../services/benches.service';
 import { MapsAPILoader} from "@agm/core";
-import { Observable, Observer } from 'rxjs';
-
 declare var google: any;
+declare var $: any;
 
 @Component({
   selector: 'app-benches',
   templateUrl: './benches.component.html',
   styleUrls: ['./benches.component.css']
 })
-export class BenchesComponent implements OnInit {
+export class BenchesComponent implements OnInit, AfterViewInit {
   benches: Bench[];
   lat: number = 52;
   lng: number = 10;
@@ -52,10 +51,13 @@ export class BenchesComponent implements OnInit {
 
   }
 
-
   ngOnInit() {
     this.getBenches();
     // this.benchesService.getLatLan("Leeuwarden");
+  }
+
+  ngAfterViewInit() {
+
   }
 
   toggleAddBench(): void {
@@ -64,6 +66,7 @@ export class BenchesComponent implements OnInit {
 
   getBenches(): void {
     this.benchesService.getBenches()
+
       .subscribe(benches => {
         this.benches = benches;
         //this.lbl = benches[0].streetname;

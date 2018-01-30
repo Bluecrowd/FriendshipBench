@@ -30,7 +30,10 @@
     "geofire": "^4.1.2",
     "ngx-cookie-service": "^1.0.10",
     "rxjs": "^5.5.6",
-    "zone.js": "^0.8.19"
+    "zone.js": "^0.8.19",
+    "socket.io-client": "^2.0.4",
+    "angular2-moment": "^1.8.0",
+    "time-ago-pipe": "^1.2.1"
   },
   "devDependencies": {
     "@angular/cli": "1.6.4",

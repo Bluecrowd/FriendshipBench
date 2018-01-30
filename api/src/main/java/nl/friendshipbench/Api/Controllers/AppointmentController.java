@@ -210,4 +210,20 @@ public class AppointmentController
 
 		return new ResponseEntity<>(appointment, HttpStatus.OK);
 	}
+
+	@CrossOrigin
+	@PreAuthorize("hasAuthority('ROLE_HEALTHWORKER')")
+	@DeleteMapping(value = "/appointments/{id}")
+	public ResponseEntity<Appointment> deleteAppointment(@PathVariable("id") long id) {
+
+		Appointment appointment = appointmentRepository.findOne(id);
+
+		if(appointment.getStatus() == AppointmentStatusEnum.CANCELLED) {
+			appointmentRepository.delete(appointment);
+
+			return new ResponseEntity<Appointment>(HttpStatus.NO_CONTENT);
+		}
+
+		return new ResponseEntity<Appointment>(HttpStatus.BAD_REQUEST);
+	}
 }

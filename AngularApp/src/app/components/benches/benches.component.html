@@ -1,6 +1,10 @@
 <h2>All benches</h2>
-<button (click)="toggleAddBench()">Add Bench</button>
+<button class="btn btn-primary btn-block" (click)="toggleAddBench()">Add Bench</button>
 <br>
+
+<app-bench-form [addBenchToggle] ="addBenchToggle" ></app-bench-form>
+
+<app-bench [bench]="selectedBench" ></app-bench>
 <agm-map [latitude]="lat" [longitude]="lng">
   <agm-marker [latitude]="lat" [longitude]="lng" [label]="lbl">
   </agm-marker>
@@ -27,7 +31,10 @@
           <td>{{bench.housenumber}}</td>
           <td>{{bench.province}}</td>
           <td>{{bench.district}}</td>
-          <td><a class="btn btn-primary btn-block" title="Edit bench" (click)="toggleBench(bench)" style="!important;color: #fff">Edit</a><a class="btn btn-secondary btn-block" title="Delete bench" (click)="delete(bench)" style="!important;color: #fff">Delete</a></td>
+          <td>
+            <a class="btn btn-primary btn-block" title="Edit bench" (click)="toggleBench(bench)" style="!important;color: #fff">Edit</a>
+            <a class="btn btn-secondary btn-block" title="Delete bench" (click)="delete(bench)" style="!important;color: #fff">Delete</a>
+          </td>
         </tr>
         </tbody>
         <tfoot>
