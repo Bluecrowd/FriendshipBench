@@ -34,6 +34,12 @@ import {QuestionsService} from './services/questions.service';
 import { QuestionFormComponent } from './components/question-form/question-form.component';
 import { QuestionComponent } from './components/question/question.component';
 import {AuthenticationService} from './services/authentication.service';
+import {ChatService} from './services/chat.service';
+import { ChatComponent } from './components/chat/chat.component';
+import { MomentModule } from 'angular2-moment';
+import { DatePipe } from '@angular/common';
+import { ConversationsComponent } from './components/conversations/conversations.component';
+import { TimeAgoPipe } from 'time-ago-pipe';
 import { HealthworkerComponent } from './components/healthworker/healthworker.component';
 import { AppointmentsFormComponent } from './components/appointments-form/appointments-form.component';
 import { AppointmentComponent } from './components/appointment/appointment.component';
@@ -58,6 +64,9 @@ import { QuestionnaireComponent } from './components/questionnaire/questionnaire
     QuestionsComponent,
     QuestionFormComponent,
     QuestionComponent,
+    ChatComponent,
+    ConversationsComponent,
+    TimeAgoPipe,
     HealthworkerComponent,
     AppointmentsFormComponent,
     AppointmentComponent,
@@ -68,7 +77,7 @@ import { QuestionnaireComponent } from './components/questionnaire/questionnaire
     FormsModule,
     AppRoutingModule,
     HttpClientModule,
-
+    MomentModule
   ],
   providers: [
     UserService,
@@ -81,7 +90,9 @@ import { QuestionnaireComponent } from './components/questionnaire/questionnaire
     HealthworkersService,
     CookieService,
     QuestionsService,
-    AuthenticationService
+    AuthenticationService,
+    ChatService,
+    DatePipe
 ],
   bootstrap: [AppComponent]
 })

@@ -96,6 +96,7 @@ export class AuthenticationService {
       this.cookieService.set('UserAccessToken', token.access_token, expireDate );
       this.cookieService.set('UserName', accountDetails.username, expireDate );
       this.cookieService.set('UserID', accountDetails.id.toString(), expireDate );
+      this.cookieService.set('UserFullName', accountDetails.firstName + ' ' + accountDetails.lastName, expireDate );
     }
   }
 
