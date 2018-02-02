@@ -102,7 +102,6 @@ import { QuestionnaireComponent } from './components/questionnaire/questionnaire
     CookieService,
     QuestionsService,
     AuthenticationService,
-    GoogleMapsAPIWrapper,
     ChatService,
     DatePipe
 ],

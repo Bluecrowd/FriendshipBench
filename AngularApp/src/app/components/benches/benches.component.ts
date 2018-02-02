@@ -12,13 +12,21 @@ declare var $: any;
 })
 export class BenchesComponent implements OnInit, AfterViewInit {
   benches: Bench[];
-  lat: number = 52;
-  lng: number = 10;
+  lat: number;
+  lng: number;
+  address: string;
   public lbl: string;
 
   markers: marker[] = [
     {
-      name: 'company one',
+      lat: -90.673858,
+      lng: 7.815982,
+      label: 'i',
+      draggable: true,
+      streetname: "hoi",
+      housenumber: "doei",
+      district: "Zwolle",
+      provice: "Overeisel",
     }
   ]
 
@@ -36,24 +44,56 @@ export class BenchesComponent implements OnInit, AfterViewInit {
       console.log('google script loaded');
       this.geocoder = new google.maps.Geocoder();
     }).then(() => {
-      const address = "Leeuwarden";
-      this.geocoder.geocode( { 'address': address}, (results, status) => {
+
+        this.benchesService.getBenches()
+
+          .subscribe(benches => {
+            var i;
+            var len = benches.length;
+            for (i = 0; i < len; i++) {
+              const index = i;
+            const ad = benches[index];
+            this.benches = benches;
+            this.address = ad.streetname;
+            this.address += " " + ad.housenumber;
+            this.address += " " + ad.district;
+
+
+
+
+      const address = this.address;
+      this.geocoder.geocode({'address': address}, (results, status) => {
         if (status == 'OK') {
-          this.lat = results[0].geometry.location.lat();
-          this.lng = results[0].geometry.location.lng();
-          console.log(results[0].geometry.location.lat());
-          console.log(this.lat + ' ' + this.lng);
+          var lat = results[0].geometry.location.lat();
+          var lng = results[0].geometry.location.lng();
+          var mark =
+            {
+              lat: lat,
+              lng: lng,
+              label: ''+ad.id+'',
+              draggable: true,
+              streetname: address,
+              housenumber: "doei",
+              district: "Zwolle",
+              provice: "Overeisel",
+            };
+          this.markers.push(mark);
+          this.lat = lat;
+          this.lng = lng;
+
         } else {
           alert('Geocode was not successful for the following reason: ' + status);
         }
       });
+            }
+          });
+
     });
 
   }
 
   ngOnInit() {
     this.getBenches();
-    // this.benchesService.getLatLan("Leeuwarden");
   }
 
   ngAfterViewInit() {
@@ -69,7 +109,7 @@ export class BenchesComponent implements OnInit, AfterViewInit {
 
       .subscribe(benches => {
         this.benches = benches;
-        //this.lbl = benches[0].streetname;
+
       });
   }
 

@@ -9,17 +9,25 @@
   </div>
   <div class="form-group">
     <label for="location">Bench</label>
+    <!--<input ng-value="myVar">-->
     <select
       id="location"
       class="form-control"
       required
       [(ngModel)]="model.bench.id"
       name="bench">
-      <option *ngFor="let bench of benches" [value]="bench.id">
+      <option *ngFor="let bench of benches" [ngValue]="bench.id">
         {{bench.streetname + ' ' + bench.housenumber + ', ' + bench.province + ', ' + bench.district}}
       </option>
     </select>
   </div>
+  <agm-map [latitude]="lat" [longitude]="lng">
+    <agm-marker [latitude]="mark.lat" [longitude]="mark.lng" [label]="mark.label" [markerDraggable]="mark.draggable"*ngFor="let mark of markers" (markerClick)="markerClick(mark)">d
+      <agm-info-window>
+        {{mark.streetname}}
+      </agm-info-window>
+    </agm-marker>
+  </agm-map>
   <div class="form-group">
     <label for="client">Client</label>
     <select

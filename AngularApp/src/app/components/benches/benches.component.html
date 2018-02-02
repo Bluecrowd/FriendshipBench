@@ -5,10 +5,7 @@
 <app-bench-form [addBenchToggle] ="addBenchToggle" ></app-bench-form>
 
 <app-bench [bench]="selectedBench" ></app-bench>
-<agm-map [latitude]="lat" [longitude]="lng">
-  <agm-marker [latitude]="lat" [longitude]="lng" [label]="lbl">
-  </agm-marker>
-</agm-map>
+
 <div class="card mb-3">
   <div class="card-header"><i class="fa fa-table"></i> Data Table Example</div>
   <div class="card-body">
@@ -50,5 +47,12 @@
       </table>
     </div>
   </div>
+  <agm-map [latitude]="lat" [longitude]="lng">
+    <agm-marker [latitude]="mark.lat" [longitude]="mark.lng" [label]="mark.label" [markerDraggable]="mark.draggable"*ngFor="let mark of markers">
+      <agm-info-window>
+          {{mark.streetname}}
+      </agm-info-window>
+    </agm-marker>
+  </agm-map>
   <div class="card-footer small text-muted"></div>
 </div>
