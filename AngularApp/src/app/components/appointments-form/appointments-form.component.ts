@@ -26,7 +26,7 @@ export class AppointmentsFormComponent implements OnInit {
 
   model: Object;
   markerBench: Bench;
-  markerAddress: string;
+  myText: string = "hoiiiii";
   lat: number;
   lng: number;
   address: string;
@@ -132,10 +132,7 @@ export class AppointmentsFormComponent implements OnInit {
     });
   }
   markerClick(marker: any): void {
-      marker.label;
-      console.log(marker.label + "hoi");
-      this.markerBench = marker.label;
-      console.log(this.markerBench);
+      this.model["bench"] = {id: marker.label};
   }
   getCurrentHw(): void {
     this.appointmentsService.requestAccountDetails()
