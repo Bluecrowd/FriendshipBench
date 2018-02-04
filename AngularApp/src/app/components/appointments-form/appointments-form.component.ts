@@ -14,7 +14,8 @@ import {AddAppointment} from '../../models/add-appointment';
 import {NgForm} from '@angular/forms';
 import {Question} from '../../models/question';
 import {Appointment} from '../../models/appointment';
-
+import {MapsAPILoader} from "@agm/core";
+declare var google: any;
 @Component({
   selector: 'app-appointments-form',
   templateUrl: './appointments-form.component.html',
@@ -24,21 +25,35 @@ export class AppointmentsFormComponent implements OnInit {
   @Input() addAppointmentToggle: false;
 
   model: Object;
-
+  markerBench: Bench;
+  myText: string = "hoiiiii";
+  lat: number;
+  lng: number;
+  address: string;
   benches: Bench[];
 
   myClients: Client[];
-
+  markers: marker[] = [
+    {
+      lat: -90.673858,
+      lng: 7.815982,
+      label: 'i',
+      draggable: true,
+      streetname: "hoi",
+      housenumber: "doei",
+      district: "Zwolle",
+      provice: "Overeisel",
+    }
+  ]
   currentHw: AccountDetails;
-
-  // TODO: Remove this when it works
-  get diagnostic() { return JSON.stringify(this.model); }
+  private geocoder: any;
 
   constructor(
     private appointmentsComponent: AppointmentsComponent,
     private appointmentsService: AppointmentsService,
     private benchesService: BenchesService,
     private clientsService: ClientsService,
+    private mapsAPILoader: MapsAPILoader,
   ) {
     this.model = {
       'timestamp': '',
@@ -54,12 +69,71 @@ export class AppointmentsFormComponent implements OnInit {
     };
   }
 
+  // TODO: Remove this when it works
+  get diagnostic() { return JSON.stringify(this.model); }
+
   ngOnInit() {
     this.getBenches();
     this.getMyClients();
     this.getCurrentHw();
+    this.showMap();
   }
 
+  showMap(): void{
+
+    this.mapsAPILoader.load().then(() => {
+      console.log('google script loaded');
+      this.geocoder = new google.maps.Geocoder();
+    }).then(() => {
+
+      this.benchesService.getBenches()
+
+        .subscribe(benches => {
+          var i;
+          var len = benches.length;
+          for (i = 0; i < len; i++) {
+            const index = i;
+            const ad = benches[index];
+            this.benches = benches;
+            this.address = ad.streetname;
+            this.address += " " + ad.housenumber;
+            this.address += " " + ad.district;
+
+
+
+
+            const address = this.address;
+            this.geocoder.geocode({'address': address}, (results, status) => {
+              if (status == 'OK') {
+                var lat = results[0].geometry.location.lat();
+                var lng = results[0].geometry.location.lng();
+                var mark =
+                  {
+                    lat: lat,
+                    lng: lng,
+                    label: ''+ad.id+'',
+                    draggable: true,
+                    streetname: address,
+                    housenumber: "doei",
+                    district: "Zwolle",
+                    provice: "Overeisel",
+                  };
+                this.markers.push(mark);
+                this.lat = lat;
+                this.lng = lng;
+
+              } else {
+                alert('Geocode was not successful for the following reason: ' + status);
+              }
+            });
+          }
+        });
+
+    });
+  }
+  markerClick(marker: any): void {
+      this.model["bench"] = {id: marker.label};
+  }
   getCurrentHw(): void {
     this.appointmentsService.requestAccountDetails()
       .subscribe( hw => this.currentHw = hw);
@@ -102,5 +176,8 @@ export class AppointmentsFormComponent implements OnInit {
       }
     };
   }
+
+}
+interface marker {
 
 }

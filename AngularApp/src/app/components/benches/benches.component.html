@@ -47,5 +47,12 @@
       </table>
     </div>
   </div>
+  <agm-map [latitude]="lat" [longitude]="lng">
+    <agm-marker [latitude]="mark.lat" [longitude]="mark.lng" [label]="mark.label" [markerDraggable]="mark.draggable"*ngFor="let mark of markers">
+      <agm-info-window>
+          {{mark.streetname}}
+      </agm-info-window>
+    </agm-marker>
+  </agm-map>
   <div class="card-footer small text-muted"></div>
 </div>
